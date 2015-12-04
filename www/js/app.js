@@ -4,15 +4,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('tabs', {
             url: '/app',
-            controller: 'TabsCtrl',
-            templateUrl: 'templates/tabs.html',
+            controller: 'AppCtrl',
+            templateUrl: function(){
+                return 'templates/tabs.html';
+            },
             abstract: true
         })
         .state('tabs.home', {
             url: '/home',
             views: {
                 'home-tab': {
-                    templateUrl: 'templates/login.html'
+                    templateUrl: 'templates/home.html'
                 }
             }
         })
@@ -41,13 +43,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     templateUrl: 'templates/charge.html'
                 }
             }
+        })
+        .state('login', {
+            url : '/login',
+            templateUrl: 'templates/login.html'
         });
 
-    $urlRouterProvider.otherwise('/app/home');
-});
+    $urlRouterProvider.otherwise('/login');
+})
+.run(['$rootScope', '$state', function ($rootScope, $state) {
+    var authorized = localStorage.authorized;
+
+    if (!authorized) {
+        $state.go('login');
+    }else{
+        $state.go('tabs.home')
+    };
+}]);
 
 app
-	.controller('TabsCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate) {
+	.controller('AppCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate) {
 	    $scope.toggleLeft = function() {
 	        $ionicSideMenuDelegate.toggleLeft();
 	    };

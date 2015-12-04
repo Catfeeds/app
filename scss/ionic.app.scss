@@ -20,7 +20,10 @@ $positive:                        #4a90e2 !default;
 
 $font-family-base:                "webfont" !default;
 $font-family-sans-serif: 		  "webfont" !default;
+
+// $item-default-text				  #
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 @import "style.css";
+@import "icon.css";
 

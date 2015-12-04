@@ -26,6 +26,7 @@ $dark:                            #444 !default;
   Modified icons to fit ionicon’s grid from original.
 */
 @import url(style.css);
+@import url(icon.css);
 @font-face {
   font-family: "Ionicons";
   src: url("../lib/ionic/fonts/ionicons.eot?v=2.0.1");
