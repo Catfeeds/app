@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1449210645_7972813.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1449210645_7972813.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1449210645_7972813.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1449210645_7972813.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1449210645_7972813.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+                                 
+.fi {
+    font-family: "iconfont";
+    font-size: 20px;
+    font-style: normal;
+}
+.fi:after{
+	line-height: 1em;
+}
+
+.fi.fi-home:after{
+   	content: "\e602";
+}
+.fi.fi-analyze:after{
+   	content: "\e609";
+}
+.fi.fi-device:after{
+   	content: "\e61e";
+}
+.fi.fi-charge:after{
+   	content: "\e61d";
+}
+.fi.fi-user:after{
+	content: "\e614";
+}
+.fi.fi-pass:after{
+	content: "\e603";
+}

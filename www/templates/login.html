@@ -1,5 +1,25 @@
-<ion-view title="首页">
-    <ion-content>
-        首页
-    </ion-content>
-</ion-view>
+<ion-content has-subheader="false" class="full">
+    <div class="row">
+        <div class="col col-center">
+            <div class="list list-inset">
+                <label class="item item-input item-input-icon">
+                    <input type="text" placeholder="用户名">
+                    <i class="fi fi-user"></i>
+                </label>
+                <label class="item item-input item-input-icon">
+                    <input type="password" placeholder="密码">
+                    <i class="fi fi-pass"></i>
+                </label>
+            </div>
+            <div class="">
+                <label class="checkbox">
+                    <input type="checkbox">
+                </label>
+                记住密码
+            </div>
+            <div class="padding">
+                <button class="button button-block button-positive activated" ng-click="login()">登录</button>
+            </div>
+        </div>
+    </div>
+</ion-content>
