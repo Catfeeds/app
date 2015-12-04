@@ -4,10 +4,19 @@
     <ion-side-menu side="left">
         <ion-content has-header="true">
             <ion-list>
-                <ion-item ng-click="changeTab(0)" menu-close>Home</ion-item>
-                <ion-item ng-click="changeTab(1)" menu-close>Settings</ion-item>
-                <ion-item ng-click="changeTab(2)" menu-close>About</ion-item>
-                <ion-item ng-click="changeTab(3)" menu-close>Charge</ion-item>
+                <ion-item ng-click="changeTab(0)" menu-close>
+                    <i class="icon ion-home"></i>
+                    首页
+                </ion-item>
+                <ion-item ng-click="changeTab(1)" menu-close>
+                    <i class="icon ion-ios-pie-outline"></i>
+                    能耗分析</ion-item>
+                <ion-item ng-click="changeTab(2)" menu-close>
+                    <i class="icon ion-ios-world"></i>
+                仪表控制</ion-item>
+                <ion-item ng-click="changeTab(3)" menu-close>
+                    <i class="icon ion-social-usd"></i>
+                充值</ion-item>
             </ion-list>
         </ion-content>
     </ion-side-menu>
@@ -17,27 +26,20 @@
                 <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
+
         <!-- Main content, usually <ion-nav-view> -->
         <ion-tabs class="tabs-icon-top tabs-positive" delegate-handle="tabs">
             <ion-tab title="主页" icon="ion-home" href="#/home">
-                <ion-content has-subheader="false">
-                    <ion-nav-view name="home-tab"></ion-nav-view>
-                </ion-content>
+                <ion-nav-view name="home-tab"></ion-nav-view>
             </ion-tab>
-            <ion-tab title="分析" icon="ion-ios-information" ui-sref="tabs.analyze">
-                <ion-content has-subheader="false">
-                    <ion-nav-view name="analyze-tab"></ion-nav-view>
-                </ion-content>
+            <ion-tab title="分析" icon="ion-ios-pie-outline" ui-sref="tabs.analyze">
+                <ion-nav-view name="analyze-tab"></ion-nav-view>
             </ion-tab>
             <ion-tab title="仪表" icon="ion-ios-world" ui-sref="tabs.device">
-                <ion-content has-subheader="false">
-                    <ion-nav-view name="device-tab"></ion-nav-view>
-                </ion-content>
+                <ion-nav-view name="device-tab"></ion-nav-view>
             </ion-tab>
             <ion-tab title="充值" icon="ion-social-usd" ui-sref="tabs.charge">
-                <ion-content has-subheader="false">
-                    <ion-nav-view name="charge-tab"></ion-nav-view>
-                </ion-content>
+                <ion-nav-view name="charge-tab"></ion-nav-view>
             </ion-tab>
         </ion-tabs>
     </ion-side-menu-content>
