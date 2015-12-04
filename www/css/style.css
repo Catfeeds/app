@@ -44,7 +44,6 @@ ion-content.full > .scroll > .row {
   height: 100%;
 }
 .slider-slide {
-  padding-top: 80px;
   color: #000;
   background-color: #fff;
   text-align: center;
@@ -74,5 +73,15 @@ ion-content.full > .scroll > .row {
 .button.ng-hide{
   display:none;
 }
-
-
+ion-slide img{
+    max-width: 100%;
+}
+ion-slide .trans-btn{
+    position: absolute;
+    z-index: 3;
+    bottom: 120px;
+    right: calc(100%/2 - 45px);
+    background: rgba(0, 0, 0, 0);
+    border: rgba(0, 0, 0, 0);
+    opacity: 0;
+}

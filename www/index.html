@@ -13,38 +13,20 @@
 <body>
     <ion-nav-view></ion-nav-view>
     <script id="templates/intro.html" type="text/ng-template">
-        <ion-view view-title="Intro">
-
-            <ion-slide-box on-slide-changed="slideChanged(index)">
+        <ion-view view-title="">
+            <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="false">
                 <ion-slide>
-                    <h3>Thank you for choosing the Awesome App!</h3>
-                    <div id="logo">
-                        <img src="http://code.ionicframework.com/assets/img/app_icon.png">
-                    </div>
-                    <p>
-                        We've worked super hard to make you happy.
-                    </p>
-                    <p>
-                        But if you are angry, too bad.
-                    </p>
+                    <img src="img/wt/wt_1.jpg" alt="">
                 </ion-slide>
                 <ion-slide>
-                    <h3>Using Awesome</h3>
-                    <div id="list">
-                        <h5>Just three steps:</h5>
-                        <ol>
-                            <li>Be awesome</li>
-                            <li>Stay awesome</li>
-                            <li>There is no step 3</li>
-                        </ol>
-                    </div>
+                    <img src="img/wt/wt_2.jpg" alt="">
                 </ion-slide>
                 <ion-slide>
-                    <h3>Any questions?</h3>
-                    <p>
-                        Too bad!
-                    </p>
-                    <button type="button" class="button button-positive" ng-click="startApp()">开始管理</button>
+                    <img src="img/wt/wt_3.jpg" alt="">
+                </ion-slide>
+                <ion-slide>
+                    <img src="img/wt/wt_4.jpg" alt="">
+                    <button type="button" class="button button-positive trans-btn" ng-click="startApp()">开始管理</button>
                 </ion-slide>
             </ion-slide-box>
         </ion-view>
