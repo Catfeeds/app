@@ -79,7 +79,7 @@ ion-slide img{
 ion-slide .trans-btn{
     position: absolute;
     z-index: 3;
-    bottom: 120px;
+    bottom: 130px;
     right: calc(100%/2 - 45px);
     background: rgba(0, 0, 0, 0);
     border: rgba(0, 0, 0, 0);

@@ -61,4 +61,22 @@ angular.module('gugecc.services', ['ngResource'])
             }
         }
     }, this);
+}])
+.service('cookies', ['$cookies', function ($cookies) {
+	var keys = {
+		user : '',
+		token : ''
+	};
+
+	this.up = function(data){
+
+	}
+
+	this.down = function(){
+
+	}
+
+	this.valid = function(){
+		return $cookies.get('user') && $cookies.get('token');
+	}
 }]);

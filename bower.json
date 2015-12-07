@@ -7,6 +7,7 @@
   "dependencies": {
     "onezone-datepicker": "newset/ion-datepicker",
     "angular-md5": "~0.1.10",
-    "oclazyload": "~1.0.9"
+    "oclazyload": "~1.0.9",
+    "angular-cookies": "1.4.3"
   }
 }

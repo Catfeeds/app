@@ -1,7 +1,7 @@
 ### 2015-12-7 (0.0.2)
 
 - 添加$api service, 设置 api proxy为在线服务 
-- 添加 md5 oclazyload 模块
+- 添加 md5 oclazyload ng-cookies模块
 
 ### 2015-12-4 (0.0.1)
 

@@ -1,7 +1,9 @@
 var app = angular.module('gugecc', [
     'ionic', 
+    'ui.router',
     'gugecc.services',
-    'oc.lazyLoad'
+    'oc.lazyLoad',
+    'ngCookies'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -66,24 +68,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
     })
-    .run(['$rootScope', '$state', function($rootScope, $state) {
-        var authorized = localStorage.authorized,
-            inited = localStorage.inited;
-
-        if (!authorized && inited) {
-            return $state.go('login');
-        } else if (inited){
-            return $state.go('tabs.home');
-        }
-
+    .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
+        var inited = localStorage.inited;
         // 设置跳转
-        $rootScope.$on('$stateChangeStart', function(){
-            console.log('test');
-        });
+        
+        $rootScope.$on('$stateChangeStart',  function(event, toState, toParams, fromState, fromParams){ 
+            // event.preventDefault(); 
+            // transitionTo() promise will be rejected with 
+            // a 'transition prevented' error
+            console.log(event, localStorage);
+        })
     }]);
 
 app
-    .controller('AppCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate) {
+    .controller('AppCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate, $api) {
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -92,20 +90,26 @@ app
             console.log('tab: ', index);
             $ionicTabsDelegate.$getByHandle('tabs').select(index);
         }
+
+        $scope.logout = function(){
+            $api.auth.logout(null, function(res){
+                console.log('logout: ', res);
+            })
+        }
     })
     .controller('HomeTabCtrl', function($scope, $ionicSideMenuDelegate) {
 
     }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
 
     })
-    .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
+    .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, cookies) {
         // Called to navigate to the main app
         $scope.startApp = function() {
             // 检查登录
             localStorage.inited = true;
             // disable backbutton
             
-            if (localStorage.authorized) {
+            if (cookies.valid()) {
                 $state.go('tabs.home');
             }else{
                 $state.go('login');
@@ -130,6 +134,12 @@ app
             console.log($api, $scope.user);
             // $state.go('tabs.home');
             $api.auth.login(credential, function(res){
+                if(!res.code){
+                    
+                    $state.go('tabs.home');
+                }else{
+                    alert('登录失败');
+                }
                 console.log('res: ', res);
             });
         }

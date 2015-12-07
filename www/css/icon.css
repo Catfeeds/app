@@ -34,3 +34,6 @@
 .fi.fi-pass:after{
 	content: "\e603";
 }
+.fi.fi-exit:after{
+  content: "\e605";
+}
