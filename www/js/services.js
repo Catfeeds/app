@@ -1,50 +1,64 @@
-angular.module('starter.services', [])
+angular.module('gugecc.services', ['ngResource'])
+.service('$api', ['$resource', function ($resource) {
+    var fullUrl = function (url, bool) {
+        return (/(^http:\/\/)|(^https:\/\/)|(^\/)/.test(url) ? url : (location.protocol + '//' + location.host + '/api/' + url)) + (bool ? '/:_api_action' : '')
+    };
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+	var _apis = {
+		 auth: ['auth', {
+	        login: { method: 'POST' },
+	        logout: { method: 'POST' }
+	    }]
+	};
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+    angular.forEach(_apis, function (item, name) {
+        if (item instanceof Array) {
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+            var url = item[0],
+                actions = item[1],
+                paramDefaults = item[2],
+                options = item[3];
+
+            if (url) {
+
+                actions = angular.forEach(angular.extend({
+                    get: {
+                        method: 'GET'
+                    },
+                    list: {
+                        method: 'GET'
+                    },
+                    search: {
+                        method: 'GET'
+                    },
+                    set: {
+                        method: 'POST'
+                    },
+                    create: {
+                        method: 'POST'
+                    },
+                    update: {
+                        method: 'POST'
+                    },
+                    remove: {
+                        method: 'POST'
+                    },
+                    delete: {
+                        method: 'POST'
+                    }
+                }, actions), function (action, name) {
+                    action = action || {};
+                    if (action.url) {
+                        action.url = fullUrl(action.url)
+                    }
+                    action.method = action.method || 'GET';
+                    action.params = angular.extend(action.url ? {} : {
+                        _api_action: name
+                    }, action.params);
+                });
+
+                this[name] = $resource(fullUrl(url, true), paramDefaults, actions, options);
+            }
         }
-      }
-      return null;
-    }
-  };
-});
+    }, this);
+}]);

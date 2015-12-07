@@ -1,4 +1,8 @@
-var app = angular.module('myApp', ['ionic']);
+var app = angular.module('gugecc', [
+    'ionic', 
+    'gugecc.services',
+    'oc.lazyLoad'
+]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -52,7 +56,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
             .state('login', {
                 url: '/login',
                 templateUrl: 'templates/login.html',
-                controller: 'AuthCtrl'
+                controller: 'AuthCtrl',
+                resolve : {
+                    deps : ['$ocLazyLoad', function($ocLazyLoad){
+                        return $ocLazyLoad.load('lib/angular-md5/angular-md5.js');
+                    }]
+                }
             });
 
         $urlRouterProvider.otherwise('/');
@@ -108,9 +117,20 @@ app
             $scope.slideIndex = index;
         };
     })
-    .controller('AuthCtrl', ['$scope', '$state', function ($scope, $state) {
+    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', function ($scope, $state, $api, md5) {
+        $scope.user = {};
+
         $scope.login = function(){
+            var credential = {
+                user: $scope.user.user,
+                passwd: md5.createHash($scope.user.password).toUpperCase()
+            }
+                
             // disable backbutton
-            $state.go('tabs.home');
+            console.log($api, $scope.user);
+            // $state.go('tabs.home');
+            $api.auth.login(credential, function(res){
+                console.log('res: ', res);
+            });
         }
     }]);

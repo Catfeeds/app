@@ -1,4 +1,6 @@
+### 2015-12-7 (0.0.2)
 
+- 添加$api service, 设置 api proxy为在线服务 
 
 ### 2015-12-4 (0.0.1)
 
@@ -6,3 +8,5 @@
 - 添加 iconfont 引用
 - 开始登录页面构建
 - 添加 walkthrough 和 datepicker
+
+
