@@ -28,10 +28,10 @@ ion-content{
     font-family: 'webfont';
 }
 
-ion-content.full > .scroll {
+ion-content.full >{
   height: 100%;
 }
-ion-content.full > .scroll > .row {
+ion-content.full > .row {
   min-height: 100%;
 }
 
@@ -54,6 +54,32 @@ ion-content.full > .scroll > .row {
 
 #logo {
   margin: 30px 0px;
+}
+
+.login{
+  background: url('../img/login-bg.png');
+  background-position-y: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+}
+
+.login .list, .login .list .item, .login .list .item input{
+  background-color: transparent;
+  border: none;
+}
+
+.login .list .item ::-webkit-input-placeholder{
+  color: #fff;
+}
+
+.login .list label.item{
+  padding-left: 0px;
+}
+
+.login .list .item input{
+  border-bottom: 1px solid #ddd;
+  padding-left: 16px;
 }
 
 #list {

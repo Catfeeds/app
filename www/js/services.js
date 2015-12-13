@@ -80,7 +80,9 @@ angular.module('gugecc.services', ['ngResource'])
 	}
 
 	this.down = function(){
-
+        Object.keys(auth_keys).map(function(item){
+            $cookies.remove(item);
+        });
 	}
 
 	this.valid = function(){

@@ -76,6 +76,13 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                         return $ocLazyLoad.load('lib/angular-md5/angular-md5.js');
                     }]
                 }
+            })
+            .state('logout', {
+                url: '/logout',
+                controller: function($scope, cookies, $state) {
+                    cookies.down();
+                    $state.go('login');
+                }
             });
 
         $urlRouterProvider.otherwise('/');
@@ -85,9 +92,9 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         
         $rootScope.$on('$stateChangeStart',  function(event, toState, toParams, fromState, fromParams){ 
             var inited = localStorage.inited;
-            if (inited && toState.name != 'tabs.home') {
+            if (inited && toState.name == 'intro') {
                 event.preventDefault(); 
-                $state.go('tabs.home');
+                $state.go('login');
             };
         })
     }]);

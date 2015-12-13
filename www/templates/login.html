@@ -1,18 +1,21 @@
-<ion-content has-subheader="false" class="full">
+<ion-content has-subheader="false" class="full login" scroll="false">
     <div class="row">
         <div class="col col-center">
             <div class="list list-inset">
-                <label class="item item-input item-input-icon">
-                    <input type="text" ng-model="user.user" placeholder="用户名">
-                    <i class="fi fi-user"></i>
-                </label>
-                <label class="item item-input item-input-icon">
-                    <input type="password" ng-model="user.password" placeholder="密码">
-                    <i class="fi fi-pass"></i>
-                </label>
+                 <form method="get" accept-charset="utf-8" autocomplete="disable">
+                    <label class="item item-input item-input-icon">
+                        <input type="text" autocomplete="disable" ng-model="user.user" placeholder="用户名">
+                        <i class="fi fi-user"></i>
+                    </label>
+                    <label class="item item-input item-input-icon">
+                        <input type="password" ng-model="user.password" placeholder="密码">
+                        <i class="fi fi-pass"></i>
+                    </label>
+                </form>
             </div>
+
             <div class="padding">
-                <button class="button button-block button-positive activated" ng-click="login()">登录</button>
+                <button class="button button-block button-positive" ng-click="login()">登录</button>
             </div>
         </div>
     </div>
