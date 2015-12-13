@@ -8,6 +8,7 @@
     "onezone-datepicker": "newset/ion-datepicker",
     "angular-md5": "~0.1.10",
     "oclazyload": "~1.0.9",
-    "angular-cookies": "1.4.3"
+    "angular-cookies": "1.4.3",
+    "moment": "~2.10.6"
   }
 }

@@ -8,7 +8,10 @@ angular.module('gugecc.services', ['ngResource'])
 		 auth: ['auth', {
 	        login: { method: 'POST' },
 	        logout: { method: 'POST' }
-	    }]
+	    }],
+        account : ['account', {
+            info : { method : 'POST'}
+        }]
 	};
 
     angular.forEach(_apis, function (item, name) {
@@ -63,13 +66,17 @@ angular.module('gugecc.services', ['ngResource'])
     }, this);
 }])
 .service('cookies', ['$cookies', function ($cookies) {
-	var keys = {
+	var auth_keys = {
 		user : '',
 		token : ''
 	};
 
 	this.up = function(data){
-
+        Object.keys(auth_keys).map(function(item){
+            $cookies.put(item, data[item], {
+                expire : ''
+            });
+        });
 	}
 
 	this.down = function(){

@@ -1,4 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('gugecc.controllers', [])
+    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, $cookies) {
+        $scope.account = {};
+
+        $api.account.info({id : $cookies.get('user')}, function(res){
+            console.log(res);
+            $scope.account = res.result.billingAccount;
+        })
+    }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
+
+    })
     .controller('RootPageController', function($scope, $ionicSideMenuDelegate) {})
     .controller('NavController', function($scope, $ionicSideMenuDelegate) {
         $scope.toggleLeft = function() {

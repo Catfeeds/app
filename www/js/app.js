@@ -2,11 +2,15 @@ var app = angular.module('gugecc', [
     'ionic', 
     'ui.router',
     'gugecc.services',
+    'gugecc.controllers',
     'oc.lazyLoad',
     'ngCookies'
 ]);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+        $ionicConfigProvider.platform.android.tabs.position("bottom");
+        $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+
         $stateProvider
             .state('tabs', {
                 url: '/app',
@@ -20,7 +24,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url: '/home',
                 views: {
                     'home-tab': {
-                        templateUrl: 'templates/home.html'
+                        templateUrl: 'templates/home.html',
+                        controller: 'HomeTabCtrl'
+                    }
+                },
+                resolve : {
+                    deps : function($ocLazyLoad){
+                        return $ocLazyLoad.load([{
+                            'files' : ['./lib/moment/moment.js']
+                        }]);
                     }
                 }
             })
@@ -69,14 +81,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/');
     })
     .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
-        var inited = localStorage.inited;
         // 设置跳转
         
         $rootScope.$on('$stateChangeStart',  function(event, toState, toParams, fromState, fromParams){ 
-            // event.preventDefault(); 
-            // transitionTo() promise will be rejected with 
-            // a 'transition prevented' error
-            console.log(event, localStorage);
+            var inited = localStorage.inited;
+            if (inited && toState.name != 'tabs.home') {
+                event.preventDefault(); 
+                $state.go('tabs.home');
+            };
         })
     }]);
 
@@ -97,11 +109,6 @@ app
             })
         }
     })
-    .controller('HomeTabCtrl', function($scope, $ionicSideMenuDelegate) {
-
-    }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
-
-    })
     .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, cookies) {
         // Called to navigate to the main app
         $scope.startApp = function() {
@@ -121,7 +128,7 @@ app
             $scope.slideIndex = index;
         };
     })
-    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', function ($scope, $state, $api, md5) {
+    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', function ($scope, $state, $api, md5, cookies) {
         $scope.user = {};
 
         $scope.login = function(){
@@ -135,7 +142,8 @@ app
             // $state.go('tabs.home');
             $api.auth.login(credential, function(res){
                 if(!res.code){
-                    
+                    // setup cookie
+                    cookies.up(res.result);
                     $state.go('tabs.home');
                 }else{
                     alert('登录失败');
