@@ -1,5 +1,15 @@
 <ion-view title="能耗分析">
+	<div class="tabs-striped tabs-top tabs-color-positive">
+        <div class="tabs" ng-init="show='day'">
+            <a class="tab-item" href="#" ng-class="{active : show == 'day'}" ng-click="show='day'">
+                日
+            </a>
+            <a class="tab-item" href="#" ng-class="{active : show == 'month'}" ng-click="show='month'">
+                月
+            </a>
+        </div>
+    </div>
     <ion-content class="padding">
-        能耗分析
+        
     </ion-content>
 </ion-view>

@@ -1,5 +1,29 @@
 <ion-view title="仪表控制">
     <ion-content class="padding">
-       仪表控制
+        <div class="panel sensors">
+            <div class="panel-heading text-center">
+                我的仪表
+                <a href="" class="pull-right">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </a>
+            </div>
+            <div class="media" ng-repeat="row in [3, 2]">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="../img/energy/energy-c-{{row}}.png" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">D-避风塘-01</h4>
+                    电脑 打印机
+                </div>
+                <div class="media-right">
+                    <div class="switch">
+                        <input id="cmn-toggle" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" checked>
+                        <label for="cmn-toggle"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
