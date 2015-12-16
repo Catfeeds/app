@@ -17,7 +17,7 @@ angular.module('gugecc.controllers', [])
     })
     .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout) {
         $scope.labels = ["1", "2", "3", "4", "5", "6", "7"];
-        $scope.series = ['用水', '空调'];
+        $scope.series = ['用水', '空调', '用电'];
         $scope.colours= [{ // default
           "fillColor": '#F7464A'
         },{ // default
@@ -27,21 +27,22 @@ angular.module('gugecc.controllers', [])
         }];
         $scope.data = [
             [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90]
+            [28, 48, 40, 19, 86, 27, 90],
+            [18, 28, 4, 9, 16, 27, 20]
         ];
 
         $scope.changeview = function(view){
             $scope.show = view;
-            $scope.series = ['用水', '空调', view];
+            $scope.series = ['用水', '空调', '用电', view];
             $scope.data = $scope.data.reverse();
         }
     })
-    .controller('FstHomePageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('FstFirstPageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('FstSecondPageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('SndController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('SndHomePageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('SndChatPageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('SndChatSinglePageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('SndDrinkPageController', function($scope, $ionicSideMenuDelegate) {})
-    .controller('SndPolicyPageController', function($scope, $ionicSideMenuDelegate) {});
+    .controller('Charge', function($scope, $ionicSideMenuDelegate) {
+        $scope.amountSelects = [10, 20, 50, 100, 200, 500];
+        $scope.charge = {
+            amount : 10,
+            gateway: 'wx_pub',
+            mobile: ''
+        };
+
+    });

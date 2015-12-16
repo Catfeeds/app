@@ -15,7 +15,9 @@ html,
 body {
     font-family: 'webfont';
 }
-
+input{
+  color: #666;
+}
 .pull-right {
     float: right;
 }
@@ -26,6 +28,15 @@ body {
 
 .bb{
   border-bottom: 1px solid #ddd;
+}
+.bt{
+  border-top: 1px solid #ddd;
+}
+.mt{
+  margin-top: 10px;
+}
+.mb{
+  margin-bottom: 10px;
 }
 
 ion-content{
@@ -103,6 +114,9 @@ ion-content.full > .row {
   border-bottom: 1px solid #ddd;
   padding-left: 16px;
 }
+.dash-pag .item-complex .item-content{
+  padding-right: 16px;
+}
 
 #list {
   width: 170px;
@@ -168,7 +182,7 @@ input.cmn-toggle-round-flat + label {
   padding: 2px;
   width: 40px;
   height: 20px;
-  background-color: #dddddd;
+  background-color: #aaa;
   -webkit-border-radius: 60px;
   -moz-border-radius: 60px;
   -ms-border-radius: 60px;
@@ -205,7 +219,7 @@ input.cmn-toggle-round-flat + label:after {
   left: 4px;
   bottom: 4px;
   width: 12px;
-  background-color: #dddddd;
+  background-color: #aaa;
   -webkit-border-radius: 52px;
   -moz-border-radius: 52px;
   -ms-border-radius: 52px;
@@ -269,4 +283,22 @@ input.cmn-toggle-round-flat:checked + label:after {
   width: 16px;
   height: 16px;
   border-radius: 50%;
+}
+
+/** charge */
+.charge .row{
+  margin-top: 0px!important;
+  padding: 0px;
+  flex-wrap: wrap;
+}
+.charge .col{
+  border-left: 1px solid #ddd;
+  padding: 20px 0px;
+  border-bottom: 1px solid #ddd;
+  transition: all ease 0.5s;
+  cursor: pointer;
+}
+
+.charge .col:nth-child(3n){
+  border-right: 1px solid #ddd;
 }

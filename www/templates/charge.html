@@ -1,5 +1,20 @@
 <ion-view title="充值">
-    <ion-content class="padding">
-        充值
+    <ion-content class="padding charge">
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="手机号">
+            </label>
+        </div>
+        <div class="row text-center bt">
+            <div class="col col-33" ng-repeat="row in amountSelects" ng-class="{'positive-bg light': charge.amount == row}" ng-click="charge.amount=row">{{row}} 元</div>
+        </div>
+        <div class="button-bar padding-top padding-bottom mt">
+            <a class="button" href="" ng-click="charge.gateway='wx_pub'" ng-class="{'positive-bg light' : charge.gateway=='wx_pub'}">微信支付</a>
+            <a class="button" href="" ng-click="charge.gateway='alipya_wap'" ng-class="{'positive-bg light' : charge.gateway=='alipya_wap'}">支付宝</a>
+        </div>
+
+        <button class="button button-block button-positive">
+            <span class="">立即充值</span>
+        </button>
     </ion-content>
 </ion-view>

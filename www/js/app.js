@@ -82,7 +82,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $o
                 url: '/charge',
                 views: {
                     'charge-tab': {
-                        controller: 'AboutCtrl',
+                        controller: 'Charge',
                         templateUrl: 'templates/charge.html'
                     }
                 }
