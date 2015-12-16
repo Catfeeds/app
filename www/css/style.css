@@ -24,6 +24,10 @@ body {
     float: left;
 }
 
+.bb{
+  border-bottom: 1px solid #ddd;
+}
+
 ion-content{
     font-family: 'webfont';
 }
@@ -33,6 +37,16 @@ ion-content.full >{
 }
 ion-content.full > .row {
   min-height: 100%;
+}
+
+.tabs-striped.tabs-positive .tabs-striped.transparent .tabs{
+  background-color: transparent;
+}
+
+.tabs-striped.tabs-positive .tab-item.tab-item-active, 
+.tabs-striped.tabs-positive .tab-item.active, 
+.tabs-striped.tabs-positive .tab-item.activated {
+    border-color: #83B8F7;
 }
 
 .list .item-input-icon i{
@@ -50,6 +64,14 @@ ion-content.full > .row {
 
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: 300;
+}
+
+.card{
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3)!important;
+}
+
+.row + .row {
+  padding-top: 5px;
 }
 
 #logo {

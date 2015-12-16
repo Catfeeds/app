@@ -9,6 +9,9 @@
     "angular-md5": "~0.1.10",
     "oclazyload": "~1.0.9",
     "angular-cookies": "1.4.3",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "Chart.js": "~1.0.2",
+    "Chart.StackedBar.js": "Regaddi/Chart.StackedBar.js#~1.0.3",
+    "angular-chart.js": "~0.8.8"
   }
 }

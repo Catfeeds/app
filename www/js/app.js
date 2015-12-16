@@ -7,7 +7,7 @@ var app = angular.module('gugecc', [
     'ngCookies'
 ]);
 
-app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ocLazyLoadProvider) {
         $ionicConfigProvider.platform.android.tabs.position("bottom");
         $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
@@ -18,6 +18,13 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 templateUrl: function() {
                     return 'templates/tabs.html';
                 },
+                resolve : {
+                    deps : function($ocLazyLoad){
+                        return $ocLazyLoad.load([
+                            {'type' : 'js', path: './lib/moment/moment.js'}
+                        ]);
+                    }
+                },
                 abstract: true
             })
             .state('tabs.home', {
@@ -27,20 +34,34 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                         templateUrl: 'templates/home.html',
                         controller: 'HomeTabCtrl'
                     }
-                },
-                resolve : {
-                    deps : function($ocLazyLoad){
-                        return $ocLazyLoad.load([{
-                            'files' : ['./lib/moment/moment.js']
-                        }]);
-                    }
                 }
             })
             .state('tabs.analyze', {
                 url: '/analyze',
                 views: {
                     'analyze-tab': {
-                        templateUrl: 'templates/analyze.html'
+                        templateUrl: 'templates/analyze.html',
+                        controller: 'Analyze'
+                    }
+                },
+                resolve : {
+                    deps : function($ocLazyLoad, $injector){
+                        return $ocLazyLoad.load([{
+                            serie : true,
+                            files: [
+                                './js/directives.js',
+                                './lib/Chart.js/Chart.js',
+                                './lib/Chart.StackedBar.js/src/Chart.StackedBar.js',
+                                './lib/angular-chart.js/dist/angular-chart.css',
+                                './lib/angular-chart.js/dist/angular-chart.js'
+                            ]}
+                        ]).then(function(){
+                            var provider = $injector.get("ChartJs");
+                            provider.Chart.defaults.StackedBar.barStrokeWidth = 1;
+                            provider.Chart.defaults.StackedBar.barValueSpacing = 15;
+
+                            console.log('chart', $injector.get("ChartJs"));
+                        });
                     }
                 }
             })

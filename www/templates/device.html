@@ -1,26 +1,28 @@
 <ion-view title="仪表控制">
     <ion-content class="padding">
         <div class="panel sensors">
-            <div class="panel-heading text-center">
-                我的仪表
-                <a href="" class="pull-right">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </a>
+            <div class="panel-heading text-center bb">
+            	<h3>
+            		我的仪表
+	                <a href="#" class="pull-right">
+	                    <i class="icon ion-plus-round"></i>
+	                </a>
+            	</h3>
             </div>
-            <div class="media" ng-repeat="row in [3, 2]">
+            <div class="media" ng-repeat="row in [3, 2, 1]" ng-class="{bb : !$last}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" src="../img/energy/energy-c-{{row}}.png" alt="...">
+                        <img class="media-object" ng-src="../img/energy/energy-c-{{row}}.png" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">D-避风塘-01</h4>
+                    <h4 class="media-heading">D-避风塘-{{row}}</h4>
                     电脑 打印机
                 </div>
                 <div class="media-right">
                     <div class="switch">
-                        <input id="cmn-toggle" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" checked>
-                        <label for="cmn-toggle"></label>
+                        <input id="cmn-toggle-{{row}}" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" checked>
+                        <label for="cmn-toggle-{{row}}"></label>
                     </div>
                 </div>
             </div>

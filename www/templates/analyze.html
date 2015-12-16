@@ -1,5 +1,5 @@
 <ion-view title="能耗分析">
-	<div class="tabs-striped tabs-top tabs-color-positive">
+	<div class="tabs-striped tabs-top tabs-color-positive transparent">
         <div class="tabs" ng-init="show='day'">
             <a class="tab-item" href="#" ng-class="{active : show == 'day'}" ng-click="show='day'">
                 日
@@ -9,7 +9,9 @@
             </a>
         </div>
     </div>
-    <ion-content class="padding">
-        
+    <ion-content class="padding has-tabs-top">
+        <canvas id="stacked-bar" class="chart chart-stacked-bar"
+		  chart-data="data" chart-labels="labels"> chart-series="series"
+		</canvas>
     </ion-content>
 </ion-view>
