@@ -15,17 +15,26 @@ angular.module('gugecc.controllers', [])
             $ionicSideMenuDelegate.toggleLeft();
         };
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps) {
-        console.log('analyze deps', deps);
-
-        $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-        $scope.series = ['Series A', 'Series B', 'Series C'];
-
+    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout) {
+        $scope.labels = ["1", "2", "3", "4", "5", "6", "7"];
+        $scope.series = ['用水', '空调'];
+        $scope.colours= [{ // default
+          "fillColor": '#F7464A'
+        },{ // default
+          "fillColor": '#46BFBD'
+        },{ // default
+          "fillColor": '#FDB45C'
+        }];
         $scope.data = [
             [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90],
             [28, 48, 40, 19, 86, 27, 90]
         ];
+
+        $scope.changeview = function(view){
+            $scope.show = view;
+            $scope.series = ['用水', '空调', view];
+            $scope.data = $scope.data.reverse();
+        }
     })
     .controller('FstHomePageController', function($scope, $ionicSideMenuDelegate) {})
     .controller('FstFirstPageController', function($scope, $ionicSideMenuDelegate) {})

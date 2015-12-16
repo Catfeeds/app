@@ -57,8 +57,12 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $o
                             ]}
                         ]).then(function(){
                             var provider = $injector.get("ChartJs");
-                            provider.Chart.defaults.StackedBar.barStrokeWidth = 1;
-                            provider.Chart.defaults.StackedBar.barValueSpacing = 15;
+                            provider.Chart.defaults.StackedBar.barShowStroke = false;
+                            provider.Chart.defaults.StackedBar.barValueSpacing = 18;
+                            provider.Chart.defaults.StackedBar.showTooltips = false;
+                            provider.Chart.defaults.global.colours = [
+                                '#F7464A','#46BFBD', '#FDB45C'
+                            ];
 
                             console.log('chart', $injector.get("ChartJs"));
                         });
