@@ -114,12 +114,18 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $o
     })
     .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
         // 设置跳转
-        
-        $rootScope.$on('$stateChangeStart',  function(event, toState, toParams, fromState, fromParams){ 
+        var cookies = cookies;
+        $rootScope.$on('$stateChangeStart',  function(event, 
+            toState, toParams, fromState, fromParams){ 
             var inited = localStorage.inited;
-            if (inited && toState.name == 'intro') {
+            if ((inited && toState.name == 'intro') || (toState.name != 'login' && !cookies.valid()) ) {
                 event.preventDefault(); 
                 $state.go('login');
+            };
+
+            if (cookies.valid() && toState.name == 'login') {
+                event.preventDefault();
+                $state.go('tabs.home');
             };
         })
     }]);

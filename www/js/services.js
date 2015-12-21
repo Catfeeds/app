@@ -1,7 +1,17 @@
 angular.module('gugecc.services', ['ngResource'])
-.service('$api', ['$resource', function ($resource) {
+.constant('urls', {
+    'api' : 'http://cloudenergy.me',
+    'devApi' : '',
+    'debug' : !Boolean(window.cordova)
+})
+.service('$api', ['$resource', 'urls', function ($resource, urls) {
     var fullUrl = function (url, bool) {
-        return (/(^http:\/\/)|(^https:\/\/)|(^\/)/.test(url) ? url : (location.protocol + '//' + location.host + '/api/' + url)) + (bool ? '/:_api_action' : '')
+        var local = /(^http:\/\/)|(^https:\/\/)|(^\/)/.test(url);
+        if (local) {
+            return url;
+        }else{
+            return (!urls.debug ? urls.api : urls.devApi + '/api/' + url) + (bool ? '/:_api_action' : '')
+        }
     };
 
 	var _apis = {
@@ -86,6 +96,6 @@ angular.module('gugecc.services', ['ngResource'])
 	}
 
 	this.valid = function(){
-		return $cookies.get('user') && $cookies.get('token');
+		return (Boolean)($cookies.get('user') && $cookies.get('token'));
 	}
 }]);

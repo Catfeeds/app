@@ -148,6 +148,10 @@ ion-slide .trans-btn{
     opacity: 0;
 }
 
+.item-complex .item-content{
+  padding-right: 16px!important;
+}
+
 /* ============================================================
   COMMON
 ============================================================ */
