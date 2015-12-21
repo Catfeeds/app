@@ -1,13 +1,24 @@
 /* Empty. Add your own CSS if you like */
 
 @font-face {
-    font-family: 'webfont';
-    src: url('//at.alicdn.com/t/cq8g56jlrznkx1or.eot');
+    font-family: 'webfont bold';
+    src: url('http://at.alicdn.com/t/rx6g3o4biuj714i.eot');
     /* IE9*/
-    src: url('//at.alicdn.com/t/cq8g56jlrznkx1or.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('//at.alicdn.com/t/cq8g56jlrznkx1or.woff') format('woff'), /* chrome、firefox */
-    url('//at.alicdn.com/t/cq8g56jlrznkx1or.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('//at.alicdn.com/t/cq8g56jlrznkx1or.svg#思源黑体-极细') format('svg');
+    src: url('http://at.alicdn.com/t/rx6g3o4biuj714i.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('http://at.alicdn.com/t/rx6g3o4biuj714i.woff') format('woff'), /* chrome、firefox */
+    url('http://at.alicdn.com/t/rx6g3o4biuj714i.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('http://at.alicdn.com/t/rx6g3o4biuj714i.svg#思源黑体-极细') format('svg');
+    /* iOS 4.1- */
+}
+
+@font-face {
+    font-family: 'webfont';
+    src: url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.eot');
+    /* IE9*/
+    src: url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.woff') format('woff'), /* chrome、firefox */
+    url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.svg#思源黑体-极细') format('svg');
     /* iOS 4.1- */
 }
 

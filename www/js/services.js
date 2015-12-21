@@ -1,7 +1,7 @@
 angular.module('gugecc.services', ['ngResource'])
 .constant('urls', {
-    'api' : 'http://cloudenergy.me',
-    'devApi' : '',
+    'api' : 'http://127.0.0.1:8005/api/',
+    'devApi' : '/api/',
     'debug' : !Boolean(window.cordova)
 })
 .service('$api', ['$resource', 'urls', function ($resource, urls) {
@@ -10,7 +10,7 @@ angular.module('gugecc.services', ['ngResource'])
         if (local) {
             return url;
         }else{
-            return (!urls.debug ? urls.api : urls.devApi + '/api/' + url) + (bool ? '/:_api_action' : '')
+            return (!urls.debug ? urls.api : urls.devApi) + url + (bool ? '/:_api_action': '')
         }
     };
 
