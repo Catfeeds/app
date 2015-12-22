@@ -6,14 +6,14 @@
             		<h4>账户余额</h4>
             		<b class="assertive">{{account.cash}}<span>元</span></b>
                 </div>
-                <div class="col col-center assertive">充值</div>
+                <a class="col col-center assertive" ui-sref="tabs.charge">充值</a>
 	        </div>
 	        <div class="item row item-icon-left">
 	            <div class="col col-center">
             		<h4>本月已用</h4>
-            		<b class="positive">{{account.consume}}<span>元</span></b>
+            		<b class="positive">{{usage.cost}}<span>元</span></b>
                 </div>
-                <div class="col col-center positive">分析</div>
+                <a class="col col-center positive" ui-sref="tabs.analyze">分析</a>
 	        </div>
 	    </div>
 

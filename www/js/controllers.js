@@ -1,11 +1,19 @@
 angular.module('gugecc.controllers', [])
     .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, $cookies) {
         $scope.account = {};
+        var user = $cookies.get('user');
 
         $api.account.info({id : $cookies.get('user')}, function(res){
             console.log(res);
             $scope.account = res.result.billingAccount;
         })
+
+        $api.business.monthlyusage({
+            time: moment().format('YYYYMM'),
+            account: user
+        }, function(res){
+            $scope.usage = res.result[user];
+        });
     }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
 
     })
@@ -15,7 +23,15 @@ angular.module('gugecc.controllers', [])
             $ionicSideMenuDelegate.toggleLeft();
         };
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout) {
+    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies) {
+        var user = $cookies.get('user');
+        $api.business.monthlyaccountelectricusage({
+            time: moment().format('YYYYMM'),
+            account: user
+        }, function(res){
+            $scope.usage = res.result[user];
+        });
+
         $scope.labels = ["1", "2", "3", "4", "5", "6", "7"];
         $scope.series = ['用水', '空调', '用电'];
         $scope.colours= [{ // default

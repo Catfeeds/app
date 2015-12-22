@@ -21,6 +21,11 @@ angular.module('gugecc.services', ['ngResource'])
 	    }],
         account : ['account', {
             info : { method : 'POST'}
+        }],
+        business : [ 'business', {
+            "monthlyusage" : { method : 'POST'},
+            "monthlyaccountelectricusage" : { method : 'POST'},
+            "monthlysensordetail" : {method: "POST"}
         }]
 	};
 
@@ -80,6 +85,10 @@ angular.module('gugecc.services', ['ngResource'])
 		user : '',
 		token : ''
 	};
+
+    this.get = function(key){
+        return $cookies.get(key);
+    }
 
 	this.up = function(data){
         Object.keys(auth_keys).map(function(item){

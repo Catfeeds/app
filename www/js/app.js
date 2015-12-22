@@ -24,7 +24,7 @@ app.config(function($stateProvider,
                 resolve : {
                     deps : function($ocLazyLoad){
                         return $ocLazyLoad.load([
-                            {'type' : 'js', path: './lib/moment/moment.js'}
+                            'lib/moment/moment.js'
                         ]);
                     }
                 },
@@ -48,7 +48,7 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve : {
-                    deps : function($ocLazyLoad, $injector){
+                    deps : function($ocLazyLoad, $injector, $q){
                         return $ocLazyLoad.load([{
                             serie : true,
                             files: [
@@ -58,16 +58,14 @@ app.config(function($stateProvider,
                                 './lib/angular-chart.js/dist/angular-chart.css',
                                 './lib/angular-chart.js/dist/angular-chart.js'
                             ]}
-                        ]).then(function(){
+                        ]).then(function(chart){
                             var provider = $injector.get("ChartJs");
                             provider.Chart.defaults.StackedBar.barShowStroke = false;
                             provider.Chart.defaults.StackedBar.barValueSpacing = 18;
                             provider.Chart.defaults.StackedBar.showTooltips = false;
                             provider.Chart.defaults.global.colours = [
                                 '#F7464A','#46BFBD', '#FDB45C'
-                            ];
-
-                            console.log('chart', $injector.get("ChartJs"));
+                            ]; 
                         });
                     }
                 }
@@ -151,8 +149,9 @@ app
         };
 
         $scope.changeTab = function(index) {
-            console.log('tab: ', index);
             $ionicTabsDelegate.$getByHandle('tabs').select(index);
+
+            // reload the page
         }
 
         $scope.logout = function(){
@@ -196,7 +195,7 @@ app
                 if(!res.code){
                     // setup cookie
                     cookies.up(res.result);
-                    $state.go('tabs.home');
+                    $state.go('tabs.home', null, {reload: true});
                 }else{
                     alert('登录失败');
                 }

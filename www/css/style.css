@@ -29,6 +29,9 @@ body {
 input{
   color: #666;
 }
+a{
+  text-decoration: none;
+}
 .pull-right {
     float: right;
 }
