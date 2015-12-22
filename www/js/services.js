@@ -98,4 +98,55 @@ angular.module('gugecc.services', ['ngResource'])
 	this.valid = function(){
 		return (Boolean)($cookies.get('user') && $cookies.get('token'));
 	}
+}])
+.provider('encrypt', [function () {
+    this.$get = function(){
+        return function(user, token, data){
+            if(_.isEmpty(data)){
+                return null;
+            }
+
+            var v = moment();
+            var vCode = Hash(v.unix());
+
+            data['v'] = v.unix();
+            data['t'] = token;
+
+            var plainText = PlainText(data, vCode);
+            console.log('PlainText: '+plainText);
+
+            var sign = Hash(plainText);
+            data['sign'] = sign;
+            data['p'] = user;
+            data = _.omit(data, 't');
+
+            return data;
+        }
+    }
+   
+
+    var PlainText = function(data, vCode){
+        var keyArray = [];
+        _.map(data, function(v, k){
+            keyArray.push(k);
+        });
+
+        keyArray.sort();
+
+        var plainText = '';
+        var kvArray = [];
+        _.each(keyArray, function (key) {
+            kvArray.push( key+'='+encodeURI(data[key]) );
+        });
+        plainText = kvArray.toString();
+        plainText = plainText.replace(/,/g, '');
+        plainText = vCode + plainText + vCode;
+
+        return plainText;
+    }
+
+    var Hash = function(v){
+        var hash = hex_sha1(v.toString());
+        return hash;
+    }
 }]);

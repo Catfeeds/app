@@ -7,7 +7,10 @@ var app = angular.module('gugecc', [
     'ngCookies'
 ]);
 
-app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ocLazyLoadProvider) {
+app.config(function($stateProvider, 
+        $urlRouterProvider, 
+        $ionicConfigProvider, 
+        $ocLazyLoadProvider) {
         $ionicConfigProvider.platform.android.tabs.position("bottom");
         $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
@@ -98,7 +101,10 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $o
                 controller: 'AuthCtrl',
                 resolve : {
                     deps : ['$ocLazyLoad', function($ocLazyLoad){
-                        return $ocLazyLoad.load('lib/angular-md5/angular-md5.js');
+                        return $ocLazyLoad.load([
+                            'lib/moment/moment.js',
+                            'lib/angular-md5/angular-md5.js'
+                        ]);
                     }]
                 }
             })
@@ -112,6 +118,14 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $o
 
         $urlRouterProvider.otherwise('/');
     })
+    .run(['urls', '$cookies', 'encrypt', '$http', function (urls, $cookies, encrypt, $http) {
+        if (!urls.debug) {
+            $http.defaults.transformRequest.push(function(data, headerGetter){
+                var obj = encrypt($cookies.get('user'), $cookies.get('token'), data ? JSON.parse(data) : data);
+                return obj ? JSON.stringify(obj) : obj;
+            });
+        };
+    }])
     .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
         // 设置跳转
         var cookies = cookies;
