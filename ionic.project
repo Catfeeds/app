@@ -1,6 +1,6 @@
 {
   "name": "gugecc-app",
-  "app_id": "",
+  "app_id": "53bbd346",
   "proxies": [
     {
       "path": "/api",
