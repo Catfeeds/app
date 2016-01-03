@@ -1,6 +1,6 @@
 angular.module('gugecc.services', ['ngResource'])
 .constant('urls', {
-    'api' : 'http://127.0.0.1:8005/api/',
+    'api' : 'http://42.120.42.45:8085/api/',
     'devApi' : '/api/',
     'debug' : !Boolean(window.cordova)
 })

@@ -13,6 +13,8 @@
     "Chart.js": "~1.0.2",
     "Chart.StackedBar.js": "Regaddi/Chart.StackedBar.js#~1.0.3",
     "angular-chart.js": "~0.8.8",
-    "sha1.min.js": "kazuho/sha1.min.js"
+    "sha1.min.js": "kazuho/sha1.min.js",
+    "angular-resource": "1.4.3",
+    "underscore": "~1.8.3"
   }
 }
