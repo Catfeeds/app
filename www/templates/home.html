@@ -4,7 +4,7 @@
 	        <div class="item row item-icon-left">
 	            <div class="col col-center">
             		<h4>账户余额</h4>
-            		<b class="assertive">{{account.cash}}<span>元</span></b>
+            		<b class="assertive">{{account.cash | number: 2}}<span>元</span></b>
                 </div>
                 <a class="col col-center assertive" ui-sref="tabs.charge">充值</a>
 	        </div>

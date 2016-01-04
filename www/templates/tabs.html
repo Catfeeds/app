@@ -4,7 +4,8 @@
     <ion-side-menu side="left">
         <ion-content has-header="true" class="dash-page">
             <center>
-                <img src="img/header-logo.png" alt="" style="max-width: 100%">
+                <i class="fi">&#xe61f</i>
+                <h4>中泰</h4>
             </center>
             <ion-list>
                 <ion-item ng-click="changeTab(0)" menu-close>
@@ -22,12 +23,22 @@
                     仪表控制
                     <i class="icon ion-chevron-right pull-right"></i>
                 </ion-item>
-                <ion-item ng-click="changeTab(3)" menu-close>
-                    <i class="fi fi-charge"></i>
-                    充值
+                <ion-item href="#">
+                    <i class="fi fi-comment"></i>
+                    通知
                     <i class="icon ion-chevron-right pull-right"></i>
                 </ion-item>
-                <ion-item ui-sref="logout" menu-close="" class="item">
+                <ion-item href="#">
+                    <i class="fi fi-feedback"></i>
+                    反馈
+                    <i class="icon ion-chevron-right pull-right"></i>
+                </ion-item>
+                <ion-item href="#">
+                    <i class="fi fi-setting"></i>
+                    设置
+                    <i class="icon ion-chevron-right pull-right"></i>
+                </ion-item>
+                <ion-item ui-sref="logout" menu-close="" class="item" ui-sref-opts="{reload: true}">
                     <i class="fi fi-exit"></i>
                     退出
                     <i class="icon ion-chevron-right pull-right"></i>

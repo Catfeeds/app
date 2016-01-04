@@ -146,6 +146,30 @@ ion-content.full > .row {
   margin: 10px 0px;
 }
 
+.menu{
+  background-color: #c5e2fb;
+}
+
+.menu .item-complex .item-content{
+  background-color: transparent;
+}
+
+.menu center{
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.menu center i{
+  font-size: 100px;
+  line-height: 125px;
+}
+
+ .menu center h4{
+  color: #fff;
+  margin: 0px;
+  padding-bottom: 10px;
+ }
+
 .button.ng-hide{
   display:none;
 }

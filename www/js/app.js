@@ -32,6 +32,8 @@ app.config(function($stateProvider,
             })
             .state('tabs.home', {
                 url: '/home',
+                cache: false,
+                // todo 加入 resovlve 数据
                 views: {
                     'home-tab': {
                         templateUrl: 'templates/home.html',
@@ -108,8 +110,18 @@ app.config(function($stateProvider,
             })
             .state('logout', {
                 url: '/logout',
-                controller: function($scope, cookies, $state) {
-                    cookies.down();
+                cache: false,
+                resolve : {
+                    deps : function(cookies, $api, $q) {
+                        var defer = $q.defer();
+                        $api.auth.logout(null, function(res){
+                            cookies.down();
+                            defer.resolve();
+                        });
+                        return defer.promise;
+                    }
+                },
+                controller: function($scope, $state, deps) {
                     $state.go('login');
                 }
             });
@@ -143,7 +155,7 @@ app.config(function($stateProvider,
     }]);
 
 app
-    .controller('AppCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate, $api) {
+    .controller('AppCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate, $api, $state) {
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -157,6 +169,7 @@ app
         $scope.logout = function(){
             $api.auth.logout(null, function(res){
                 console.log('logout: ', res);
+                $state.go('login');
             })
         }
     })
