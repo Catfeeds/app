@@ -53,6 +53,10 @@ a{
   margin-bottom: 10px;
 }
 
+.round{
+  border-radius: 50%;
+}
+
 ion-content{
     font-family: 'webfont';
 }
@@ -157,6 +161,7 @@ ion-content.full > .row {
 .menu center{
   background-color: #4a90e2;
   color: #fff;
+  padding-top: 30px;
 }
 
 .menu center i{
@@ -289,7 +294,9 @@ input.cmn-toggle-round-flat:checked + label:after {
 }
 
 .sensors .media .media-left a {
-    padding-left: 10px;
+  padding-left: 10px;
+  display: inline-block;
+  padding: 10px 0px;
 }
 
 
@@ -343,4 +350,34 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .charge .col:nth-child(3n){
   border-right: 1px solid #ddd;
+}
+
+.stackedbar-legend li small{
+  float: right;
+}
+
+.stackedbar-legend li{
+  border-bottom: 1px solid #ddd;
+  border-radius: 0px;
+}
+
+.usage-data{
+  width: 80px;
+  height: 80px;
+  display: block;
+  text-align: center;
+  border: 2px solid #449edd;
+  padding: 10px;
+  box-sizing: content-box;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.usage-data p {
+  color: #449edd;
+  font-size: 20px;
+}
+
+.usage-data small {
+  color: #aaa;
 }

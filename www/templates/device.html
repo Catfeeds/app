@@ -2,22 +2,21 @@
     <ion-content class="padding">
         <div class="panel sensors">
             <div class="panel-heading text-center bb">
-            	<h3>
+            	<h4>
             		我的仪表
 	                <a href="#" class="pull-right">
 	                    <i class="icon ion-plus-round"></i>
 	                </a>
-            	</h3>
+            	</h4>
             </div>
-            <div class="media bb" ng-repeat="row in [3, 2, 1]">
-                <div class="media-left">
+            <div class="media bb" ng-repeat="row in devices">
+                <div class="media-left media-middle">
                     <a href="#">
-                        <img class="media-object" ng-src="img/energy/energy-c-{{row}}.png" alt="...">
+                        <img class="media-object" ng-src="img/energy/energy-c-{{$index%3+1}}.png" alt="...">
                     </a>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading">D-避风塘-{{row}}</h4>
-                    电脑 打印机
+                <div class="media-body media-middle">
+                    <h5 class="media-heading">{{row.title}}</h5>
                 </div>
                 <div class="media-right">
                     <div class="switch">

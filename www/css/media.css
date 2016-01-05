@@ -27,7 +27,7 @@
 .media-right,
 .media-body {
   display: table-cell;
-  vertical-align: middle;
+  vertical-align: top;
 }
 .media-middle {
   vertical-align: middle;

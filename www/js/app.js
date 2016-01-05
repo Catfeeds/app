@@ -26,18 +26,28 @@ app.config(function($stateProvider,
                         return $ocLazyLoad.load([
                             'lib/moment/moment.js'
                         ]);
+                    },
+                    'Me' : function($api, $q, $cookies){
+                        var defer = $q.defer();
+                        $api.account.info({id : $cookies.get('user')}, function(res){
+                            return defer.resolve(res.result);
+                        });
+                        return defer.promise;
                     }
                 },
                 abstract: true
             })
             .state('tabs.home', {
                 url: '/home',
-                cache: false,
-                // todo 加入 resovlve 数据
                 views: {
                     'home-tab': {
                         templateUrl: 'templates/home.html',
                         controller: 'HomeTabCtrl'
+                    }
+                },
+                resolve: {
+                    'Account' : function(Me){
+                        return Me;
                     }
                 }
             })
@@ -76,7 +86,7 @@ app.config(function($stateProvider,
                 url: '/device',
                 views: {
                     'device-tab': {
-                        controller: 'AboutCtrl',
+                        controller: 'Device',
                         templateUrl: 'templates/device.html'
                     }
                 }
@@ -192,7 +202,7 @@ app
             $scope.slideIndex = index;
         };
     })
-    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', function ($scope, $state, $api, md5, cookies) {
+    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', '$ionicHistory', function ($scope, $state, $api, md5, cookies, $ionicHistory) {
         $scope.user = {};
 
         $scope.login = function(){
@@ -200,15 +210,13 @@ app
                 user: $scope.user.user,
                 passwd: md5.createHash($scope.user.password).toUpperCase()
             }
-                
-            // disable backbutton
-            console.log($api, $scope.user);
             // $state.go('tabs.home');
             $api.auth.login(credential, function(res){
                 if(!res.code){
                     // setup cookie
                     cookies.up(res.result);
-                    $state.go('tabs.home', null, {reload: true});
+                    $ionicHistory.clearCache()
+                    $state.go('tabs.home', {}, {reload: true});
                 }else{
                     alert('登录失败');
                 }

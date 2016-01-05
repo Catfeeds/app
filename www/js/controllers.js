@@ -1,12 +1,8 @@
 angular.module('gugecc.controllers', [])
-    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, $cookies) {
-        $scope.account = {};
-        var user = $cookies.get('user');
+    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, $cookies, Account) {
+        $scope.account = Account.billingAccount;
 
-        $api.account.info({id : $cookies.get('user')}, function(res){
-            console.log(res);
-            $scope.account = res.result.billingAccount;
-        })
+        var user = $cookies.get('user');
 
         $api.business.monthlyusage({
             time: moment().format('YYYYMM'),
@@ -17,7 +13,6 @@ angular.module('gugecc.controllers', [])
     }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
 
     })
-    .controller('RootPageController', function($scope, $ionicSideMenuDelegate) {})
     .controller('NavController', function($scope, $ionicSideMenuDelegate) {
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
@@ -47,10 +42,14 @@ angular.module('gugecc.controllers', [])
             [18, 28, 4, 9, 16, 27, 20]
         ];
 
+        $scope.options = {
+            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><b><%=datasets[i].label%></b><small><%=datasets[i].bars.reduce(function(total, now){return total+now.value}, 0)%><%}%>元</small></li><%}%></ul>"
+        }
+
         $scope.changeview = function(view){
             $scope.show = view;
             $scope.series = ['用水', '空调', '用电', view];
-            $scope.data = $scope.data.reverse();
+            $scope.data = _.shuffle($scope.data);
         }
     })
     .controller('Charge', function($scope, $ionicSideMenuDelegate) {
@@ -60,5 +59,16 @@ angular.module('gugecc.controllers', [])
             gateway: 'wx_pub',
             mobile: ''
         };
+    })
+    .controller('Device', ['$scope', '$api', '$cookies', 'Me', function($scope, $api, $cookies, Me){
+        var project = Me.resource.project[0];
 
-    });
+        $api.sensor.info({
+            project: project
+        }, function(res){
+            if (!res.code) {
+                $scope.devices = res.result.detail;
+            };
+            console.log($scope.devices);
+        })
+    }])

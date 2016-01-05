@@ -26,6 +26,9 @@ angular.module('gugecc.services', ['ngResource'])
             "monthlyusage" : { method : 'POST'},
             "monthlyaccountelectricusage" : { method : 'POST'},
             "monthlysensordetail" : {method: "POST"}
+        }],
+        sensor : [ 'sensor', {
+            "info" : { method : 'POST'}
         }]
 	};
 
