@@ -152,6 +152,9 @@ app.config(function($stateProvider,
         $rootScope.$on('$stateChangeStart',  function(event, 
             toState, toParams, fromState, fromParams){ 
             var inited = localStorage.inited;
+            if (!inited && toState.name == 'intro') {
+                return;
+            }
             if ((inited && toState.name == 'intro') || (toState.name != 'login' && !cookies.valid()) ) {
                 event.preventDefault(); 
                 $state.go('login');

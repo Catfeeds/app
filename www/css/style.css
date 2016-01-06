@@ -59,6 +59,7 @@ a{
 
 ion-content{
     font-family: 'webfont';
+    /*background-color: aliceblue;*/
 }
 
 ion-content.full >{
@@ -278,11 +279,11 @@ input.cmn-toggle-round-flat + label:after {
   transition: margin 0.4s, background 0.4s;
 }
 input.cmn-toggle-round-flat:checked + label {
-  background-color: #4a90e2;
+  background-color: #3ed84c;
 }
 input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 20px;
-  background-color: #4a90e2;
+  background-color: #3ed84c;
 }
 
 .sensors .media .media-left img {

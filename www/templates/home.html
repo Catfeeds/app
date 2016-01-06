@@ -1,27 +1,45 @@
-<ion-view title="首页">
-	<ion-content class="padding">
-	    <div class="list card text-center vertical-middle">
-	        <div class="item row item-icon-left">
-	            <div class="col col-center">
-            		<h4>账户余额</h4>
-            		<b class="assertive">{{account.cash | number: 2}}<span>元</span></b>
+<ion-view title="古鸽云能源">
+    <ion-content class="padding">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="false">
+            <ion-slide ng-repeat="item in [1,2,3]">
+                <div class="box blue">
+                    <img ng-src="img/ad/ad_{{item}}.png" alt="">
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+        <div class="list card text-center vertical-middle">
+            <div class="item row item-icon-left">
+                <div class="col col-center">
+                    <h4>账户余额</h4>
+                    <b class="assertive">{{account.cash | number: 2}}
+                        <span>元</span>
+                    </b>
                 </div>
                 <a class="col col-center assertive" ui-sref="tabs.charge">充值</a>
-	        </div>
-	        <div class="item row item-icon-left">
-	            <div class="col col-center">
-            		<h4>本月已用</h4>
-            		<b class="positive">{{usage.cost}}<span>元</span></b>
+            </div>
+            <div class="item row item-icon-left">
+                <div class="col col-center">
+                    <h4>本月已用</h4>
+                    <b class="positive">{{usage.cost}}
+                        <span>元</span>
+                    </b>
                 </div>
                 <a class="col col-center positive" ui-sref="tabs.analyze">分析</a>
-	        </div>
-	    </div>
-
+            </div>
+        </div>
         <ion-list>
-			<ion-item>今日能耗<span class="item-note">12.4元</span></ion-item>
-			<ion-item>今日电费<span class="item-note">12.2元</span></ion-item>
-			<ion-item>平均能耗<span class="item-note">15.4元</span></ion-item>
-			<ion-item>今日排名<span class="item-note">6</span></ion-item>
+            <ion-item>今日能耗
+                <span class="item-note">12.4元</span>
+            </ion-item>
+            <ion-item>今日电费
+                <span class="item-note">12.2元</span>
+            </ion-item>
+            <ion-item>平均能耗
+                <span class="item-note">15.4元</span>
+            </ion-item>
+            <ion-item>今日排名
+                <span class="item-note">6</span>
+            </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
