@@ -19,13 +19,14 @@ angular.module('gugecc.services', ['ngResource'])
 	        login: { method: 'POST' },
 	        logout: { method: 'POST' }
 	    }],
-        account : ['account', {
-            info : { method : 'POST'}
+        account : ['business', {
+            userinfo : { method : 'POST'}
         }],
         business : [ 'business', {
             "monthlyusage" : { method : 'POST'},
             "monthlyaccountelectricusage" : { method : 'POST'},
-            "monthlysensordetail" : {method: "POST"}
+            "monthlysensordetail" : {method: "POST"},
+            "energyconsumptioncost" : {method: 'POST'}
         }],
         sensor : [ 'sensor', {
             "info" : { method : 'POST'}
@@ -161,4 +162,30 @@ angular.module('gugecc.services', ['ngResource'])
         var hash = hex_sha1(v.toString());
         return hash;
     }
+}]).factory('utils', [function () {
+    return {
+        bar : function(data, type){
+            var res = {
+                series : [],
+                labels: [],
+                data: [],
+                total : 0
+            },
+            method = type == 'DAY' ? 'hour' : 'date';
+
+            _.each(data, function(v, k){
+                _.each(v, function(data, label){
+                    var index = 0, val = parseFloat(data.toFixed(3));
+                    res.series.indexOf(label) == -1 ? res.series.push(label) : index = res.series.indexOf(label);
+                    !res.data[index] ? res.data[index] = [] : 1;
+                    res.data[index].push(val);
+                    res.total += val;
+                });
+                res.labels.push(moment(k/1000, 'X')[method]());
+
+            }.bind(this))
+
+            return res;
+        }
+    };
 }]);

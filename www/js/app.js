@@ -29,7 +29,7 @@ app.config(function($stateProvider,
                     },
                     'Me' : function($api, $q, $cookies){
                         var defer = $q.defer();
-                        $api.account.info({id : $cookies.get('user')}, function(res){
+                        $api.account.userinfo({uid : $cookies.get('user')}, function(res){
                             return defer.resolve(res.result);
                         });
                         return defer.promise;
@@ -64,20 +64,18 @@ app.config(function($stateProvider,
                         return $ocLazyLoad.load([{
                             serie : true,
                             files: [
-                                './js/directives.js',
                                 './lib/Chart.js/Chart.js',
                                 './lib/Chart.StackedBar.js/src/Chart.StackedBar.js',
                                 './lib/angular-chart.js/dist/angular-chart.css',
-                                './lib/angular-chart.js/dist/angular-chart.js'
+                                './lib/angular-chart.js/dist/angular-chart.js',
+                                './js/directives.js'
                             ]}
                         ]).then(function(chart){
                             var provider = $injector.get("ChartJs");
                             provider.Chart.defaults.StackedBar.barShowStroke = false;
-                            provider.Chart.defaults.StackedBar.barValueSpacing = 18;
+                            provider.Chart.defaults.StackedBar.barValueSpacing = 15;
                             provider.Chart.defaults.StackedBar.showTooltips = false;
-                            provider.Chart.defaults.global.colours = [
-                                '#F7464A','#46BFBD', '#FDB45C'
-                            ]; 
+                           
                         });
                     }
                 }

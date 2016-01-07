@@ -1,10 +1,10 @@
 <ion-view title="能耗分析">
 	<div class="tabs-striped tabs-top tabs-color-positive transparent">
-        <div class="tabs" ng-init="show='day'">
-            <a class="tab-item" href="#" ng-class="{active : show == 'day'}" ng-click="changeview('day')">
+        <div class="tabs">
+            <a class="tab-item" href="#" ng-class="{active : show == 'DAY'}" ng-click="changeview('DAY')">
                 日
             </a>
-            <a class="tab-item" href="#" ng-class="{active : show == 'month'}" ng-click="changeview('month')">
+            <a class="tab-item" href="#" ng-class="{active : show == 'MONTH'}" ng-click="changeview('MONTH')">
                 月
             </a>
         </div>
@@ -12,18 +12,19 @@
     <ion-content class="padding has-tabs-top">
         <canvas id="stacked-bar" 
         	class="chart chart-stacked-bar" 
-        	chart-data="data" 
-        	chart-labels="labels"
+        	chart-data="usage.data" 
+        	chart-labels="usage.labels"
         	chart-colours="colours"
-        	chart-series="series"
+        	chart-series="usage.series"
             chart-options="options"
         	chart-legend="true">
 		</canvas>
 
-        <div class="usage-data round">
-            <h6>本月已使用</h6>
-            <p>385.5</p>
+        <a class="usage-data round">
+            <h6 ng-show="show=='MONTH'">本月已使用</h6>
+            <h6 ng-show="show=='DAY'">今日已使用</h6>
+            <p>{{usage.total || 0}}</p>
             <small>元</small>
-        </div>
+        </a>
     </ion-content>
 </ion-view>
