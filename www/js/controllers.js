@@ -18,17 +18,26 @@ angular.module('gugecc.controllers', [])
             $ionicSideMenuDelegate.toggleLeft();
         };
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies, Me, utils) {
+    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies, Me, utils, $stateParams) {
         var user = $cookies.get('user');
-        $scope.show = 'DAY';
+        $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
+        $scope.time = moment().format('YYYYMMDD');
 
-        $scope.getData = function(cb){
+        $scope.$on('create', function (event, chart) {
+          $scope.chart = chart;
+        });
+
+        $scope.getData = function(type, cb){
             $api.business.energyconsumptioncost({
-                time: moment().format('YYYYMMDD'),
-                project: Me.project,
-                type: $scope.show
+                'time': $scope.time,
+                'project': Me.project,
+                'type': type
             }, function(res){
                 $scope.usage = utils.bar(res.result[Me.project].detail, $scope.show);
+                $scope.list = res.result[Me.project].detail;
+                if (cb) {
+                    cb();
+                };
             });
         }
 
@@ -43,14 +52,19 @@ angular.module('gugecc.controllers', [])
             },{ // default
               "fillColor": '#FDB45C'
             }];
-
+        $scope.showBar = function(bar, event){
+            console.log(bar, $scope.chart);
+        }
         $scope.changeview = function(view){
             $scope.show = view;
-
-            $scope.getData();
+            $scope.list = [];
+            $scope.getData(view);
         }
-        $scope.getData();
+        $scope.getData($scope.show);
     })
+    .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state', function ($scope, $api, Me, $stateParams, $state) {
+        
+    }])
     .controller('Charge', function($scope, $ionicSideMenuDelegate) {
         $scope.amountSelects = [10, 20, 50, 100, 200, 5000];
         $scope.charge = {

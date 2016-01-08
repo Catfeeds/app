@@ -26,7 +26,8 @@ angular.module('gugecc.services', ['ngResource'])
             "monthlyusage" : { method : 'POST'},
             "monthlyaccountelectricusage" : { method : 'POST'},
             "monthlysensordetail" : {method: "POST"},
-            "energyconsumptioncost" : {method: 'POST'}
+            "energyconsumptioncost" : {method: 'POST'},
+            "energytimeline" : {method: 'POST'}
         }],
         sensor : [ 'sensor', {
             "info" : { method : 'POST'}
@@ -184,7 +185,9 @@ angular.module('gugecc.services', ['ngResource'])
                 res.labels.push(moment(k/1000, 'X')[method]());
 
             }.bind(this))
-
+            res.total = parseFloat(res.total.toFixed(3));
+            console.log(res);
+            
             return res;
         }
     };

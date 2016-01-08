@@ -17,13 +17,21 @@
         	chart-colours="colours"
         	chart-series="usage.series"
             chart-options="options"
-        	chart-legend="true">
+            chart-click="showBar">
 		</canvas>
-
-        <a class="usage-data round">
+        <chart-legend>
+            <ul class="stackedbar-legend">
+                <li ng-repeat="energy in chart.data.datasets">
+                    <span style="background-color:{{energy.fillColor}}"></span>
+                    <b>{{energy.label}}</b>
+                    <small>{{energy.data | sum | number: 2}}元</small>
+                </li>
+            </ul>
+        </chart-legend>
+        <a class="usage-data round" ui-sref="tabs.analyze_detail({'time': time, 'type': show})">
             <h6 ng-show="show=='MONTH'">本月已使用</h6>
             <h6 ng-show="show=='DAY'">今日已使用</h6>
-            <p>{{usage.total || 0}}</p>
+            <p>{{usage.total || 0 | number: 2}}</p>
             <small>元</small>
         </a>
     </ion-content>

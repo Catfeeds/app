@@ -63,6 +63,21 @@ a {
 	border-radius: 50%;
 }
 
+.table{
+	width: 100%;
+	font-family: 'webfont';
+}
+.table th{
+	padding: 10px 0px;
+	color: #666;
+}
+.table td{
+	text-align: center;
+	border-top: 1px solid #ddd;
+	padding: 10px 0px;
+	color: #444;
+}
+
 ion-content {
 	font-family: 'webfont';
 	/*background-color: aliceblue;*/
@@ -179,7 +194,7 @@ ion-content.full > .row {
 .menu center {
 	background-color: #4a90e2;
 	color: #fff;
-	padding-top: 30px;
+	padding-top: 22px;
 }
 
 .menu center i {

@@ -2,6 +2,7 @@ var app = angular.module('gugecc', [
     'ionic', 
     'ui.router',
     'gugecc.services',
+    'gugecc.filters',
     'gugecc.controllers',
     'oc.lazyLoad',
     'ngCookies'
@@ -77,6 +78,15 @@ app.config(function($stateProvider,
                             provider.Chart.defaults.StackedBar.showTooltips = false;
                            
                         });
+                    }
+                }
+            })
+            .state('tabs.analyze_detail', {
+                url: '/analyze_detail/:type/',
+                views: {
+                    'analyze-tab': {
+                         controller: 'Analyze',
+                        templateUrl: 'templates/analyze/detail.html'
                     }
                 }
             })
@@ -166,15 +176,18 @@ app.config(function($stateProvider,
     }]);
 
 app
-    .controller('AppCtrl', function($scope, $ionicSideMenuDelegate, $ionicTabsDelegate, $api, $state) {
+    .controller('AppCtrl', function($scope, 
+        $ionicSideMenuDelegate, 
+        $ionicTabsDelegate, 
+        $api, 
+        $state) {
+
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
 
         $scope.changeTab = function(index) {
             $ionicTabsDelegate.$getByHandle('tabs').select(index);
-
-            // reload the page
         }
 
         $scope.logout = function(){
