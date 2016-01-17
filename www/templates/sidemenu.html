@@ -1,7 +1,3 @@
-<ion-nav-bar>
-  <ion-nav-back-button>
-  </ion-nav-back-button>
-</ion-nav-bar>
 <ion-view view-title="">
     <ion-side-menus>
         <!-- Left menu -->
@@ -27,7 +23,7 @@
                         仪表控制
                         <i class="icon ion-chevron-right pull-right"></i>
                     </ion-item>
-                    <ion-item ng-click="go('tabs.notices')">
+                    <ion-item ng-click="go('notices')">
                         <i class="fi fi-comment"></i>
                         通知
                         <i class="icon ion-chevron-right pull-right"></i>
@@ -51,7 +47,7 @@
             </ion-content>
         </ion-side-menu>
         <ion-side-menu-content edge-drag-threshold="60">
-            <ion-nav-view></ion-nav-view>
+            <ion-nav-view name="tabs"></ion-nav-view>
         </ion-side-menu-content>
     </ion-side-menus>
 </ion-view>

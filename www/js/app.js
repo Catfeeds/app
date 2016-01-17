@@ -22,8 +22,12 @@ app.config(function($stateProvider,
         $stateProvider
             .state('tabs', {
                 url: '/m',
-                controller: 'AppCtrl',
-                templateUrl: 'templates/sidemenu.html',
+                views: {
+                    "root" : {
+                        controller: 'AppCtrl',
+                        templateUrl: 'templates/sidemenu.html'
+                    }
+                },
                 resolve : {
                     deps : function($ocLazyLoad){
                         return $ocLazyLoad.load([
@@ -42,7 +46,11 @@ app.config(function($stateProvider,
             })
             .state('tabs.tab', {
                 abstract: true,
-                templateUrl: 'templates/tabs.html'
+                views: {
+                    'tabs' : {
+                        templateUrl: 'templates/tabs.html'
+                    }
+                }
             })
             .state('tabs.tab.home', {
                 url: '/home',
@@ -124,9 +132,29 @@ app.config(function($stateProvider,
                 abstract: true,
                 template: '<ion-nav-view></ion-nav-view>test'
             })
-            .state('tabs.notices', {
+            .state('notices', {
                 'url': '/notices',
-                templateUrl: 'templates/notices.html'
+                'views': {
+                    'root' : {
+                        templateUrl: 'templates/notices.html'
+                    }
+                }
+            })
+            .state('feedback', {
+                'url': '/feedback',
+                'views': {
+                    'root' : {
+                        templateUrl: 'templates/feedback.html'
+                    }
+                }
+            })
+            .state('settings', {
+                'url': '/settings',
+                'views': {
+                    'root' : {
+                        templateUrl: 'templates/settings.html'
+                    }
+                }
             })
             .state('login', {
                 url: '/login',
