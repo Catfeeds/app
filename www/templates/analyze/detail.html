@@ -1,5 +1,9 @@
 <ion-view title="能耗分析">
-	<div class="tabs-striped tabs-top tabs-color-positive transparent">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear">
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <div class="tabs-striped tabs-top tabs-color-positive transparent">
         <div class="tabs">
             <a class="tab-item" href="#" ng-class="{active : show == 'DAY'}" ng-click="changeview('DAY')">
                 日
@@ -9,21 +13,21 @@
             </a>
         </div>
     </div>
-	<ion-content class="padding has-tabs-top">
-		<table class="table">
-			<thead>
-				<tr>
-					<th ng-show="show=='DAY'">时间</th>
-					<th ng-show="show=='MONTH'">日期</th>
-					<th>能耗(元)</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="(time, row) in list">
-					<td>{{time | unix : show}}</td>
-					<td>{{row | sum | number: 2}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</ion-content>
+    <ion-content class="padding has-tabs-top">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th ng-show="show=='DAY'">时间</th>
+                    <th ng-show="show=='MONTH'">日期</th>
+                    <th>能耗(元)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(time, row) in list">
+                    <td>{{time | unix : show}}</td>
+                    <td>{{row | sum | number: 2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </ion-content>
 </ion-view>

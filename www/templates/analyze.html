@@ -28,7 +28,7 @@
                 </li>
             </ul>
         </chart-legend>
-        <a class="usage-data round" ui-sref="tabs.analyze_detail({'time': time, 'type': show})">
+        <a class="usage-data round" ui-sref="tabs.tab.analyze_detail({'time': time, 'type': show})">
             <h6 ng-show="show=='MONTH'">本月已使用</h6>
             <h6 ng-show="show=='DAY'">今日已使用</h6>
             <p>{{usage.total || 0 | number: 2}}</p>

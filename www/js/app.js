@@ -15,6 +15,10 @@ app.config(function($stateProvider,
         $ionicConfigProvider.platform.android.tabs.position("bottom");
         $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
+        /* 隐藏文字 */
+        $ionicConfigProvider.backButton.text('');
+        $ionicConfigProvider.backButton.previousTitleText('');
+
         $stateProvider
             .state('tabs', {
                 url: '/m',
