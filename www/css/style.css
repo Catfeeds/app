@@ -407,6 +407,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 .stackedbar-legend li {
 	border-bottom: 1px solid #ddd;
 	border-radius: 0px;
+	margin-left: 0px;
 }
 
 .usage-data {

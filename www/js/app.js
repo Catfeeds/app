@@ -17,11 +17,9 @@ app.config(function($stateProvider,
 
         $stateProvider
             .state('tabs', {
-                url: '/app',
+                url: '/m',
                 controller: 'AppCtrl',
-                templateUrl: function() {
-                    return 'templates/tabs.html';
-                },
+                templateUrl: 'templates/sidemenu.html',
                 resolve : {
                     deps : function($ocLazyLoad){
                         return $ocLazyLoad.load([
@@ -38,7 +36,11 @@ app.config(function($stateProvider,
                 },
                 abstract: true
             })
-            .state('tabs.home', {
+            .state('tabs.tab', {
+                abstract: true,
+                templateUrl: 'templates/tabs.html'
+            })
+            .state('tabs.tab.home', {
                 url: '/home',
                 views: {
                     'home-tab': {
@@ -52,7 +54,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.analyze', {
+            .state('tabs.tab.analyze', {
                 url: '/analyze',
                 views: {
                     'analyze-tab': {
@@ -81,7 +83,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.analyze_detail', {
+            .state('tabs.tab.analyze_detail', {
                 url: '/analyze_detail/:type/',
                 views: {
                     'analyze-tab': {
@@ -90,7 +92,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.device', {
+            .state('tabs.tab.device', {
                 url: '/device',
                 views: {
                     'device-tab': {
@@ -99,7 +101,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.charge', {
+            .state('tabs.tab.charge', {
                 url: '/charge',
                 views: {
                     'charge-tab': {
@@ -112,6 +114,15 @@ app.config(function($stateProvider,
                 url: '/',
                 templateUrl: 'templates/intro.html',
                 controller: 'IntroCtrl'
+            })
+            .state('side', {
+                url: '/side',
+                abstract: true,
+                template: '<ion-nav-view></ion-nav-view>test'
+            })
+            .state('tabs.notices', {
+                'url': '/notices',
+                templateUrl: 'templates/notices.html'
             })
             .state('login', {
                 url: '/login',
@@ -170,7 +181,7 @@ app.config(function($stateProvider,
 
             if (cookies.valid() && toState.name == 'login') {
                 event.preventDefault();
-                $state.go('tabs.home');
+                $state.go('tabs.tab.home');
             };
         })
     }]);
@@ -192,9 +203,13 @@ app
 
         $scope.logout = function(){
             $api.auth.logout(null, function(res){
-                console.log('logout: ', res);
                 $state.go('login');
             })
+        }
+
+        $scope.go = function(state){
+            $state.go(state);
+            $ionicSideMenuDelegate.toggleLeft();
         }
     })
     .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, cookies) {
@@ -224,7 +239,6 @@ app
                 user: $scope.user.user,
                 passwd: md5.createHash($scope.user.password).toUpperCase()
             }
-            // $state.go('tabs.home');
             $api.auth.login(credential, function(res){
                 if(!res.code){
                     // setup cookie
@@ -234,7 +248,6 @@ app
                 }else{
                     alert('登录失败');
                 }
-                console.log('res: ', res);
             });
         }
     }]);
