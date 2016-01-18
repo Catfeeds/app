@@ -35,6 +35,11 @@ a {
 	text-decoration: none;
 }
 
+a:visited{
+	color: #0067CA;
+	text-decoration: none;
+}
+
 .pull-right {
 	float: right;
 }

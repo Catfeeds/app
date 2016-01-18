@@ -88,7 +88,7 @@ app.config(function($stateProvider,
                         ]).then(function(chart){
                             var provider = $injector.get("ChartJs");
                             provider.Chart.defaults.StackedBar.barShowStroke = false;
-                            provider.Chart.defaults.StackedBar.barValueSpacing = 15;
+                            // provider.Chart.defaults.StackedBar.barValueSpacing = 15;
                             provider.Chart.defaults.StackedBar.showTooltips = false;
                            
                         });
@@ -119,6 +119,14 @@ app.config(function($stateProvider,
                     'charge-tab': {
                         controller: 'Charge',
                         templateUrl: 'templates/charge.html'
+                    }
+                }
+            })
+            .state('tabs.tab.logs', {
+                url: '/log',
+                views: {
+                    'charge-tab': {
+                        templateUrl: 'templates/charge/logs.html'
                     }
                 }
             })

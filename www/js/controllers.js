@@ -65,7 +65,9 @@ angular.module('gugecc.controllers', [])
     .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state', function ($scope, $api, Me, $stateParams, $state) {
         
     }])
-    .controller('Charge', function($scope, $ionicSideMenuDelegate) {
+    .controller('Charge', function($scope, $ionicSideMenuDelegate, Me) {
+        $scope.me = Me;
+        console.log('me:', $scope.me);
         $scope.amountSelects = [10, 20, 50, 100, 200, 5000];
         $scope.charge = {
             amount : 10,
