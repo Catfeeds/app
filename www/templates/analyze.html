@@ -23,7 +23,7 @@
             <ul class="stackedbar-legend">
                 <li ng-repeat="energy in chart.data.datasets">
                     <span style="background-color:{{energy.fillColor}}"></span>
-                    <b>{{energy.label}}</b>
+                    <b>{{energy.label | energy}}</b>
                     <small>{{energy.data | sum | number: 2}}元</small>
                 </li>
             </ul>
