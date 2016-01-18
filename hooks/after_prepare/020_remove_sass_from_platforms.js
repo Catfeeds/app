@@ -23,6 +23,8 @@ var deleteFolderRecursive = function(removePath) {
 
 var iosPlatformsDir = path.resolve(__dirname, '../../platforms/ios/www/lib/ionic/scss');
 var androidPlatformsDir = path.resolve(__dirname, '../../platforms/android/assets/www/lib/ionic/scss');
+var pingPlatformsDir = path.resolve(__dirname, '../../platforms/ios/www/lib/pingpp-html5/example-webview');
 
 deleteFolderRecursive(iosPlatformsDir);
 deleteFolderRecursive(androidPlatformsDir);
+deleteFolderRecursive(pingPlatformsDir);

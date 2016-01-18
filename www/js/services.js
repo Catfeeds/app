@@ -31,6 +31,9 @@ angular.module('gugecc.services', ['ngResource'])
         }],
         sensor : [ 'sensor', {
             "info" : { method : 'POST'}
+        }],
+        log: ['log', {
+            "charge" : {method: 'POST'}
         }]
 	};
 

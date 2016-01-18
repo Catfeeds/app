@@ -2,9 +2,10 @@
     <ion-content class="padding charge">
         <div class="list list-inset">
             <label class="item item-input">
-                <input type="text" placeholder="商户帐号">
+                <span class="input-label">商户帐号</span>
+                <input type="text" placeholder="" value="{{me.uid}}" disabled>
             </label>
-            <p class="padding-vertical">当前余额: {{me.cash |number: 2}} 元 <a ui-sref="tabs.tab.logs" class="pull-right">余额记录</a></p>
+            <p class="padding-top">当前余额: {{me.cash |number: 2}} 元 <a ui-sref="tabs.tab.logs" class="pull-right">余额记录</a></p>
         </div>
         <div class="row text-center bt">
             <div class="col col-33" ng-repeat="row in amountSelects" ng-class="{'positive-bg light': charge.amount == row}" ng-click="charge.amount=row">{{row}} 元</div>
@@ -13,7 +14,7 @@
             <a class="button" href="" ng-click="charge.gateway='wx_pub'" ng-class="{'positive-bg light' : charge.gateway=='wx_pub'}">微信支付</a>
             <a class="button" href="" ng-click="charge.gateway='alipya_wap'" ng-class="{'positive-bg light' : charge.gateway=='alipya_wap'}">支付宝</a>
         </div>
-
+        <p>充值金额: {{charge.amount}} 元</p>
         <button class="button button-block button-default assertive">
             <span class="">立即充值</span>
         </button>

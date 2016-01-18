@@ -126,19 +126,19 @@ app.config(function($stateProvider,
                 url: '/log',
                 views: {
                     'charge-tab': {
+                        controller: 'LogCtrl',
                         templateUrl: 'templates/charge/logs.html'
                     }
                 }
             })
             .state('intro', {
                 url: '/',
-                templateUrl: 'templates/intro.html',
-                controller: 'IntroCtrl'
-            })
-            .state('side', {
-                url: '/side',
-                abstract: true,
-                template: '<ion-nav-view></ion-nav-view>test'
+                views: {
+                    'root' : {
+                        templateUrl: 'templates/intro.html',
+                        controller: 'IntroCtrl'
+                    }
+                }
             })
             .state('notices', {
                 'url': '/notices',
@@ -166,8 +166,12 @@ app.config(function($stateProvider,
             })
             .state('login', {
                 url: '/login',
-                templateUrl: 'templates/login.html',
-                controller: 'AuthCtrl',
+                views: {
+                    'root' : {
+                        templateUrl: 'templates/login.html',
+                        controller: 'AuthCtrl'
+                    }
+                },
                 resolve : {
                     deps : ['$ocLazyLoad', function($ocLazyLoad){
                         return $ocLazyLoad.load([
@@ -260,7 +264,7 @@ app
             // disable backbutton
             
             if (cookies.valid()) {
-                $state.go('tabs.home');
+                $state.go('tabs.tab.home');
             }else{
                 $state.go('login');
             };
@@ -284,7 +288,7 @@ app
                     // setup cookie
                     cookies.up(res.result);
                     $ionicHistory.clearCache()
-                    $state.go('tabs.home', {}, {reload: true});
+                    $state.go('tabs.tab.home', {}, {reload: true});
                 }else{
                     alert('登录失败');
                 }

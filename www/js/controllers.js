@@ -87,3 +87,12 @@ angular.module('gugecc.controllers', [])
             console.log($scope.devices);
         })
     }])
+    .controller('LogCtrl', ['$scope', function ($scope) {
+        $scope.tab = 'charge';
+
+        $scope.getLogs = function(tab){
+            tab ? $scope.tab = tab : 1;
+
+
+        }
+    }])
