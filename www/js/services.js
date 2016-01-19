@@ -189,8 +189,6 @@ angular.module('gugecc.services', ['ngResource'])
 
             }.bind(this))
             res.total = parseFloat(res.total.toFixed(3));
-            console.log(res);
-            
             return res;
         }
     };

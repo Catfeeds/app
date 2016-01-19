@@ -4,12 +4,6 @@ angular.module('gugecc.controllers', [])
 
         var user = $cookies.get('user');
 
-        $api.business.monthlyusage({
-            time: moment().format('YYYYMM'),
-            account: user
-        }, function(res){
-            $scope.usage = res.result[user];
-        });
     }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
 
     })
@@ -21,7 +15,7 @@ angular.module('gugecc.controllers', [])
     .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies, Me, utils, $stateParams) {
         var user = $cookies.get('user');
         $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
-        $scope.time = '20151201'; //moment().format('YYYYMMDD');
+        $scope.time = moment().format('YYYYMMDD');
 
         $scope.$on('create', function (event, chart) {
           $scope.chart = chart;

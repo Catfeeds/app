@@ -83,6 +83,13 @@ a:visited{
 	color: #444;
 }
 
+.spinner svg {
+  width: 34px;
+  height: 34px;
+  stroke: #fff;
+  fill: #fff;
+}
+
 ion-content {
 	font-family: 'webfont';
 	/*background-color: aliceblue;*/

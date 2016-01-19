@@ -1,5 +1,5 @@
 var app = angular.module('gugecc', [
-    'ionic', 
+    'ionic',
     'ui.router',
     'gugecc.services',
     'gugecc.filters',
@@ -8,9 +8,9 @@ var app = angular.module('gugecc', [
     'ngCookies'
 ]);
 
-app.config(function($stateProvider, 
-        $urlRouterProvider, 
-        $ionicConfigProvider, 
+app.config(function($stateProvider,
+        $urlRouterProvider,
+        $ionicConfigProvider,
         $ocLazyLoadProvider) {
         $ionicConfigProvider.platform.android.tabs.position("bottom");
         $ionicConfigProvider.platform.android.navBar.alignTitle('center');
@@ -23,23 +23,16 @@ app.config(function($stateProvider,
             .state('tabs', {
                 url: '/m',
                 views: {
-                    "root" : {
+                    "root": {
                         controller: 'AppCtrl',
                         templateUrl: 'templates/sidemenu.html'
                     }
                 },
-                resolve : {
-                    deps : function($ocLazyLoad){
+                resolve: {
+                    deps: function($ocLazyLoad) {
                         return $ocLazyLoad.load([
                             'lib/moment/moment.js'
                         ]);
-                    },
-                    'Me' : function($api, $q, $cookies){
-                        var defer = $q.defer();
-                        $api.account.userinfo({uid : $cookies.get('user')}, function(res){
-                            return defer.resolve(res.result);
-                        });
-                        return defer.promise;
                     }
                 },
                 abstract: true
@@ -47,8 +40,19 @@ app.config(function($stateProvider,
             .state('tabs.tab', {
                 abstract: true,
                 views: {
-                    'tabs' : {
+                    'tabs': {
                         templateUrl: 'templates/tabs.html'
+                    }
+                },
+                resolve : {
+                    'Me': function($api, $q, $cookies) {
+                        var defer = $q.defer();
+                        $api.account.userinfo({
+                            uid: $cookies.get('user')
+                        }, function(res) {
+                            return defer.resolve(res.result);
+                        });
+                        return defer.promise;
                     }
                 }
             })
@@ -61,7 +65,7 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve: {
-                    'Account' : function(Me){
+                    'Account': function(Me) {
                         return Me;
                     }
                 }
@@ -74,23 +78,23 @@ app.config(function($stateProvider,
                         controller: 'Analyze'
                     }
                 },
-                resolve : {
-                    deps : function($ocLazyLoad, $injector, $q){
+                resolve: {
+                    deps: function($ocLazyLoad, $injector, $q) {
                         return $ocLazyLoad.load([{
-                            serie : true,
+                            serie: true,
                             files: [
                                 './lib/Chart.js/Chart.js',
                                 './lib/Chart.StackedBar.js/src/Chart.StackedBar.js',
                                 './lib/angular-chart.js/dist/angular-chart.css',
                                 './lib/angular-chart.js/dist/angular-chart.js',
                                 './js/directives.js'
-                            ]}
-                        ]).then(function(chart){
+                            ]
+                        }]).then(function(chart) {
                             var provider = $injector.get("ChartJs");
                             provider.Chart.defaults.StackedBar.barShowStroke = false;
                             // provider.Chart.defaults.StackedBar.barValueSpacing = 15;
                             provider.Chart.defaults.StackedBar.showTooltips = false;
-                           
+
                         });
                     }
                 }
@@ -99,7 +103,7 @@ app.config(function($stateProvider,
                 url: '/analyze_detail/:type/',
                 views: {
                     'analyze-tab': {
-                         controller: 'Analyze',
+                        controller: 'Analyze',
                         templateUrl: 'templates/analyze/detail.html'
                     }
                 }
@@ -134,7 +138,7 @@ app.config(function($stateProvider,
             .state('intro', {
                 url: '/',
                 views: {
-                    'root' : {
+                    'root': {
                         templateUrl: 'templates/intro.html',
                         controller: 'IntroCtrl'
                     }
@@ -143,7 +147,7 @@ app.config(function($stateProvider,
             .state('notices', {
                 'url': '/notices',
                 'views': {
-                    'root' : {
+                    'root': {
                         templateUrl: 'templates/notices.html'
                     }
                 }
@@ -151,7 +155,7 @@ app.config(function($stateProvider,
             .state('feedback', {
                 'url': '/feedback',
                 'views': {
-                    'root' : {
+                    'root': {
                         templateUrl: 'templates/feedback.html'
                     }
                 }
@@ -159,7 +163,7 @@ app.config(function($stateProvider,
             .state('settings', {
                 'url': '/settings',
                 'views': {
-                    'root' : {
+                    'root': {
                         templateUrl: 'templates/settings.html'
                     }
                 }
@@ -167,13 +171,13 @@ app.config(function($stateProvider,
             .state('login', {
                 url: '/login',
                 views: {
-                    'root' : {
+                    'root': {
                         templateUrl: 'templates/login.html',
                         controller: 'AuthCtrl'
                     }
                 },
-                resolve : {
-                    deps : ['$ocLazyLoad', function($ocLazyLoad){
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load([
                             'lib/moment/moment.js',
                             'lib/angular-md5/angular-md5.js'
@@ -184,10 +188,10 @@ app.config(function($stateProvider,
             .state('logout', {
                 url: '/logout',
                 cache: false,
-                resolve : {
-                    deps : function(cookies, $api, $q) {
+                resolve: {
+                    deps: function(cookies, $api, $q) {
                         var defer = $q.defer();
-                        $api.auth.logout(null, function(res){
+                        $api.auth.logout(null, function(res) {
                             cookies.down();
                             defer.resolve();
                         });
@@ -201,25 +205,50 @@ app.config(function($stateProvider,
 
         $urlRouterProvider.otherwise('/');
     })
-    .run(['urls', '$cookies', 'encrypt', '$http', function (urls, $cookies, encrypt, $http) {
+    .config(function($httpProvider) {
+        $httpProvider.interceptors.push(function($rootScope) {
+            return {
+                request: function(config) {
+                    $rootScope.$broadcast('loading:show');
+                    return config;
+                },
+                response: function(response) {
+                    $rootScope.$broadcast('loading:hide');
+                    return response;
+                }
+            }
+        })
+    })
+    .run(['urls', '$cookies', 'encrypt', '$http', '$ionicLoading', '$rootScope', function(urls, $cookies, encrypt, $http, $ionicLoading, $rootScope) {
         if (!urls.debug) {
-            $http.defaults.transformRequest.push(function(data, headerGetter){
+            $http.defaults.transformRequest.push(function(data, headerGetter) {
                 var obj = encrypt($cookies.get('user'), $cookies.get('token'), data ? JSON.parse(data) : data);
                 return obj ? JSON.stringify(obj) : obj;
             });
         };
+
+        $rootScope.$on('loading:show', function() {
+            $ionicLoading.show({
+                template: '<ion-spinner icon="lines"></ion-spinner>',
+                hideOnStateChange: true
+            })
+        })
+
+        $rootScope.$on('loading:hide', function() {
+            $ionicLoading.hide()
+        })
     }])
     .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
         // 设置跳转
         var cookies = cookies;
-        $rootScope.$on('$stateChangeStart',  function(event, 
-            toState, toParams, fromState, fromParams){ 
+        $rootScope.$on('$stateChangeStart', function(event,
+            toState, toParams, fromState, fromParams) {
             var inited = localStorage.inited;
             if (!inited && toState.name == 'intro') {
                 return;
             }
-            if ((inited && toState.name == 'intro') || (toState.name != 'login' && !cookies.valid()) ) {
-                event.preventDefault(); 
+            if ((inited && toState.name == 'intro') || (toState.name != 'login' && !cookies.valid())) {
+                event.preventDefault();
                 $state.go('login');
             };
 
@@ -231,10 +260,10 @@ app.config(function($stateProvider,
     }]);
 
 app
-    .controller('AppCtrl', function($scope, 
-        $ionicSideMenuDelegate, 
-        $ionicTabsDelegate, 
-        $api, 
+    .controller('AppCtrl', function($scope,
+        $ionicSideMenuDelegate,
+        $ionicTabsDelegate,
+        $api,
         $state) {
 
         $scope.toggleLeft = function() {
@@ -245,13 +274,13 @@ app
             $ionicTabsDelegate.$getByHandle('tabs').select(index);
         }
 
-        $scope.logout = function(){
-            $api.auth.logout(null, function(res){
+        $scope.logout = function() {
+            $api.auth.logout(null, function(res) {
                 $state.go('login');
             })
         }
 
-        $scope.go = function(state){
+        $scope.go = function(state) {
             $state.go(state);
             $ionicSideMenuDelegate.toggleLeft();
         }
@@ -262,10 +291,10 @@ app
             // 检查登录
             localStorage.inited = true;
             // disable backbutton
-            
+
             if (cookies.valid()) {
                 $state.go('tabs.tab.home');
-            }else{
+            } else {
                 $state.go('login');
             };
         };
@@ -275,21 +304,23 @@ app
             $scope.slideIndex = index;
         };
     })
-    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', '$ionicHistory', function ($scope, $state, $api, md5, cookies, $ionicHistory) {
+    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', '$ionicHistory', function($scope, $state, $api, md5, cookies, $ionicHistory) {
         $scope.user = {};
 
-        $scope.login = function(){
+        $scope.login = function() {
             var credential = {
                 user: $scope.user.user,
                 passwd: md5.createHash($scope.user.password).toUpperCase()
             }
-            $api.auth.login(credential, function(res){
-                if(!res.code){
+            $api.auth.login(credential, function(res) {
+                if (!res.code) {
                     // setup cookie
                     cookies.up(res.result);
                     $ionicHistory.clearCache()
-                    $state.go('tabs.tab.home', {}, {reload: true});
-                }else{
+                    $state.go('tabs.tab.home', {}, {
+                        reload: true
+                    });
+                } else {
                     alert('登录失败');
                 }
             });
