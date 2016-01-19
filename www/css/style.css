@@ -150,7 +150,7 @@ ion-content.full > .row {
 	border: none;
 }
 
-.login .list .item::-webkit-input-placeholder {
+.login .list .item input::-webkit-input-placeholder {
 	color: #fff;
 }
 
@@ -434,7 +434,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .usage-data p {
 	color: #449edd;
-	font-size: 20px;
+	font-size: 16px;
 }
 
 .usage-data small {

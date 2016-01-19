@@ -21,7 +21,7 @@ angular.module('gugecc.controllers', [])
     .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies, Me, utils, $stateParams) {
         var user = $cookies.get('user');
         $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
-        $scope.time = moment().format('YYYYMMDD');
+        $scope.time = '20151201'; //moment().format('YYYYMMDD');
 
         $scope.$on('create', function (event, chart) {
           $scope.chart = chart;

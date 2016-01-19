@@ -4,7 +4,7 @@
             <div class="media bb" ng-repeat="row in devices">
                 <div class="media-left media-middle">
                     <a href="#">
-                        <img class="media-object" ng-src="img/energy/energy-c-{{$index%3+1}}.png" alt="...">
+                        <img class="media-object" ng-src="img/energy/energy-c-{{row.devicetype|meter: 'icon'}}.png" alt="...">
                     </a>
                 </div>
                 <div class="media-body media-middle">
@@ -12,8 +12,8 @@
                 </div>
                 <div class="media-right">
                     <div class="switch">
-                        <input id="cmn-toggle-{{row}}" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" ng-checked="row.status.switch != 'EMC_OFF'">
-                        <label for="cmn-toggle-{{row}}"></label>
+                        <input id="cmn-toggle-{{row.id}}" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" ng-checked="row.status.switch != 'EMC_OFF'">
+                        <label for="cmn-toggle-{{row.id}}"></label>
                     </div>
                 </div>
             </div>
