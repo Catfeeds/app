@@ -33,6 +33,15 @@ app.config(function($stateProvider,
                         return $ocLazyLoad.load([
                             'lib/moment/moment.js'
                         ]);
+                    },
+                    'Me': function($api, $q, $cookies) {
+                        var defer = $q.defer();
+                        $api.account.userinfo({
+                            uid: $cookies.get('user')
+                        }, function(res) {
+                            return defer.resolve(res.result);
+                        });
+                        return defer.promise;
                     }
                 },
                 abstract: true
@@ -44,17 +53,7 @@ app.config(function($stateProvider,
                         templateUrl: 'templates/tabs.html'
                     }
                 },
-                resolve : {
-                    'Me': function($api, $q, $cookies) {
-                        var defer = $q.defer();
-                        $api.account.userinfo({
-                            uid: $cookies.get('user')
-                        }, function(res) {
-                            return defer.resolve(res.result);
-                        });
-                        return defer.promise;
-                    }
-                }
+                resolve : {}
             })
             .state('tabs.tab.home', {
                 url: '/home',
@@ -114,6 +113,14 @@ app.config(function($stateProvider,
                     'device-tab': {
                         controller: 'Device',
                         templateUrl: 'templates/device.html'
+                    }
+                }
+            })
+            .state('tabs.tab.device_control', {
+                url: '/control/:type?',
+                views: {
+                    'device-tab': {
+                        templateUrl: 'templates/device/control.html'
                     }
                 }
             })
@@ -215,6 +222,10 @@ app.config(function($stateProvider,
                 response: function(response) {
                     $rootScope.$broadcast('loading:hide');
                     return response;
+                },
+                responseError: function(response){
+                    $rootScope.$broadcast('loading:hide', {'type': 'error'});
+                    return response
                 }
             }
         })
@@ -234,8 +245,14 @@ app.config(function($stateProvider,
             })
         })
 
-        $rootScope.$on('loading:hide', function() {
-            $ionicLoading.hide()
+        $rootScope.$on('loading:hide', function(state, data) {
+            if (data && data.type == 'error') {
+                return $ionicLoading.show({
+                    template: '服务器错误',
+                    duration: 2000
+                });
+            };
+            $ionicLoading.hide();
         })
     }])
     .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {

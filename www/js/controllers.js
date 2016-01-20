@@ -69,8 +69,12 @@ angular.module('gugecc.controllers', [])
             mobile: ''
         };
     })
-    .controller('Device', ['$scope', '$api', '$cookies', 'Me', function($scope, $api, $cookies, Me){
+    .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', function($scope, $api, $cookies, Me, $state){
         var project = Me.project;
+        
+        $scope.canSwitch = function(commands){
+            return _.contains(commands, 'EMC_SWITCH');
+        }
 
         $api.sensor.info({
             project: project
@@ -80,6 +84,10 @@ angular.module('gugecc.controllers', [])
             };
             console.log($scope.devices);
         })
+
+        $scope.showDevice = function(device){
+            $state.go('tabs.tab.device_control');
+        }
     }])
     .controller('LogCtrl', ['$scope', function ($scope) {
         $scope.tab = 'charge';

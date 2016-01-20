@@ -48,6 +48,10 @@ a:visited{
 	float: left;
 }
 
+.bold{
+	font-weight: bold;
+}
+
 .bb {
 	border-bottom: 1px solid #ddd;
 }
@@ -446,4 +450,10 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .usage-data small {
 	color: #aaa;
+}
+/*设备控制*/
+.device.control .number{
+	font-size: 30px;
+	color: #4A90E2;
+	line-height: 40px;
 }
