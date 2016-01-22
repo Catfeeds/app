@@ -13,9 +13,9 @@
             <div class="padding control-panel" ng-show="tab=='control'">
             	<!-- info -->
            		<div class="card text-center">
-	                <h5 class="bold">设备运行中</h5>
+	                <h5 class="bold" >设备运行中</h5>
 	                <p>本月已使用</p>
-	                <p class="number bold">100.23</p>
+	                <p class="number bold">{{total | number: 2}}</p>
 	                <p class="unit">度</p>
             	</div>
 
@@ -25,7 +25,15 @@
             	</div>
             </div>
             <div class="control detail-panel" ng-show="tab=='detail'">
-            	
+            	<table class="table">
+		            <tbody>
+		                <tr ng-repeat="row in usage">
+		                    <td>{{row.timepoint | unix : 'MONTH'}}</td>
+		                    <td>{{row.total | number: 2}}度</td>
+		                    <td></td>
+		                </tr>
+		            </tbody>
+		        </table>
             </div>
         </div>
     </ion-content>

@@ -173,6 +173,16 @@ app.config(function($stateProvider,
                         return $ocLazyLoad.load([
                             'lib/pingpp-html5/src/pingpp.js'
                         ]);
+                    },
+                    channels: function($api, $q, Me){
+                        var defer = $q.defer();
+                        $api.payment.channelinfo({
+                            project : Me.project,
+                            flow: 'EARNING'
+                        }, function(res){
+                            return defer.resolve(res.result);
+                        })
+                        return defer.promise;
                     }
                 }
             })
@@ -377,9 +387,7 @@ app
                     // setup cookie
                     cookies.up(res.result);
                     $ionicHistory.clearCache()
-                    $state.go('tabs.tab.home', {}, {
-                        reload: true
-                    });
+                    $state.go('tabs.tab.home');
                 } else {
                     alert('登录失败');
                 }

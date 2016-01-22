@@ -65,6 +65,6 @@ angular.module('gugecc.filters', [])
                 	icon: '1'
                 } 
             };
-            return d[t][k] || '';
+            return t ? d[t][k] || '3' : '3';
         }
     })

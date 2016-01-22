@@ -39,10 +39,14 @@ angular.module('gugecc.services', ['ngResource'])
             "charge" : {method: 'POST'}
         }],
         payment: ['payment', {
-            'charge': {method: 'POST'}
+            'charge': {method: 'POST'},
+            'channelinfo': {method: 'POST'}
         }],
         control: ['control', {
             'send': {method: 'POST'}
+        }],
+        channelaccount : ['channelaccount', {
+            'info' : {method: 'POST'}
         }]
 	};
 

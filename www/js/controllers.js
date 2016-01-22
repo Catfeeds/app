@@ -73,8 +73,8 @@ angular.module('gugecc.controllers', [])
             });
         }
     })
-    .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', 'info', 
-        function($scope, $api, $cookies, Me, $state, info){
+    .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', 'info', '$ionicLoading',
+        function($scope, $api, $cookies, Me, $state, info, $ionicLoading){
         var project = Me.project;
         
         $scope.canSwitch = function(commands){
@@ -83,7 +83,7 @@ angular.module('gugecc.controllers', [])
 
         $scope.load = function(){
             $scope.devices = [];
-            
+
             $api.sensor.info({
                 project: project
             }, function(res){
@@ -105,6 +105,10 @@ angular.module('gugecc.controllers', [])
 
             $api.control.send({id: device.id, command: 'EMC_SWITCH', ctrlcode: code, param: {mode: command}}, function(res){
                 console.log('res: ', res);
+                $ionicLoading.show({
+                    template: '命令已发送<br> 稍后下来刷新查看执行状态',
+                    duration: 2000
+                });
             });
 
             evt.stopPropagation();
@@ -118,6 +122,15 @@ angular.module('gugecc.controllers', [])
         $scope.show = function(tab){
             $scope.tab = tab;
         }
+
+        $scope.toggle = function(){
+            
+        }
+
+        $scope.usage = usage.detail;
+        $scope.total = $scope.usage.reduce(function(sum, val){
+            return sum + val.total;
+        }, 0);
     }])
     .controller('LogCtrl', ['$scope', function ($scope) {
         $scope.tab = 'charge';
