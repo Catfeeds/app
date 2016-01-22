@@ -1,16 +1,7 @@
 angular.module('gugecc.controllers', [])
     .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, $cookies, Account) {
         $scope.account = Account;
-
         var user = $cookies.get('user');
-
-    }).controller('AboutCtrl', function($scope, $ionicSideMenuDelegate) {
-
-    })
-    .controller('NavController', function($scope, $ionicSideMenuDelegate) {
-        $scope.toggleLeft = function() {
-            $ionicSideMenuDelegate.toggleLeft();
-        };
     })
     .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies, Me, utils, $stateParams) {
         var user = $cookies.get('user');
@@ -82,23 +73,42 @@ angular.module('gugecc.controllers', [])
             });
         }
     })
-    .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', function($scope, $api, $cookies, Me, $state){
+    .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', 'info', 
+        function($scope, $api, $cookies, Me, $state, info){
         var project = Me.project;
         
         $scope.canSwitch = function(commands){
             return _.contains(commands, 'EMC_SWITCH');
         }
 
-        $api.sensor.info({
-            project: project
-        }, function(res){
-            if (!res.code) {
-                $scope.devices = res.result.detail;
-            };
-        })
+        $scope.load = function(){
+            $scope.devices = [];
+            
+            $api.sensor.info({
+                project: project
+            }, function(res){
+                $scope.$broadcast('scroll.refreshComplete');
+                if (!res.code) {
+                    $scope.devices = res.result.detail;
+                };
+            })
+        }
+        $scope.load();
 
         $scope.showDevice = function(device){
             $state.go('tabs.tab.device_control', {'sensor': device});
+        }
+
+        $scope.toggle = function(device, evt){
+            var command = device.status && device.status.switch == 'EMC_ON' ? 'EMC_OFF' : 'EMC_ON',
+                code = hex_sha1(info.ctrlpasswd).toUpperCase();
+
+            $api.control.send({id: device.id, command: 'EMC_SWITCH', ctrlcode: code, param: {mode: command}}, function(res){
+                console.log('res: ', res);
+            });
+
+            evt.stopPropagation();
+            return false;
         }
     }])
     .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'usage', function ($scope, $state, $api, Me, $stateParams, usage) {

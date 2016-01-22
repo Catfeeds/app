@@ -19,11 +19,12 @@ angular.module('gugecc.services', ['ngResource'])
 	        login: { method: 'POST' },
 	        logout: { method: 'POST' }
 	    }],
-        account : ['business', {
-            userinfo : { method : 'POST'}
+        account : ['account', {
+            info : { method : 'POST'},
         }],
         business : [ 'business', {
             "monthlyusage" : { method : 'POST'},
+            "userinfo" : { method : 'POST'},
             "monthlyaccountelectricusage" : { method : 'POST'},
             "monthlysensordetail" : {method: "POST"},
             "energyconsumptioncost" : {method: 'POST'},
@@ -39,6 +40,9 @@ angular.module('gugecc.services', ['ngResource'])
         }],
         payment: ['payment', {
             'charge': {method: 'POST'}
+        }],
+        control: ['control', {
+            'send': {method: 'POST'}
         }]
 	};
 

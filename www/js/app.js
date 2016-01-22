@@ -36,9 +36,18 @@ app.config(function($stateProvider,
                     },
                     'Me': function($api, $q, $cookies) {
                         var defer = $q.defer();
-                        $api.account.userinfo({
+                        $api.business.userinfo({
                             uid: $cookies.get('user')
                         }, function(res) {
+                            return defer.resolve(res.result);
+                        });
+                        return defer.promise;
+                    },
+                    'info' : function($api, $q, $cookies){
+                        var defer = $q.defer();
+                        $api.account.info({
+                            id: $cookies.get('user')
+                        }, function(res){
                             return defer.resolve(res.result);
                         });
                         return defer.promise;
@@ -109,6 +118,13 @@ app.config(function($stateProvider,
             })
             .state('tabs.tab.device', {
                 url: '/device',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                            'lib/sha1.min.js/sha1.min.js'
+                        ]);
+                    }]
+                },
                 views: {
                     'device-tab': {
                         controller: 'Device',

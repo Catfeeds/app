@@ -1,5 +1,7 @@
 <ion-view title="仪表控制">
     <ion-content class="padding">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="load()">
+        </ion-refresher>
         <div class="panel sensors">
             <div class="media bb" ng-repeat="row in devices" ng-click="showDevice(row)">
                 <div class="media-left media-middle">
@@ -11,9 +13,9 @@
                     <h5 class="media-heading">{{row.title}}</h5>
                 </div>
                 <div class="media-right" ng-show="canSwitch(row.command)">
-                    <div class="switch">
-                        <input id="cmn-toggle-{{row.id}}" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" ng-checked="row.statuSs && row.status.switch == 'EMC_ON'">
-                        <label for="cmn-toggle-{{row.id}}"></label>
+                    <div class="switch" ng-click="toggle(row, $event)">
+                        <input id="cmn-toggle-{{row.id}}" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" ng-checked="row.status && row.status.switch == 'EMC_ON'">
+                        <label for="cmn-toggle"></label>
                     </div>
                 </div>
             </div>
