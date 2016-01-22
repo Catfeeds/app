@@ -36,6 +36,9 @@ angular.module('gugecc.services', ['ngResource'])
         }],
         log: ['log', {
             "charge" : {method: 'POST'}
+        }],
+        payment: ['payment', {
+            'charge': {method: 'POST'}
         }]
 	};
 

@@ -59,15 +59,28 @@ angular.module('gugecc.controllers', [])
     .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state', function ($scope, $api, Me, $stateParams, $state) {
         
     }])
-    .controller('Charge', function($scope, $ionicSideMenuDelegate, Me) {
+    .controller('Charge', function($scope, $ionicSideMenuDelegate, Me, $cookies, $api, $ionicLoading) {
         $scope.me = Me;
-        console.log('me:', $scope.me);
         $scope.amountSelects = [10, 20, 50, 100, 200, 5000];
+
         $scope.charge = {
             amount : 10,
-            gateway: 'wx_pub',
-            mobile: ''
+            channelaccountid: 2
         };
+
+        $scope.pay = function(){
+            var data = {
+                project: Me.project,
+                body: '智慧管家充值',
+                subject: '智慧管家',
+                uid: $cookies.get('user')
+            };
+            angular.extend(data, $scope.charge);
+
+            $api.payment.charge(data, function(res){
+
+            });
+        }
     })
     .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', function($scope, $api, $cookies, Me, $state){
         var project = Me.project;
@@ -101,7 +114,5 @@ angular.module('gugecc.controllers', [])
 
         $scope.getLogs = function(tab){
             tab ? $scope.tab = tab : 1;
-
-
         }
     }])

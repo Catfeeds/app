@@ -151,6 +151,13 @@ app.config(function($stateProvider,
                         controller: 'Charge',
                         templateUrl: 'templates/charge.html'
                     }
+                },
+                resolve: {
+                    deps : function($ocLazyLoad){
+                        return $ocLazyLoad.load([
+                            'lib/pingpp-html5/src/pingpp.js'
+                        ]);
+                    }
                 }
             })
             .state('tabs.tab.logs', {
