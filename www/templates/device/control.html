@@ -7,10 +7,10 @@
         <div class="padding">
         	<!-- tab -->
             <div class="button-bar padding">
-                <a class="button button-positive">控制</a>
-                <a class="button button-light">明细</a>
+                <a class="button" ng-class="{'button-light': tab!='control', 'button-positive': tab=='control'}" ng-click="show('control')">控制</a>
+                <a class="button" ng-class="{'button-light': tab!='detail', 'button-positive': tab=='detail'}" ng-click="show('detail')">明细</a>
             </div>
-            <div class="padding">
+            <div class="padding control-panel">
             	<!-- info -->
            		<div class="card text-center">
 	                <h5 class="bold">设备运行中</h5>
@@ -20,6 +20,9 @@
             	</div>
 
             	<!-- control -->
+            	<div class="text-center power">
+            		<a href="" title=""><img src="img/switchOn.png" alt=""></a>
+            	</div>
             </div>
         </div>
     </ion-content>

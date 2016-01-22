@@ -457,3 +457,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 	color: #4A90E2;
 	line-height: 40px;
 }
+
+.control-panel .power img{
+	height: 120px;
+}

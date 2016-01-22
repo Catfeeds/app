@@ -82,11 +82,18 @@ angular.module('gugecc.controllers', [])
             if (!res.code) {
                 $scope.devices = res.result.detail;
             };
-            console.log($scope.devices);
         })
 
         $scope.showDevice = function(device){
-            $state.go('tabs.tab.device_control');
+            $state.go('tabs.tab.device_control', {'sensor': device});
+        }
+    }])
+    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'usage', function ($scope, $state, $api, Me, $stateParams, usage) {
+        $scope.sensor = $stateParams.sensor;
+        $scope.tab = 'control';
+
+        $scope.show = function(tab){
+            $scope.tab = tab;
         }
     }])
     .controller('LogCtrl', ['$scope', function ($scope) {

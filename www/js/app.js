@@ -118,9 +118,29 @@ app.config(function($stateProvider,
             })
             .state('tabs.tab.device_control', {
                 url: '/control/:type?',
+                params : {'sensor' : null},
+                resolve: {
+                    'usage' : function($state, $stateParams, $api, $q, $cookies){
+                        var sensor = $stateParams.sensor.channels['11'].id;
+                        var defer = $q.defer();
+                        var monthFrom = moment().startOf('month').startOf('days').format('YYYYMMDD');
+                        var monthTo = moment().endOf('month').endOf('days').format('YYYYMMDD');
+
+                        $api.business.channeldetail({
+                            id: sensor, 
+                            from: monthFrom, 
+                            to: monthTo, 
+                            timeformat: 'MONTH'
+                        }, function(res){
+                                defer.resolve(res.result);
+                        });
+                        return defer.promise;
+                    }
+                },
                 views: {
                     'device-tab': {
-                        templateUrl: 'templates/device/control.html'
+                        templateUrl: 'templates/device/control.html',
+                        controller: 'DeviceCtrl'
                     }
                 }
             })
