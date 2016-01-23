@@ -253,13 +253,17 @@ app.config(function($stateProvider,
                         var defer = $q.defer();
                         $api.auth.logout(null, function(res) {
                             cookies.down();
-                            defer.resolve();
+                            defer.resolve(res);
                         });
                         return defer.promise;
                     }
                 },
-                controller: function($scope, $state, deps) {
-                    $state.go('login');
+                views: {
+                    'root' : {
+                        controller: function($scope, $state, deps) {
+                            $state.go('login');
+                        }
+                    }
                 }
             });
 
