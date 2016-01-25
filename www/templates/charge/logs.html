@@ -15,5 +15,10 @@
 	</div>
 
 	<ion-content class="has-tabs-top">
+		<div class="charge-pane padding" ng-show="tab == 'charge'">
+			<ion-list class="">
+				<ion-item href="" ng-show="!charges.length" class="text-center">暂无记录</ion-item>
+			</ion-list>
+		</div>
 	</ion-content>
 </ion-view>

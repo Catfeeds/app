@@ -11,8 +11,8 @@
             <div class="col col-33" ng-repeat="row in amountSelects" ng-class="{'positive-bg light': charge.amount == row}" ng-click="charge.amount=row">{{row}} 元</div>
         </div>
         <div class="button-bar padding-top padding-bottom mt">
-            <a class="button" href="" ng-click="charge.channelaccountid=2" ng-class="{'button-positive' : charge.channelaccountid==2}">微信支付</a>
-            <a class="button" href="" ng-click="charge.channelaccountid=1" ng-class="{'button-positive' : charge.channelaccountid==1}">支付宝</a>
+            <a class="button" href="" ng-click="charge.channelaccountid=3" ng-class="{'button-positive' : charge.channelaccountid==3}">微信支付</a>
+            <a class="button" href="" ng-click="charge.channelaccountid=2" ng-class="{'button-positive' : charge.channelaccountid==2}">支付宝</a>
         </div>
         <p>充值金额: {{charge.amount}} 元</p>
         <button class="button button-block button-default assertive" ng-click="pay()">

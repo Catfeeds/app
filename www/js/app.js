@@ -169,21 +169,16 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve: {
-                    deps : function($ocLazyLoad){
-                        return $ocLazyLoad.load([
-                            'lib/pingpp-html5/src/pingpp.js'
-                        ]);
-                    },
-                    channels: function($api, $q, Me){
-                        var defer = $q.defer();
-                        $api.payment.channelinfo({
-                            project : Me.project,
-                            flow: 'EARNING'
-                        }, function(res){
-                            return defer.resolve(res.result);
-                        })
-                        return defer.promise;
-                    }
+                    // channels: function($api, $q, Me){
+                    //     var defer = $q.defer();
+                    //     $api.payment.channelinfo({
+                    //         project : Me.project,
+                    //         flow: 'EARNING'
+                    //     }, function(res){
+                    //         return defer.resolve(res.result);
+                    //     })
+                    //     return defer.promise;
+                    // }
                 }
             })
             .state('tabs.tab.logs', {

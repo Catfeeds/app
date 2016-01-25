@@ -56,7 +56,7 @@ angular.module('gugecc.controllers', [])
 
         $scope.charge = {
             amount : 10,
-            channelaccountid: 2
+            channelaccountid: 3
         };
 
         $scope.pay = function(){
@@ -69,6 +69,25 @@ angular.module('gugecc.controllers', [])
             angular.extend(data, $scope.charge);
 
             $api.payment.charge(data, function(res){
+                if(res.code){
+                    $ionicLoading.show({
+                        template: res.message,
+                        duration: 1000
+                    });
+                    return;
+                }
+
+                pingpp.createPayment(res.result, function(msg, err){
+                    if (err) {
+                        $ionicLoading.show({
+                            template: msg,
+                            duration: 1000
+                        });
+                    };
+
+                    // 跳转支付成功页面
+                    
+                });
 
             });
         }
@@ -132,8 +151,32 @@ angular.module('gugecc.controllers', [])
             return sum + val.total;
         }, 0);
     }])
-    .controller('LogCtrl', ['$scope', function ($scope) {
+    .controller('LogCtrl', ['$scope', '$api', 'Me', '$cookies', '$http', function ($scope, $api, Me, $cookies, $http) {
         $scope.tab = 'charge';
+
+        $api.business.recentchargelog({
+            project: {
+                id : Me.project,
+                account: $cookies.get('user')
+            }
+        }, function(res){
+            $scope.charges = res.result[Me.project].detail.detail;
+            console.log(res);
+        })
+
+        $http.post('api/business/fundflow', 
+            {
+                project: Me.project,
+                uid: $cookies.get('user'),
+                key: '',
+                from: '20000101',
+                to: moment().format('YYYYMMDD'),
+                // flow: 'EXPENSE',
+                // category: 'PAYFEES'
+            })
+            .success(function(res){
+                console.log(res);
+            })
 
         $scope.getLogs = function(tab){
             tab ? $scope.tab = tab : 1;
