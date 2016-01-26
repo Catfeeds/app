@@ -83,10 +83,11 @@ a:visited{
 .table th{
 	padding: 10px 0px;
 	color: #666;
+	border-bottom: 1px solid #ddd;
 }
 .table td{
 	text-align: center;
-	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	padding: 10px 0px;
 	color: #444;
 }
@@ -479,3 +480,16 @@ input.cmn-toggle-round-flat:checked + label:after {
 	vertical-align: middle;
 }
 
+.charge-result p.status{
+	width: 50px;
+    height: 50px;
+    font-size: 40px;
+    color: #FFF;
+    line-height: 50px;
+    text-indent: 5px;
+    margin: 50px auto 30px;
+}
+
+.charge-result .button{
+    margin-top: 40px!important;
+}

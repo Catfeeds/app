@@ -50,7 +50,7 @@ angular.module('gugecc.controllers', [])
     .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state', function ($scope, $api, Me, $stateParams, $state) {
         
     }])
-    .controller('Charge', function($scope, $ionicSideMenuDelegate, Me, $cookies, $api, $ionicLoading) {
+    .controller('Charge', function($scope, $ionicSideMenuDelegate, Me, $cookies, $api, $ionicLoading, $ionicModal) {
         $scope.me = Me;
         $scope.amountSelects = [10, 20, 50, 100, 200, 5000];
 
@@ -58,6 +58,24 @@ angular.module('gugecc.controllers', [])
             amount : 10,
             channelaccountid: 3
         };
+
+        $ionicModal.fromTemplateUrl('templates/charge/result.html', {
+            scope: $scope
+        }).then(function(modal){
+            $scope.modal = modal;
+        })
+
+        $scope.showModal = function(){
+            // 查询余额
+            $api.business.userinfo({uid: $cookies.get('user')}, function(res){
+                $scope.money = res.result.cash;
+            });
+            $scope.modal.show();
+        }
+
+        $scope.closeModal = function(){
+            $scope.modal.hide();
+        }
 
         $scope.pay = function(){
             var data = {
@@ -84,9 +102,8 @@ angular.module('gugecc.controllers', [])
                             duration: 1000
                         });
                     };
-
                     // 跳转支付成功页面
-                    
+                    $scope.showModal();
                 });
 
             });
