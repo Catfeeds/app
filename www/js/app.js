@@ -29,11 +29,6 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve: {
-                    deps: function($ocLazyLoad) {
-                        return $ocLazyLoad.load([
-                            'lib/moment/moment.js'
-                        ]);
-                    },
                     'Me': function($api, $q, $cookies) {
                         var defer = $q.defer();
                         $api.business.userinfo({
@@ -234,7 +229,6 @@ app.config(function($stateProvider,
                 resolve: {
                     deps: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load([
-                            'lib/moment/moment.js',
                             'lib/angular-md5/angular-md5.js'
                         ]);
                     }]
@@ -333,8 +327,10 @@ app
         $ionicSideMenuDelegate,
         $ionicTabsDelegate,
         $api,
+        Me,
         $state) {
 
+        $scope.me = Me;
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -373,7 +369,8 @@ app
             $scope.slideIndex = index;
         };
     })
-    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', '$ionicHistory', function($scope, $state, $api, md5, cookies, $ionicHistory) {
+    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', '$ionicHistory', '$ionicLoading', 
+        function($scope, $state, $api, md5, cookies, $ionicHistory, $ionicLoading) {
         $scope.user = {};
 
         $scope.login = function() {
@@ -384,11 +381,14 @@ app
             $api.auth.login(credential, function(res) {
                 if (!res.code) {
                     // setup cookie
-                    cookies.up(res.result);
+                    cookies.up(res.result, $scope.remember);
                     $ionicHistory.clearCache()
                     $state.go('tabs.tab.home');
                 } else {
-                    alert('登录失败');
+                    $ionicLoading.show({
+                        template: res.message || '登录失败',
+                        duration: 1000
+                    })
                 }
             });
         }

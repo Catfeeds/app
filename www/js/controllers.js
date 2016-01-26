@@ -47,10 +47,15 @@ angular.module('gugecc.controllers', [])
         }
         $scope.getData($scope.show);
     })
-    .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state', function ($scope, $api, Me, $stateParams, $state) {
+    .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state',
+     function ($scope, $api, Me, $stateParams, $state) {
         
     }])
-    .controller('Charge', function($scope, $ionicSideMenuDelegate, Me, $cookies, $api, $ionicLoading, $ionicModal) {
+    .controller('Charge', function($scope, 
+        Me, 
+        $state,
+        $cookies, $api, 
+        $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
         $scope.amountSelects = [10, 20, 50, 100, 200, 5000];
 
@@ -68,12 +73,18 @@ angular.module('gugecc.controllers', [])
         $scope.showModal = function(){
             // 查询余额
             $api.business.userinfo({uid: $cookies.get('user')}, function(res){
-                $scope.money = res.result.cash;
+                $ionicHistory.clearCache();
+                $scope.me = res.result;
             });
             $scope.modal.show();
         }
 
         $scope.closeModal = function(){
+            $state.go($state.current, null, {
+                reload: true,
+                inherit: false,
+                notify: true
+            });
             $scope.modal.hide();
         }
 
@@ -95,15 +106,19 @@ angular.module('gugecc.controllers', [])
                     return;
                 }
 
-                pingpp.createPayment(res.result, function(msg, err){
-                    if (err) {
-                        $ionicLoading.show({
-                            template: msg,
-                            duration: 1000
-                        });
-                    };
+                pingpp.createPayment(res.result, function(result){
                     // 跳转支付成功页面
                     $scope.showModal();
+                }, function(err){
+                    var msg = {
+                        'fail' : '支付失败',
+                        'cancel': '用户已取消支付',
+                        'invalid': '支付结果无效，请联系支付平台'
+                    };
+                    $ionicLoading.show({
+                        template: msg[err||'invalid'],
+                        duration: 2000
+                    });
                 });
 
             });

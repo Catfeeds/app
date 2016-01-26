@@ -67,7 +67,9 @@ a:visited{
 .mb {
 	margin-bottom: 10px;
 }
-
+.no-border{
+	border: none;
+}
 .round {
 	border-radius: 50%;
 }

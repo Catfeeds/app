@@ -112,10 +112,10 @@ angular.module('gugecc.services', ['ngResource'])
         return $cookies.get(key);
     }
 
-	this.up = function(data){
+	this.up = function(data, remember){
         Object.keys(auth_keys).map(function(item){
             $cookies.put(item, data[item], {
-                expire : ''
+                expires : moment().month(+1)._d
             });
         });
 	}

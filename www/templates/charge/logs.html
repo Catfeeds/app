@@ -3,7 +3,7 @@
         <ion-nav-back-button class="button-clear">
         </ion-nav-back-button>
     </ion-nav-bar>
-    <div class="bar bar-subheader padding ">
+    <div class="bar bar-subheader padding no-border">
     	<div class="button-bar">
 		    <a class="button" ng-click="getLogs('charge')" ng-class="{'button-positive' : tab == 'charge'}">
 	            充值记录
@@ -14,7 +14,7 @@
 		</div>
 	</div>
 
-	<ion-content class="has-tabs-top">
+	<ion-content class="has-subheader">
 		<div class="charge-pane padding" ng-show="tab == 'charge'">
 			<table class="table logs">
 				<tbody>
