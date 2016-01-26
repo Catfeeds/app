@@ -5,6 +5,11 @@ angular.module('gugecc.filters', [])
             return moment(input / 1000, 'X').format(format);
         }
     })
+    .filter('timestamp', function() {
+        return function(input, format) {
+            return moment.unix(input).format(format|| 'YYYY-MM-DD');
+        }
+    })
     .filter('sum', function() {
         return function(input) {
             var sum = 0;

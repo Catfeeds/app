@@ -16,9 +16,20 @@
 
 	<ion-content class="has-tabs-top">
 		<div class="charge-pane padding" ng-show="tab == 'charge'">
-			<ion-list class="">
-				<ion-item href="" ng-show="!charges.length" class="text-center">暂无记录</ion-item>
-			</ion-list>
+			<table class="table logs">
+				<tbody>
+					<tr ng-repeat="log in charges">
+						<td ng-bind="log.timepaid | timestamp" class="time"></td>
+						<td class="detail">
+							<p ng-bind="log.amount" class="positive bold f20"></p>
+							<p ng-bind="log.channel"></p>
+						</td>
+					</tr>
+					<tr ng-if="!charges.length">
+						<td colspan="2">暂无记录</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</ion-content>
 </ion-view>

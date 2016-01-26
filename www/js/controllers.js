@@ -153,15 +153,14 @@ angular.module('gugecc.controllers', [])
     }])
     .controller('LogCtrl', ['$scope', '$api', 'Me', '$cookies', '$http', function ($scope, $api, Me, $cookies, $http) {
         $scope.tab = 'charge';
-
+        var project = '549bfb89b06197280985bf10';
         $api.business.recentchargelog({
-            project: {
-                id : Me.project,
-                account: $cookies.get('user')
-            }
+            "project":[{"id":project}],
+            "from": "20160120",
+            "to": "20160125"
         }, function(res){
-            $scope.charges = res.result[Me.project].detail.detail;
-            console.log(res);
+            $scope.charges = res.result[project].detail.detail;
+            console.log($scope.charges);
         })
 
         $http.post('api/business/fundflow', 

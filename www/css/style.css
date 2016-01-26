@@ -72,6 +72,10 @@ a:visited{
 	border-radius: 50%;
 }
 
+.f20{
+	font-size: 20px;
+}
+
 .table{
 	width: 100%;
 	font-family: 'webfont';
@@ -461,3 +465,17 @@ input.cmn-toggle-round-flat:checked + label:after {
 .control-panel .power img{
 	height: 120px;
 }
+.logs td{
+	border-top: none;
+	border-bottom: 1px solid #ddd;
+}
+
+.logs td.detail p{
+	margin-bottom: 0px;
+}
+
+.logs td.time{
+	text-align: left;
+	vertical-align: middle;
+}
+
