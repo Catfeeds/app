@@ -19,7 +19,7 @@
 			<table class="table logs">
 				<tbody>
 					<tr ng-repeat="log in charges">
-						<td ng-bind="log.timepaid | timestamp" class="time"></td>
+						<td ng-bind="log.timecreate | timestamp" class="time"></td>
 						<td class="detail">
 							<p ng-bind="log.amount" class="positive bold f20"></p>
 							<p ng-bind="log.channel"></p>
@@ -30,6 +30,29 @@
 					</tr>
 				</tbody>
 			</table>
+			<ion-infinite-scroll
+			    on-infinite="loadMore('charges')"
+			    distance="1%">
+			</ion-infinite-scroll>
+		</div>
+		<div class="fee-pane padding" ng-show="tab == 'fee'">
+			<table class="table logs">
+				<tbody>
+					<tr ng-repeat="log in fee | orderBy: 'timecreate' : true ">
+						<td ng-bind="log.timecreate | timestamp" class="time"></td>
+						<td class="detail">
+							<p ng-bind="log.amount" class="assertive bold text-right"></p>
+						</td>
+					</tr>
+					<tr ng-if="!fee.length">
+						<td colspan="2">暂无记录</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- <ion-infinite-scroll
+			    on-infinite="loadMore('fee')"
+			    distance="1%">
+			</ion-infinite-scroll> -->
 		</div>
 	</ion-content>
 </ion-view>

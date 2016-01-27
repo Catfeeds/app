@@ -98,9 +98,9 @@ angular.module('gugecc.controllers', [])
             angular.extend(data, $scope.charge);
 
             $api.payment.charge(data, function(res){
-                if(res.code){
+                if(res.code != 0 ){
                     $ionicLoading.show({
-                        template: res.message,
+                        template: res.message || '服务器错误',
                         duration: 1000
                     });
                     return;
@@ -185,29 +185,62 @@ angular.module('gugecc.controllers', [])
     }])
     .controller('LogCtrl', ['$scope', '$api', 'Me', '$cookies', '$http', function ($scope, $api, Me, $cookies, $http) {
         $scope.tab = 'charge';
-        var project = '549bfb89b06197280985bf10';
-        $api.business.recentchargelog({
-            "project":[{"id":project}],
-            "from": "20160120",
-            "to": "20160125"
-        }, function(res){
-            $scope.charges = res.result[project].detail.detail;
-            console.log($scope.charges);
-        })
+        $scope.paging = {};
 
-        $http.post('api/business/fundflow', 
-            {
-                project: Me.project,
+        var project = Me.project;
+        var query = {
+            charges: {
+                "project":[{"id":project}],
+                "from": moment().subtract(7, 'day').format('YYYYMMDD'),
+                "to": moment().format('YYYYMMDD'),
+                pageindex: 1,
+                pagesize: 20
+            },
+            fee: {
+                // project: Me.project,
                 uid: $cookies.get('user'),
-                key: '',
+                // key: '',
                 from: '20000101',
                 to: moment().format('YYYYMMDD'),
                 // flow: 'EXPENSE',
-                // category: 'PAYFEES'
-            })
-            .success(function(res){
-                console.log(res);
-            })
+                category: 'PAYFEES'
+            }
+        }
+
+        $scope.loadList = function(type){
+            if (type == 'charges') {
+                $api.business.recentchargelog(query[type], function(res){
+                    var page = res.result[project].detail.detail;
+                    $scope[type] = $scope[type] ? $scope[type].concat(page) : page;
+                    $scope.paging[type] = res.result[project].paging;
+
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                })
+            };
+
+            if (type == 'fee') {
+                $api.business.fundflow(query[type], function(res){
+                    var page = res.result;
+                    $scope[type] = $scope[type] ? $scope[type].concat(page) : page;
+                    // $scope.paging[type] = res.result[project].paging;
+                    // $scope.$broadcast('scroll.infiniteScrollComplete');
+                })
+            };
+        }
+
+        $scope.loadList('charges');
+        $scope.loadList('fee');
+
+        $scope.loadMore = function(type){
+            var paging = $scope.paging[type];
+            if (!paging) {
+                return false;
+            };
+            if(paging.pageindex * paging.pagesize < paging.count){
+                query[type].pageindex ++;
+                $scope.loadList(type);
+            }
+        }
 
         $scope.getLogs = function(tab){
             tab ? $scope.tab = tab : 1;
