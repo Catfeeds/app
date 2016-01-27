@@ -32,6 +32,7 @@
 			</table>
 			<ion-infinite-scroll
 			    on-infinite="loadMore('charges')"
+			    ng-if="more('charges')"
 			    distance="1%">
 			</ion-infinite-scroll>
 		</div>

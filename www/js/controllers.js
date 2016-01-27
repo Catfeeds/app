@@ -207,6 +207,12 @@ angular.module('gugecc.controllers', [])
             }
         }
 
+        $scope.more = function(type){
+            var paging = $scope.paging[type];
+            if (!paging) {return true};
+            return paging.pageindex * paging.pagesize < paging.count;
+        }
+
         $scope.loadList = function(type){
             if (type == 'charges') {
                 $api.business.recentchargelog(query[type], function(res){
