@@ -1,0 +1,30 @@
+<ion-view view-title="{{vm.month}}">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear">
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content has-subheader="false" class="device control">
+    	<canvas id="stacked-bar" 
+        	class="chart chart-stacked-bar" 
+        	chart-data="usage.data" 
+        	chart-labels="usage.labels"
+        	chart-colours="colours"
+        	chart-series="usage.series"
+            chart-options="options">
+		</canvas>
+		<div class="padding row header-month">
+            <div class="col text-center legend">
+                <p><span class="dot off"></span>下班 {{vm.offDutyPercent|number: 0}}%</p>
+                <p><span class="dot"></span>上班 {{vm.onDutyPercent|number: 0}}%</p>
+            </div>
+            <div class="col">
+                <div class="round shape">
+                    <p class="h3 positive">
+                    	{{vm.sum | number: 2}} 
+                    </p>
+                    <p> 度</p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

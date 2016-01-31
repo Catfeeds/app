@@ -11,12 +11,22 @@ angular.module('gugecc.filters', [])
         }
     })
     .filter('sum', function() {
-        return function(input) {
+        return function(input, key) {
             var sum = 0;
             _.each(input, function(v) {
-                sum += v;
+                key ? sum += Number(v[key]) : sum += v;
             });
             return sum;
+        }
+    })
+    .filter('percent', function() {
+        return function(input, key) {
+            var sum = 0, val = 0;
+            _.each(input, function(v) {
+                sum += v.sum;
+                val += v[key];
+            });
+            return sum ? val*100/sum : 0;
         }
     })
     .filter('energy', function() {
@@ -28,14 +38,14 @@ angular.module('gugecc.filters', [])
             'BIZGAS': '商用煤气',
             'BIZHEATENERGY': '商用热量',
             'BIZOXYGEN': '商业氧气',
-            'CHAINBIZELECTRIC': '连锁商业用电	',
-            'COLDWATER': '冷水	立方米',
-            'COOLINGENERGY': '冷量	',
-            'DININGELECTRIC': '餐饮用电	',
+            'CHAINBIZELECTRIC': '连锁商业用电',
+            'COLDWATER': '冷水',
+            'COOLINGENERGY': '冷量',
+            'DININGELECTRIC': '餐饮用电',
             'DIRECTWATER': '直饮水',
             'ELECTRIC': '电	',
             'GAS': '煤气',
-            'HEATENERGY': '热量	',
+            'HEATENERGY': '热量',
             'HOTELELECTRIC': '宾馆用电',
             'HOTWATER': '热水',
             'OXYGEN': '氧气',

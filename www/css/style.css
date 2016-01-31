@@ -93,6 +93,7 @@ a:visited{
 	border-bottom: 1px solid #ddd;
 	padding: 10px 0px;
 	color: #444;
+    vertical-align: middle;
 }
 
 .spinner svg {
@@ -414,10 +415,15 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .charge .col {
 	border-left: 1px solid #ddd;
-	padding: 20px 0px;
+	padding: 10px 0px;
 	border-bottom: 1px solid #ddd;
 	transition: all ease 0.5s;
 	cursor: pointer;
+	margin: 2%;
+	flex: 1 0 29%;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	height: 40px;
 }
 
 .charge .col:nth-child(3n) {
@@ -496,3 +502,75 @@ input.cmn-toggle-round-flat:checked + label:after {
 .charge-result .button{
     margin-top: 40px!important;
 }
+
+
+/* device control */
+.responsive-sm.round{
+	border-radius: 50%;
+	background: #86C1FF;
+	font-size: 10px;
+	height: 55px;
+	width: 55px;
+	float: right;
+	border: 1px solid #63A2D1;
+	color: #fff;
+	padding-top: 7px;
+}
+.responsive-sm p{
+	margin-bottom: 0px;
+}
+
+.header-recent .shape{
+	width: 100px;
+	height: 100px;
+	background: #199DEE;
+	line-height: 100px;
+	text-align: center;
+	border: 2px solid #3393E8;
+	color: #fff;
+	margin: 0 auto;
+}
+
+.header-month .shape{
+    width: 120px;
+    height: 120px;
+    border: 2px solid #3393E8;
+    background: #199DEE;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 30px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.header-month .shape .h3{
+	color: #fff;
+}
+
+.header-month .legend{
+	padding: 0px 20px;
+}
+
+.header-month .legend p {
+	padding: 20px;
+	margin: 0px;
+	/* vertical-align: middle; */
+	/* line-height: 20px; */
+}
+
+.header-month .legend p:first-child{
+	border-bottom: 1px solid #ddd;
+}
+
+.header-month .legend .dot{
+	width: 15px;
+	height: 15px;
+	background: #DF1C1C;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 10px;
+}
+.header-month .legend .dot.off{
+	background: #FCA9A9;
+}
+

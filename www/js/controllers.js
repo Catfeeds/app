@@ -3,7 +3,7 @@ angular.module('gugecc.controllers', [])
         $scope.account = Account;
         var user = $cookies.get('user');
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, deps, $timeout, $api, $cookies, Me, utils, $stateParams) {
+    .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, $cookies, Me, utils, $stateParams) {
         var user = $cookies.get('user');
         $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
         $scope.time = moment().format('YYYYMMDD');
@@ -57,10 +57,10 @@ angular.module('gugecc.controllers', [])
         $cookies, $api, 
         $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
-        $scope.amountSelects = [10, 20, 50, 100, 200, 5000];
+        $scope.amountSelects = [100, 200, 500, 1000, 2000, 5000];
 
         $scope.charge = {
-            amount : 10,
+            amount : 100,
             channelaccountid: 3
         };
 
@@ -166,22 +166,29 @@ angular.module('gugecc.controllers', [])
             return false;
         }
     }])
-    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'usage', function ($scope, $state, $api, Me, $stateParams, usage) {
+    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'recent', function ($scope, $state, $api, Me, $stateParams, recent) {
         $scope.sensor = $stateParams.sensor;
         $scope.tab = 'control';
+
+        $scope.canSwitch = function(commands){
+            return _.contains(commands, 'EMC_SWITCH');
+        }
 
         $scope.show = function(tab){
             $scope.tab = tab;
         }
 
-        $scope.toggle = function(){
-            
+        $scope.go = function(month){
+            $state.go('tabs.tab.device_month', {'month': month, 'device': $scope.sensor.id});
         }
 
-        $scope.usage = usage.detail;
-        $scope.total = $scope.usage.reduce(function(sum, val){
-            return sum + val.total;
-        }, 0);
+        $scope.recent = recent;
+    }])
+    .controller('MonthCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'utils', 'days', 
+        function ($scope, $state, $api, Me, $stateParams, utils, days) {
+        $scope.vm = $stateParams.month;
+
+        $scope.usage = utils.duty($scope.vm.usage);
     }])
     .controller('LogCtrl', ['$scope', '$api', 'Me', '$cookies', '$http', function ($scope, $api, Me, $cookies, $http) {
         $scope.tab = 'charge';

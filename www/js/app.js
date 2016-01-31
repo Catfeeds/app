@@ -90,6 +90,7 @@ app.config(function($stateProvider,
                                 './lib/Chart.StackedBar.js/src/Chart.StackedBar.js',
                                 './lib/angular-chart.js/dist/angular-chart.css',
                                 './lib/angular-chart.js/dist/angular-chart.js',
+                                './lib/d3/d3.js',
                                 './js/directives.js'
                             ]
                         }]).then(function(chart) {
@@ -131,20 +132,19 @@ app.config(function($stateProvider,
                 url: '/control/:type?',
                 params : {'sensor' : null},
                 resolve: {
-                    'usage' : function($state, $stateParams, $api, $q, $cookies){
-                        var sensor = $stateParams.sensor.channels['11'].id;
+                    recent : function($api, $q, $cookies, $stateParams){
                         var defer = $q.defer();
-                        var monthFrom = moment().startOf('month').startOf('days').format('YYYYMMDD');
-                        var monthTo = moment().endOf('month').endOf('days').format('YYYYMMDD');
 
-                        $api.business.channeldetail({
-                            id: sensor, 
-                            from: monthFrom, 
-                            to: monthTo, 
-                            timeformat: 'MONTH'
+                        $api.business.timequantumstatistic({
+                            deviceid: $stateParams.sensor.id
                         }, function(res){
+                            console.log(res);
+                            if (res.code == 0) {
                                 defer.resolve(res.result);
-                        });
+                            }else{
+                                defer.reject([]);
+                            };
+                        })
                         return defer.promise;
                     }
                 },
@@ -152,6 +152,39 @@ app.config(function($stateProvider,
                     'device-tab': {
                         templateUrl: 'templates/device/control.html',
                         controller: 'DeviceCtrl'
+                    }
+                }
+            })
+            .state('tabs.tab.device_month', {
+                url: '/month',
+                params: {
+                    'month': null,
+                    'device': null
+                },
+                resolve: {
+                    days: function($stateParams, $api, $q){
+                        var m = $stateParams.month,
+                            d = $stateParams.device,
+                            defer = $q.defer();
+
+                        $api.business.timequantumstatistic({
+                            deviceid: d,
+                            time: m.month
+                        }, function(res){
+                            if (res.code == 0) {
+                                defer.resolve(res.result);
+                            }else{
+                                defer.reject([]);                               
+                            }
+                        })
+
+                        return defer.promise;
+                    }
+                },
+                views: {
+                    'device-tab' : {
+                        templateUrl: 'templates/device/month.html',
+                        controller: 'MonthCtrl'
                     }
                 }
             })

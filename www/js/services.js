@@ -32,7 +32,8 @@ angular.module('gugecc.services', ['ngResource'])
             "sensorusage" : {method: 'POST'},
             "channeldetail" : {method: 'POST'},
             "recentchargelog": {method: 'POST'},
-            "fundflow": {method: 'POST'}
+            "fundflow": {method: 'POST'}, 
+            "timequantumstatistic" : {method: 'POST'}
         }],
         sensor : [ 'sensor', {
             "info" : { method : 'POST'}
@@ -204,6 +205,20 @@ angular.module('gugecc.services', ['ngResource'])
 
             }.bind(this))
             res.total = parseFloat(res.total.toFixed(3));
+            return res;
+        },
+        duty : function(data){
+            var res = {
+                series : [],
+                labels: [],
+                data: []
+            };
+
+            _.each(data, function(v, k){
+                
+                res.labels.push(moment(k/1000, 'X').day());
+            })
+
             return res;
         }
     };

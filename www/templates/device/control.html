@@ -11,26 +11,51 @@
                 <a class="button" ng-class="{'button-light': tab!='detail', 'button-positive': tab=='detail'}" ng-click="show('detail')">明细</a>
             </div>
             <div class="padding control-panel" ng-show="tab=='control'">
+
             	<!-- info -->
-           		<div class="card text-center">
+           		<div class="card text-center" ng-if="sensor.devicetype == 'ELECTRICITYMETER'">
 	                <h5 class="bold" >设备运行中</h5>
 	                <p>本月已使用</p>
-	                <p class="number bold">{{total | number: 2}}</p>
+	                <p class="number bold">{{recent[0].sum}}</p>
 	                <p class="unit">度</p>
             	</div>
+                
+                <div class="card text-center" ng-if="sensor.devicetype == 'TEMPRATURECONTROL'">
+                    <h5 class="bold" >设备运行中</h5>
+                    <p>本月已使用</p>
+                    <p class="number bold">{{recent[0].sum}}</p>
+                    <p class="unit">度</p>
+                </div>
+
 
             	<!-- control -->
-            	<div class="text-center power">
+            	<div class="text-center power" ng-if="canSwitch(sensor.command)">
             		<a href="" title=""><img src="img/switchOn.png" alt=""></a>
             	</div>
             </div>
             <div class="control detail-panel" ng-show="tab=='detail'">
-            	<table class="table">
+                <div class="padding row header-recent">
+                    <div class="col">
+                        <div class="round shape">
+                            上班 {{recent | percent : 'onDuty' | number: 0}} %
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h5>最近六月</h5>
+                        <p><span class="h3 positive" ng-bind="recent | sum : 'sum'|number:2"></span> 度</p>
+                    </div>
+                </div>
+            	<table class="table bt">
 		            <tbody>
-		                <tr ng-repeat="row in usage">
-		                    <td>{{row.timepoint | unix : 'MONTH'}}</td>
-		                    <td>{{row.total | number: 2}}度</td>
-		                    <td></td>
+		                <tr ng-repeat="row in recent" ng-click="go(row)">
+		                    <td>{{row.month}}</td>
+		                    <td>{{row.sum | number: 2}}度</td>
+		                    <td> 
+                                <div class="responsive-sm round">
+                                    <p>上班 {{row.onDutyPercent|number: 0}}%</p>
+                                    <p>下班 {{row.offDutyPercent|number: 0}}%</p>
+                                </div>
+                            </td>
 		                </tr>
 		            </tbody>
 		        </table>
