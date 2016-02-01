@@ -170,6 +170,21 @@ angular.module('gugecc.controllers', [])
         $scope.sensor = $stateParams.sensor;
         $scope.tab = 'control';
 
+        $scope.toggle = function(device, evt){
+            var command = device.status && device.status.switch == 'EMC_ON' ? 'EMC_OFF' : 'EMC_ON',
+                code = hex_sha1(info.ctrlpasswd).toUpperCase();
+
+            $api.control.send({id: device.id, command: 'EMC_SWITCH', ctrlcode: code, param: {mode: command}}, function(res){
+                console.log('res: ', res);
+                $ionicLoading.show({
+                    template: '命令已发送<br> 稍后下来刷新查看执行状态',
+                    duration: 2000
+                });
+            });
+
+            evt.stopPropagation();
+        }
+
         $scope.canSwitch = function(commands){
             return _.contains(commands, 'EMC_SWITCH');
         }

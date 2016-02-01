@@ -146,7 +146,12 @@ app.config(function($stateProvider,
                             };
                         })
                         return defer.promise;
-                    }
+                    },
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                            'lib/sha1.min.js/sha1.min.js'
+                        ]);
+                    }]
                 },
                 views: {
                     'device-tab': {
