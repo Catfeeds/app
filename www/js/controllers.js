@@ -188,7 +188,15 @@ angular.module('gugecc.controllers', [])
         function ($scope, $state, $api, Me, $stateParams, utils, days) {
         $scope.vm = $stateParams.month;
 
-        $scope.usage = utils.duty($scope.vm.usage);
+        $scope.usage = utils.duty(days.usage);
+
+        $scope.colours= [{ // default
+              "fillColor": '#FCA9A9'
+            },{ // default
+              "fillColor": '#DF1C1C'
+            },{ // default
+              "fillColor": '#FDB45C'
+            }];
     }])
     .controller('LogCtrl', ['$scope', '$api', 'Me', '$cookies', '$http', function ($scope, $api, Me, $cookies, $http) {
         $scope.tab = 'charge';

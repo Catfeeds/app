@@ -117,7 +117,7 @@ angular.module('gugecc.services', ['ngResource'])
 	this.up = function(data, remember){
         Object.keys(auth_keys).map(function(item){
             $cookies.put(item, data[item], {
-                expires : moment().month(+1)._d
+                expires : moment().add(1, 'M')._d
             });
         });
 	}
@@ -209,16 +209,17 @@ angular.module('gugecc.services', ['ngResource'])
         },
         duty : function(data){
             var res = {
-                series : [],
+                series : ['上班', '下班'],
                 labels: [],
-                data: []
+                data: [[], []]
             };
 
             _.each(data, function(v, k){
-                
-                res.labels.push(moment(k/1000, 'X').day());
+                res.labels.push(moment(k/1000, 'X').date());
+                res.data[1].push(v.onDuty);
+                res.data[0].push(v.offDuty);
             })
-
+            console.log(res);
             return res;
         }
     };
