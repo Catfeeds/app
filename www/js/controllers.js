@@ -185,6 +185,10 @@ angular.module('gugecc.controllers', [])
             evt.stopPropagation();
         }
 
+        $scope.statusImg = function(device){
+            return device.status.switch == 'EMC_ON' ? 'img/switchOn.png' : 'img/switchOff.png';
+        }
+
         $scope.canSwitch = function(commands){
             return _.contains(commands, 'EMC_SWITCH');
         }

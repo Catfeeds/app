@@ -30,7 +30,9 @@
 
             	<!-- control -->
             	<div class="text-center power" ng-if="canSwitch(sensor.command)">
-            		<a href="" title="" ng-click="toggle(sensor, $event)"><img src="img/switchOn.png" alt=""></a>
+            		<a href="" title="" ng-click="toggle(sensor, $event)">
+                        <img ng-src="{{statusImg(sensor)}}" alt="">
+                    </a>
             	</div>
             </div>
             <div class="control detail-panel" ng-show="tab=='detail'">
