@@ -166,7 +166,8 @@ angular.module('gugecc.controllers', [])
             return false;
         }
     }])
-    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'recent', function ($scope, $state, $api, Me, $stateParams, recent) {
+    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'recent', 'info', '$ionicLoading',
+         function ($scope, $state, $api, Me, $stateParams, recent, info, $ionicLoading) {
         $scope.sensor = $stateParams.sensor;
         $scope.tab = 'control';
 
@@ -186,7 +187,7 @@ angular.module('gugecc.controllers', [])
         }
 
         $scope.statusImg = function(device){
-            return device.status.switch == 'EMC_ON' ? 'img/switchOn.png' : 'img/switchOff.png';
+            return device.status && device.status.switch == 'EMC_ON' ? 'img/switchOn.png' : 'img/switchOff.png';
         }
 
         $scope.canSwitch = function(commands){

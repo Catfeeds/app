@@ -421,6 +421,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 	cursor: pointer;
 	margin: 2%;
 	flex: 1 0 29%;
+	-webkit-flex: 1 0 29%;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	height: 40px;

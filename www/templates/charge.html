@@ -8,7 +8,10 @@
             <p class="padding-top">当前余额: {{me.cash |number: 2}} 元 <a ui-sref="tabs.tab.logs" class="pull-right">余额记录</a></p>
         </div>
         <div class="row text-center">
-            <div class="col col-33" ng-repeat="row in amountSelects" ng-class="{'positive-bg light': charge.amount == row}" ng-click="charge.amount=row">{{row}} 元</div>
+            <div class="col col-33" ng-repeat="row in amountSelects | limitTo: 3" ng-class="{'positive-bg light': charge.amount == row}" ng-click="charge.amount=row">{{row}} 元</div>
+        </div>
+        <div class="row text-center">
+            <div class="col col-33" ng-repeat="row in amountSelects.slice(3) " ng-class="{'positive-bg light': charge.amount == row}" ng-click="charge.amount=row">{{row}} 元</div>
         </div>
         <div class="button-bar padding-top padding-bottom mt">
             <a class="button" href="" ng-click="charge.channelaccountid=3" ng-class="{'button-positive' : charge.channelaccountid==3}">微信支付</a>
