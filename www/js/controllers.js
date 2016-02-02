@@ -3,10 +3,25 @@ angular.module('gugecc.controllers', [])
         $scope.account = Account;
         var user = $cookies.get('user');
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, $cookies, Me, utils, $stateParams) {
+    .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, $cookies, Me, utils, $stateParams, datePickerSettings) {
         var user = $cookies.get('user');
         $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
         $scope.time = moment().format('YYYYMMDD');
+
+        $scope.showLeft = function(){
+            $ionicSideMenuDelegate.toggleLeft()
+        }
+
+        $scope.datepicker = datePickerSettings();
+        $scope.datepicker.to = new Date();
+        $scope.datepicker.callback = function(val){
+            if (!val) {
+                return false;
+            };
+            $scope.time = moment(val).format('YYYYMMDD');
+            $scope.getData($scope.show);
+            console.log(moment(val).format('YYYYMMDD'));
+        }
 
         $scope.$on('create', function (event, chart) {
           $scope.chart = chart;

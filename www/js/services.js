@@ -223,4 +223,26 @@ angular.module('gugecc.services', ['ngResource'])
             return res;
         }
     };
+}])
+.factory('datePickerSettings', [function(){
+    return function datePickerSettings(){
+        return {
+            titleLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            setLabel: '选取',
+            setButtonType : 'button-calm',
+            todayButtonType : 'button-positive',
+            closeButtonType : 'button-assertive',
+            inputDate: new Date(),
+            weekDaysList: ["日", "一", "二", "三", "四", "五", "六"],
+            monthList: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+            templateType: 'modal',
+            showTodayButton: 'true',
+            modalHeaderColor: 'bar-positive', 
+            modalFooterColor: 'bar-positive', 
+            closeOnSelect: true,
+            dateFormat: 'MM-yyyy'
+        }
+    };
 }]);

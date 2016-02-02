@@ -1,4 +1,17 @@
 <ion-view title="能耗分析">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-buttons side="primary">
+            <button class="button icon ion-navicon button-clear" ng-click="showLeft()">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <!-- <button class="button icon ion-ios-calendar-outline button-clear">
+            </button> -->
+            <ionic-datepicker input-obj="datepicker">
+                <button class="button icon ion-ios-calendar-outline button-clear"></button>
+            </ionic-datepicker>
+        </ion-nav-buttons>
+    </ion-nav-bar>
 	<div class="tabs-striped tabs-top tabs-color-positive transparent">
         <div class="tabs">
             <a class="tab-item" ng-class="{active : show == 'DAY'}" ng-click="changeview('DAY')">

@@ -91,7 +91,8 @@ app.config(function($stateProvider,
                                 './lib/angular-chart.js/dist/angular-chart.css',
                                 './lib/angular-chart.js/dist/angular-chart.js',
                                 './lib/d3/d3.js',
-                                './js/directives.js'
+                                './js/directives.js', 
+                                './lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js'
                             ]
                         }]).then(function(chart) {
                             var provider = $injector.get("ChartJs");

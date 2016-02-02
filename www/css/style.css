@@ -192,6 +192,15 @@ ion-content.full > .row {
 	padding-top: 10px!important;
 }
 
+.home-card b{
+	font-size: 16px;
+    line-height: 32px;
+}
+
+.home-card a{
+	font-size: 20px;
+}
+
 #list {
 	width: 170px;
 	margin: 30px auto;
@@ -291,8 +300,8 @@ ion-slide .trans-btn {
 
 input.cmn-toggle-round-flat + label {
 	padding: 2px;
-	width: 40px;
-	height: 20px;
+	width: 44px;
+	height: 25px;
 	background-color: #aaa;
 	-webkit-border-radius: 60px;
 	-moz-border-radius: 60px;
@@ -333,7 +342,7 @@ input.cmn-toggle-round-flat + label:after {
 	top: 4px;
 	left: 4px;
 	bottom: 4px;
-	width: 12px;
+	width: 16px;
 	background-color: #aaa;
 	-webkit-border-radius: 52px;
 	-moz-border-radius: 52px;

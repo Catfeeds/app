@@ -17,9 +17,11 @@
             <a class="button" href="" ng-click="charge.channelaccountid=3" ng-class="{'button-positive' : charge.channelaccountid==3}">微信支付</a>
             <a class="button" href="" ng-click="charge.channelaccountid=2" ng-class="{'button-positive' : charge.channelaccountid==2}">支付宝</a>
         </div>
-        <p>充值金额: {{charge.amount}} 元</p>
-        <button class="button button-block button-default assertive" ng-click="pay()">
-            <span class="">立即充值</span>
-        </button>
+        <p class="padding-vertical">充值金额: {{charge.amount}} 元</p>
+        <div class="padding-vertical">
+            <button class="button button-block button-default assertive" ng-click="pay()">
+                <span class="">立即充值</span>
+            </button>
+        </div>
     </ion-content>
 </ion-view>
