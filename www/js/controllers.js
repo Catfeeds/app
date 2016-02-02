@@ -72,12 +72,23 @@ angular.module('gugecc.controllers', [])
         $cookies, $api, 
         $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
-        $scope.amountSelects = [100, 200, 500, 1000, 2000, 5000];
+        $scope.amountSelects = [100, 500, 1000, 2000, 5000];
+        $scope.otherAmount = '';
 
         $scope.charge = {
             amount : 100,
             channelaccountid: 3
         };
+
+        $scope.checkKey = 'a0';
+
+        $scope.setAmount = function(amount, reset, key){
+            $scope.charge.amount = amount;
+            if (reset) {
+                $scope.otherAmount = '';
+            };
+            $scope.checkKey = key;
+        }
 
         $ionicModal.fromTemplateUrl('templates/charge/result.html', {
             scope: $scope
@@ -104,6 +115,13 @@ angular.module('gugecc.controllers', [])
         }
 
         $scope.pay = function(){
+            if (!$scope.charge.amount && !angular.isNumber($scope.charge.amount)) {
+                $ionicLoading.show({
+                    template: '请选择正确的金额',
+                    duration: 1000
+                });
+                return;
+            };
             var data = {
                 project: Me.project,
                 body: '智慧管家充值',
@@ -175,6 +193,7 @@ angular.module('gugecc.controllers', [])
                     template: '命令已发送<br> 稍后下来刷新查看执行状态',
                     duration: 2000
                 });
+                device.status.switch = command;
             });
 
             evt.stopPropagation();

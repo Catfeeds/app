@@ -584,3 +584,15 @@ input.cmn-toggle-round-flat:checked + label:after {
 	background: #FCA9A9;
 }
 
+.charge .col input[type='number']{
+	width: 84px;
+    height: 38px;
+    line-height: 25px;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.charge .col.positive-bg input[type='number']{
+	background: transparent;
+	color: #fff;
+}
