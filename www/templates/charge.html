@@ -17,8 +17,7 @@
             </div>
         </div>
         <div class="button-bar padding-top padding-bottom mt">
-            <a class="button" href="" ng-click="charge.channelaccountid=3" ng-class="{'button-positive' : charge.channelaccountid==3}">微信支付</a>
-            <a class="button" href="" ng-click="charge.channelaccountid=2" ng-class="{'button-positive' : charge.channelaccountid==2}">支付宝</a>
+            <a class="button" href="" ng-click="charge.channelaccountid=channel.id" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id}" ng-bind="channel.origin"></a>
         </div>
         <p class="padding-vertical">充值金额: {{charge.amount}} 元</p>
         <div class="padding-vertical">

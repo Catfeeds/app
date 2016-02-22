@@ -222,16 +222,17 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve: {
-                    // channels: function($api, $q, Me){
-                    //     var defer = $q.defer();
-                    //     $api.payment.channelinfo({
-                    //         project : Me.project,
-                    //         flow: 'EARNING'
-                    //     }, function(res){
-                    //         return defer.resolve(res.result);
-                    //     })
-                    //     return defer.promise;
-                    // }
+                    channels: function($api, $q, Me){
+                        var defer = $q.defer();
+                        $api.payment.channelinfo({
+                            project : Me.project,
+                            flow: 'EARNING',
+                            type: ['alipay','wx']
+                        }, function(res){
+                            return defer.resolve(res.result);
+                        })
+                        return defer.promise;
+                    }
                 }
             })
             .state('tabs.tab.logs', {

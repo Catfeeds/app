@@ -41,9 +41,7 @@ angular.module('gugecc.controllers', [])
             });
         }
 
-        $scope.options = {
-            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><b><%=datasets[i].label%></b><small><%=datasets[i].bars.reduce(function(total, now){return total+now.value}, 0)%><%}%>元</small></li><%}%></ul>"
-        }
+        $scope.options = {}
 
         $scope.colours= [{ // default
               "fillColor": '#F7464A'
@@ -70,14 +68,16 @@ angular.module('gugecc.controllers', [])
         Me, 
         $state,
         $cookies, $api, 
+        channels,
         $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
         $scope.amountSelects = [100, 500, 1000, 2000, 5000];
         $scope.otherAmount = '';
+        $scope.channels = channels;
 
         $scope.charge = {
             amount : 100,
-            channelaccountid: 3
+            channelaccountid: channels[0].id
         };
 
         $scope.checkKey = 'a0';
@@ -263,7 +263,8 @@ angular.module('gugecc.controllers', [])
                 "from": moment().subtract(7, 'day').format('YYYYMMDD'),
                 "to": moment().format('YYYYMMDD'),
                 pageindex: 1,
-                pagesize: 20
+                pagesize: 20,
+                status:'SUCCESS'
             },
             fee: {
                 // project: Me.project,
