@@ -77,7 +77,7 @@ angular.module('gugecc.controllers', [])
 
         $scope.charge = {
             amount : 100,
-            channelaccountid: channels[0].id
+            channelaccountid: channels ? channels[0].id : undefined
         };
 
         $scope.checkKey = 'a0';
@@ -115,6 +115,15 @@ angular.module('gugecc.controllers', [])
         }
 
         $scope.pay = function(){
+            // 提示无充值渠道错误
+            if (!channels) {
+                $ionicLoading.show({
+                    template: '暂无可用充值渠道',
+                    duration: 1000
+                });
+                return;
+            }
+
             if (!$scope.charge.amount && !angular.isNumber($scope.charge.amount)) {
                 $ionicLoading.show({
                     template: '请选择正确的金额',
@@ -122,6 +131,7 @@ angular.module('gugecc.controllers', [])
                 });
                 return;
             };
+
             var data = {
                 project: Me.project,
                 body: '智慧管家充值',
