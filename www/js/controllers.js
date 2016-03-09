@@ -20,7 +20,6 @@ angular.module('gugecc.controllers', [])
             };
             $scope.time = moment(val).format('YYYYMMDD');
             $scope.getData($scope.show);
-            console.log(moment(val).format('YYYYMMDD'));
         }
 
         $scope.$on('create', function (event, chart) {

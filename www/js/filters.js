@@ -10,6 +10,12 @@ angular.module('gugecc.filters', [])
             return moment.unix(input).format(format|| 'YYYY-MM-DD');
         }
     })
+    .filter('rtime', function(){
+        return function(input, m){
+            var format = m ? 'YYYY-MM-DD' : 'YYYY-MM';
+            return moment(input, 'YYYYMMDD').format(format);
+        }
+    })
     .filter('sum', function() {
         return function(input, key) {
             var sum = 0;
