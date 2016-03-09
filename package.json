@@ -21,7 +21,8 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "co.airsia.cordova.pingpp"
+    "co.airsia.cordova.pingpp",
+    "cordova-plugin-dialogs"
   ],
   "cordovaPlatforms": [
     "ios",
