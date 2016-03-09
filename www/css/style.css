@@ -199,6 +199,7 @@ ion-content.full > .row {
 
 .home-card a{
 	font-size: 20px;
+	
 }
 
 #list {
@@ -255,9 +256,14 @@ ion-slide .trans-btn {
 	z-index: 3;
 	bottom: 130px;
 	right: calc(100%/2 - 45px);
-	background: rgba(0, 0, 0, 0);
-	border: rgba(0, 0, 0, 0);
-	opacity: 0;
+	background: rgba(0, 0, 0, 0) url('../img/wt/start-btn.png') 50% 50% no-repeat;
+	background-color: rgba(0, 0, 0, 0)!important;
+	color: rgba(0, 0, 0, 0)!important;
+	width: 100px;
+	background-size: 100%;
+	height: 34px;
+	min-height: 0px;
+	border: none;
 }
 
 .item-complex .item-content {
