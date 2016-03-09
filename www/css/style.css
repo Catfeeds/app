@@ -199,7 +199,8 @@ ion-content.full > .row {
 
 .home-card a{
 	font-size: 20px;
-	
+	height: 50px;
+	line-height: 40px;
 }
 
 #list {
