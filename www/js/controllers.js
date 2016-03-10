@@ -172,7 +172,6 @@ angular.module('gugecc.controllers', [])
             var project = Me.project;
 
             $scope.canSwitch = function(commands) {
-                return true;
                 return _.contains(commands, 'EMC_SWITCH');
             }
 
