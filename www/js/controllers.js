@@ -286,7 +286,7 @@ angular.module('gugecc.controllers', [])
         var query = {
             charges: {
                 "project": [{ "id": project }],
-                "from": moment().subtract(7, 'day').format('YYYYMMDD'),
+                "from": moment().subtract(6, 'month').format('YYYYMMDD'),
                 "to": moment().format('YYYYMMDD'),
                 pageindex: 1,
                 pagesize: 20,
@@ -296,7 +296,7 @@ angular.module('gugecc.controllers', [])
                 // project: Me.project,
                 uid: $cookies.get('user'),
                 // key: '',
-                from: '20000101',
+                from: '20160101',
                 to: moment().format('YYYYMMDD'),
                 // flow: 'EXPENSE',
                 category: 'PAYFEES'
