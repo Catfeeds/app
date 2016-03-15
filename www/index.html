@@ -51,6 +51,7 @@
     <script>
         document.addEventListener('deviceready', function() {
             if (cordova) {
+                window.plugins.jPushPlugin.init();
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
             };
         }, false);
