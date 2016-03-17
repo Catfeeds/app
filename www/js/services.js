@@ -104,34 +104,32 @@ angular.module('gugecc.services', ['ngResource'])
         }
     }, this);
 }])
-.service('cookies', ['$cookies', function ($cookies) {
+.service('$cookies', function () {
 	var auth_keys = {
 		user : '',
 		token : ''
-	};
+	}, prefix = '_ec_';
 
     this.get = function(key){
-        return $cookies.get(key);
+        return localStorage[prefix + key];
     }
 
 	this.up = function(data, remember){
         Object.keys(auth_keys).map(function(item){
-            $cookies.put(item, data[item], {
-                expires : moment().add(1, 'M')._d
-            });
+            localStorage[prefix + item] = data[item];
         });
 	}
 
 	this.down = function(){
         Object.keys(auth_keys).map(function(item){
-            $cookies.remove(item);
+            delete localStorage[prefix + item];
         });
 	}
 
 	this.valid = function(){
-		return (Boolean)($cookies.get('user') && $cookies.get('token'));
+		return (Boolean)(this.get('user') && this.get('token'));
 	}
-}])
+})
 .provider('encrypt', [function () {
     this.$get = function(){
         return function(user, token, data){

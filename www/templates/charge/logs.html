@@ -41,6 +41,7 @@
 				<tbody>
 					<tr ng-repeat="log in fee | orderBy: 'timecreate' : true ">
 						<td ng-bind="log.timecreate | timestamp" class="time"></td>
+						<td ng-bind="log.subject || log.category" class="time"></td>
 						<td class="detail">
 							<p ng-bind="log.amount" class="assertive bold text-right"></p>
 						</td>

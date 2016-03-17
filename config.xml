@@ -8,7 +8,9 @@
       古鸽云能源信息技术
     </author>
   <content src="index.html"/>
-  <access origin="*"/>
+  <access origin="*" />
+  <allow-navigation href="*" />
+  <allow-intent href="*" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

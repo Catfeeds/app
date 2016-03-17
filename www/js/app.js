@@ -4,8 +4,7 @@ var app = angular.module('gugecc', [
     'gugecc.services',
     'gugecc.filters',
     'gugecc.controllers',
-    'oc.lazyLoad',
-    'ngCookies'
+    'oc.lazyLoad'
 ]);
 
 app.config(function($stateProvider,
@@ -297,10 +296,10 @@ app.config(function($stateProvider,
                 url: '/logout',
                 cache: false,
                 resolve: {
-                    deps: function(cookies, $api, $q) {
+                    deps: function($cookies, $api, $q) {
                         var defer = $q.defer();
                         $api.auth.logout(null, function(res) {
-                            cookies.down();
+                            $cookies.down();
                             defer.resolve(res);
                         });
                         return defer.promise;
@@ -335,7 +334,8 @@ app.config(function($stateProvider,
             }
         })
     })
-    .run(['urls', '$cookies', 'encrypt', '$http', '$ionicLoading', '$rootScope', function(urls, $cookies, encrypt, $http, $ionicLoading, $rootScope) {
+    .run(['urls', '$cookies', 'encrypt', '$http', '$ionicLoading', '$rootScope', 
+        function(urls, $cookies, encrypt, $http, $ionicLoading, $rootScope) {
         if (!urls.debug) {
             $http.defaults.transformRequest.push(function(data, headerGetter) {
                 var obj = encrypt($cookies.get('user'), $cookies.get('token'), data ? JSON.parse(data) : data);
@@ -360,9 +360,9 @@ app.config(function($stateProvider,
             $ionicLoading.hide();
         })
     }])
-    .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
+    .run(['$rootScope', '$state', '$cookies', function($rootScope, $state, $cookies) {
         // 设置跳转
-        var cookies = cookies;
+        var cookies = $cookies;
         $rootScope.$on('$stateChangeStart', function(event,
             toState, toParams, fromState, fromParams) {
             var inited = localStorage.inited;
@@ -409,14 +409,15 @@ app
             $ionicSideMenuDelegate.toggleLeft();
         }
     })
-    .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, cookies) {
+    .controller('IntroCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', '$cookies',
+        function($scope, $state, $ionicSlideBoxDelegate, $cookies) {
         // Called to navigate to the main app
         $scope.startApp = function() {
             // 检查登录
             localStorage.inited = true;
             // disable backbutton
 
-            if (cookies.valid()) {
+            if ($cookies.valid()) {
                 $state.go('tabs.tab.home');
             } else {
                 $state.go('login');
@@ -427,9 +428,9 @@ app
         $scope.slideChanged = function(index) {
             $scope.slideIndex = index;
         };
-    })
-    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', 'cookies', '$ionicHistory', '$ionicLoading', 
-        function($scope, $state, $api, md5, cookies, $ionicHistory, $ionicLoading) {
+    }])
+    .controller('AuthCtrl', ['$scope', '$state', '$api', 'md5', '$cookies', '$ionicHistory', '$ionicLoading', 
+        function($scope, $state, $api, md5, $cookies, $ionicHistory, $ionicLoading) {
         $scope.user = {};
 
         $scope.login = function() {
@@ -440,7 +441,7 @@ app
             $api.auth.login(credential, function(res) {
                 if (!res.code) {
                     // setup cookie
-                    cookies.up(res.result, $scope.remember);
+                    $cookies.up(res.result, $scope.remember);
                     $ionicHistory.clearCache()
                     $state.go('tabs.tab.home');
                 } else {
