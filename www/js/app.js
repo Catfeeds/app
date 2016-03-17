@@ -13,6 +13,7 @@ app.config(function($stateProvider,
         $ocLazyLoadProvider) {
         $ionicConfigProvider.platform.android.tabs.position("bottom");
         $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+        $ionicConfigProvider.platform.android.navBar.positionPrimaryButtons('left');
 
         /* 隐藏文字 */
         $ionicConfigProvider.backButton.text('');

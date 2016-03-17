@@ -123,7 +123,7 @@ ion-content.full > .row {
 .tabs-striped.tabs-positive .tab-item.tab-item-active,
 .tabs-striped.tabs-positive .tab-item.active,
 .tabs-striped.tabs-positive .tab-item.activated {
-	border-color: #83B8F7;
+	border-color: #83B8F7!important;
 }
 
 .list .item-input-icon i {
