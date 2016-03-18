@@ -604,3 +604,16 @@ input.cmn-toggle-round-flat:checked + label:after {
 	background: transparent;
 	color: #fff;
 }
+.weather{
+
+}
+
+.weather .main-data{
+	background: url('../img/weather/weather1.png') 50% 30% no-repeat;
+	height: 180px;
+	background-size: cover;
+}
+
+.weather .sub-data{
+
+}

@@ -104,19 +104,40 @@ angular.module('gugecc.services', ['ngResource'])
         }
     }, this);
 }])
-.service('$cookies', function () {
+.service('cookies', ['$cookies', function ($cookies) {
 	var auth_keys = {
 		user : '',
 		token : ''
 	}, prefix = '_ec_';
 
     this.get = function(key){
+        if (this.expired()) {
+            return null;
+        }
         return localStorage[prefix + key];
+    }
+    this.setExpire = function(date){
+        localStorage[prefix+'expire'] = date;
+    }
+
+    this.expired = function(){
+        var stamp = localStorage[prefix+'expire'];
+        if (!stamp) {
+            return true;
+        }
+        return moment(stamp, 'X').isBefore(moment());
     }
 
 	this.up = function(data, remember){
+        var date = moment().add(1, 'M');
+        this.setExpire(date.unix());
+
         Object.keys(auth_keys).map(function(item){
             localStorage[prefix + item] = data[item];
+
+            $cookies.put(item, data[item], {
+                expires : date._d
+            });
         });
 	}
 
@@ -129,7 +150,7 @@ angular.module('gugecc.services', ['ngResource'])
 	this.valid = function(){
 		return (Boolean)(this.get('user') && this.get('token'));
 	}
-})
+}])
 .provider('encrypt', [function () {
     this.$get = function(){
         return function(user, token, data){
@@ -243,4 +264,21 @@ angular.module('gugecc.services', ['ngResource'])
             dateFormat: 'MM-yyyy'
         }
     };
+}])
+.factory('$weather', ['$http', function ($http) {
+    var apiUrl = 'http://www.baidu.com',
+        location = null;
+
+    weather.locate();
+
+    weather = {
+        update : function(){
+
+        },
+        locate: function(){
+
+        }
+    }
+
+    return weather;
 }]);

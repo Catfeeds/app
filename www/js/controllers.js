@@ -1,10 +1,10 @@
 angular.module('gugecc.controllers', [])
-    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, $cookies, Account) {
+    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, cookies, Account) {
         $scope.account = Account;
-        var user = $cookies.get('user');
+        var user = cookies.get('user');
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, $cookies, Me, utils, $stateParams, datePickerSettings) {
-        var user = $cookies.get('user');
+    .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, cookies, Me, utils, $stateParams, datePickerSettings) {
+        var user = cookies.get('user');
         $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
         $scope.time = moment().format('YYYYMMDD');
 
@@ -67,7 +67,7 @@ angular.module('gugecc.controllers', [])
     .controller('Charge', function($scope,
         Me,
         $state,
-        $cookies, $api,
+        cookies, $api,
         channels,
         $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
@@ -98,7 +98,7 @@ angular.module('gugecc.controllers', [])
 
         $scope.showModal = function() {
             // 查询余额
-            $api.business.userinfo({ uid: $cookies.get('user') }, function(res) {
+            $api.business.userinfo({ uid: cookies.get('user') }, function(res) {
                 $ionicHistory.clearCache();
                 $scope.me = res.result;
             });
@@ -136,7 +136,7 @@ angular.module('gugecc.controllers', [])
                 project: Me.project,
                 body: '智慧管家充值',
                 subject: '智慧管家',
-                uid: $cookies.get('user')
+                uid: cookies.get('user')
             };
             angular.extend(data, $scope.charge);
 
@@ -167,8 +167,8 @@ angular.module('gugecc.controllers', [])
             });
         }
     })
-    .controller('Device', ['$scope', '$api', '$cookies', 'Me', '$state', 'info', '$ionicLoading',
-        function($scope, $api, $cookies, Me, $state, info, $ionicLoading) {
+    .controller('Device', ['$scope', '$api', 'cookies', 'Me', '$state', 'info', '$ionicLoading',
+        function($scope, $api, cookies, Me, $state, info, $ionicLoading) {
             var project = Me.project;
 
             $scope.canSwitch = function(commands) {
@@ -278,7 +278,7 @@ angular.module('gugecc.controllers', [])
             }];
         }
     ])
-    .controller('LogCtrl', ['$scope', '$api', 'Me', '$cookies', '$http', function($scope, $api, Me, $cookies, $http) {
+    .controller('LogCtrl', ['$scope', '$api', 'Me', 'cookies', '$http', function($scope, $api, Me, cookies, $http) {
         $scope.tab = 'charge';
         $scope.paging = {};
 
@@ -294,7 +294,7 @@ angular.module('gugecc.controllers', [])
             },
             fee: {
                 // project: Me.project,
-                uid: $cookies.get('user'),
+                uid: cookies.get('user'),
                 // key: '',
                 from: '20160101',
                 to: moment().format('YYYYMMDD'),
