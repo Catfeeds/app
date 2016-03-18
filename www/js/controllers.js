@@ -1,5 +1,5 @@
 angular.module('gugecc.controllers', [])
-    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, cookies, Account) {
+    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, cookies, Account, $weather) {
         $scope.account = Account;
         var user = cookies.get('user');
     })

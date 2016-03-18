@@ -266,19 +266,66 @@ angular.module('gugecc.services', ['ngResource'])
     };
 }])
 .factory('$weather', ['$http', function ($http) {
-    var apiUrl = 'http://www.baidu.com',
-        location = null;
+    var apiKey = 'a2c457b03c1aa9cd4af847ff77f0df93',
+        weatherUrl = 'http://apis.baidu.com/apistore/weatherservice/cityname?cityname=',
+        locationUrl = "http://api.map.baidu.com/geocoder?output=json&location=",
+        location = null,
+        cityCode = null,
+        cache = null;
 
-    weather.locate();
-
-    weather = {
+    var weather = {
+        city: function(){
+            return location
+        },
         update : function(){
+            // 请求天气数据 
+            var url = weatherUrl + location.district,
+                req = $http.get(url, {
+                    headers: {
+                        apikey: apiKey
+                    }
+                });
+
+                req.success(function(result){
+                    if (errNum == 0) {
+                        cache = res.retData;
+                    }else{
+                        // 提示错误
+                        
+                    }
+                })
+            return req;
+        },
+        save: function(location, code){
 
         },
         locate: function(){
+            // 定位
+            var self = this;
+            navigator.geolocation.getCurrentPosition(function(loc){
+                // 解析地址
+                self.coder(loc.coords);
+            }, function(error){
+                console.log(error);
+            });
+        },
+        coder: function(cord){
+            // 通过gps查询 城市名称
+            // 
+            var self = this, 
+                url = locationUrl + cord.latitude + ',' + cord.longitude;
+            $http.get(url).success(function(res){
+                location = res.result.addressComponent;
+                cityCode = res.result.cityCode;
 
+                self.update();
+            }, function(err){
+
+            })
         }
     }
+    
+    weather.locate();
 
     return weather;
 }]);
