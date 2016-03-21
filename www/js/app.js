@@ -58,7 +58,9 @@ app.config(function($stateProvider,
                         templateUrl: 'templates/tabs.html'
                     }
                 },
-                resolve : {}
+                resolve : {
+
+                }
             })
             .state('tabs.tab.home', {
                 url: '/home',
@@ -338,6 +340,8 @@ app.config(function($stateProvider,
     })
     .run(['urls', 'cookies', 'encrypt', '$http', '$ionicLoading', '$rootScope', 
         function(urls, cookies, encrypt, $http, $ionicLoading, $rootScope) {
+        // 设置请求超时 和 API 签名
+        $http.defaults.timeout = 5000;
         if (!urls.debug) {
             $http.defaults.transformRequest.push(function(data, headerGetter) {
                 var obj = encrypt(cookies.get('user'), cookies.get('token'), data ? JSON.parse(data) : data);

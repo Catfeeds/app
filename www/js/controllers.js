@@ -1,7 +1,19 @@
 angular.module('gugecc.controllers', [])
-    .controller('HomeTabCtrl', function($scope, $api, $ionicSideMenuDelegate, cookies, Account, $weather) {
+    .controller('HomeTabCtrl', function($scope,
+        $api,
+        $ionicSideMenuDelegate,
+        cookies,
+        Account, 
+        $weather) {
         $scope.account = Account;
         var user = cookies.get('user');
+
+        // 添加天气信息
+        $weather.get().then(function(weather){
+            console.log(weather);
+            $scope.weather = weather.today;
+            $scope.city = weather.city;
+        });
     })
     .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, cookies, Me, utils, $stateParams, datePickerSettings) {
         var user = cookies.get('user');

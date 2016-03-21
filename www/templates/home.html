@@ -9,11 +9,45 @@
         </ion-slide-box> -->
 
         <div class="weather">
-            <div class="main-data">
+            <div class="main-data padding">
+                <div class="row">
+                    <div class="col">
+                        <!-- 天气 -->
+                        <div ng-bind="weather.curTemp" class="temp-header"></div>
+                        <p class="padding-vertical" ng-show="weather">
+                            <span>{{weather.lowtemp}}</span> - <span>{{weather.hightemp}}</span> 
+                            <b>{{weather.type}}</b>
+
+                            <br>
+                            <span> {{weather.fengxiang + ' ' + weather.fengli}}</span>
+                        </p>
+                    </div>
+                    <div class="col text-right">
+                        <!--  区域 -->
+                        <div class="temp-header" ng-bind="city"></div>
+                        <p class="padding-vertical">
+                            {{ weather.week }}
+                            <br>
+                            <span>{{weather.date}}</span>
+                        </p>
+                    </div>
+                </div>
                 
             </div>
-            <div class="sub-data">
-                
+            <div class="sub-data padding" >
+                <!-- 指数 -->
+                <div class="row">
+                    <div class="col">
+                        <div ng-show="weather" class="">
+                            PM 2.5 <span class="h3 light"> {{weather.aqi || '无'}}</span>
+                        </div>
+                    </div>
+                    <div class="col text-right">
+                        <div class="" ng-show="weather">
+                            洗车指数: {{weather.index[3].index}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="list card text-center vertical-middle home-card">

@@ -605,15 +605,21 @@ input.cmn-toggle-round-flat:checked + label:after {
 	color: #fff;
 }
 .weather{
-
+	color: #fff;
+	background: url('../img/weather/weather1.png') 50% 30% no-repeat;
 }
 
 .weather .main-data{
-	background: url('../img/weather/weather1.png') 50% 30% no-repeat;
-	height: 180px;
+	// background: url('../img/weather/weather1.png') 50% 30% no-repeat;
+	height: 100px;
 	background-size: cover;
 }
 
-.weather .sub-data{
+.weather .main-data .temp-header{
+	font-size: 30px;
+	line-height: 40px;
+}
 
+.weather .sub-data{
+	
 }
