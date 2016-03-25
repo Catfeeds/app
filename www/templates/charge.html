@@ -16,9 +16,28 @@
                 <input type="number" ng-change="setAmount(otherAmount, false, 'c')" ng-model="otherAmount" placeholder="其他" min="100" max="5000">
             </div>
         </div>
+        <!-- 支付平台 -->
         <div class="button-bar padding-top padding-bottom mt">
             <a class="button" href="" ng-click="charge.channelaccountid=channel.id" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id}" ng-bind="channel.origin"></a>
         </div>
+        <!-- 银行卡 -->
+        <ul class="list list-light">
+            <li>
+                <a class="item item-avatar" href="" >
+                    <img src="img/pay/ps_cmb.png" alt="">
+                    <h4>招商银行</h4>
+                    <p>每日限额50000，单次限额10000</p>
+                </a>
+            </li>
+            <li>
+                <a class="item item-avatar" href="" >
+                    <img src="img/pay/ps_icbc.png" alt="">
+                    <h4>工商银行</h4>
+                    <p>每日限额50000，单次限额10000</p>
+                </a>
+            </li>
+        </ul>
+           
         <p class="padding-vertical">充值金额: {{charge.amount}} 元</p>
         <div class="padding-vertical">
             <button class="button button-block button-default assertive" ng-click="pay()">
