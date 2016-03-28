@@ -230,7 +230,16 @@ app.config(function($stateProvider,
                         $api.payment.channelinfo({
                             project : Me.project,
                             flow: 'EARNING',
-                            type: ['alipay','wx']
+                            type: ['wx', 'alipay']
+                        }, function(res){
+                            return defer.resolve(res.result);
+                        })
+                        return defer.promise;
+                    },
+                    bankcards: function($api, $q, Me){
+                        var defer = $q.defer();
+                        $api.channelaccount.info({
+                            belongto : Me.uid,
                         }, function(res){
                             return defer.resolve(res.result);
                         })

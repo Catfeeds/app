@@ -22,6 +22,9 @@ angular.module('gugecc.services', ['ngResource'])
             account: ['account', {
                 info: { method: 'POST' },
             }],
+            bank: ['bank', {
+                info: { method: 'POST'}
+            }],
             business: ['business', {
                 "monthlyusage": { method: 'POST' },
                 "userinfo": { method: 'POST' },
@@ -360,13 +363,45 @@ angular.module('gugecc.services', ['ngResource'])
 
         return weather;
     }])
-    .service('$eview', ['$ionicModal', '$http', '$rootScope', '$injector', '$controller', '$q', 
-        function ($ionicModal, $http, $rootScope, $injector, $controller, $q) {
+    .service('$app', ['$ionicModal', 
+        '$http', 
+        '$rootScope', 
+        '$injector', 
+        '$controller', 
+        '$ionicLoading', 
+        '$api', 
+        '$q', 
+    function (
+        $ionicModal, 
+        $http, 
+        $rootScope, 
+        $injector, 
+        $controller, 
+        $ionicLoading, 
+        $api, 
+        $q) {
         var modalPrefix = 'modal-',
             _options = {};
         // common modal 
-        this.modals = {};
+        _modals = {};
 
+        /**
+         * 关闭 modal ，resolve相应 defer
+         * @param  {[type]} modal [description]
+         * @param  {[type]} data  [description]
+         * @return {[type]}       [description]
+         */
+        this.closeModal = function(modal, data){
+            var m = _modals[modalPrefix + modal.scope.$id];
+            m.defer.resolve(data);
+            modal.remove();
+        }
+
+        /**
+         * 打开对应 modal,并保存 scope 和 defer
+         * @param  {[type]} options [description]
+         * @return {[type]}         [description]
+         */
         this.modal = function(options){
             // templateUrl is required
             var self = this,
@@ -379,13 +414,21 @@ angular.module('gugecc.services', ['ngResource'])
 
             promise.then(function(modal){
 
-                self.modals[modalPrefix + modal.scope.$id] = {
+                _modals[modalPrefix + modal.scope.$id] = {
                     modal: modal,
                     defer: defer
                 };
 
                 modal.scope.closeModal = function(){
                     modal.remove();
+                }
+
+                if (options.scopeData) {
+                    for (var key in options.scopeData) {
+                        if (options.scopeData.hasOwnProperty(key)) {
+                            modal.scope[key] = options.scopeData[key];
+                        }
+                    }
                 }
 
                 if (options.controller) {
@@ -398,6 +441,39 @@ angular.module('gugecc.services', ['ngResource'])
                 modal.show();
             });
             
+            return defer.promise;
+        }
+
+        this.pay = function(data){
+            var defer = $q.defer();
+
+            $api.payment.charge(data, function(res) {
+                if (res.code != 0) {
+                    $ionicLoading.show({
+                        template: res.message || '服务器错误',
+                        duration: 1000
+                    });
+                    return;
+                }
+
+                pingpp.createPayment(res.result, function(result) {
+                    // 跳转支付成功页面
+                    defer.resolve();
+                }, function(err) {
+                    var msg = {
+                        'fail': '支付失败',
+                        'cancel': '用户已取消支付',
+                        'invalid': '支付结果无效，请联系支付平台'
+                    };
+                    $ionicLoading.show({
+                        template: msg[err || 'invalid'],
+                        duration: 2000
+                    });
+                    defer.reject();
+                });
+
+            });
+
             return defer.promise;
         }
     }]);

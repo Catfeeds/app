@@ -20,27 +20,27 @@
             <legend>支付方式</legend>
         </fieldset>
         <!-- 支付平台 -->
-        <div class="button-bar">
-            <a class="button" href="" ng-click="charge.channelaccountid=channel.id" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id}" ng-bind="channel.origin"></a>
+        <div class="button-bar padding-horizontal">
+            <a class="button button-small" ng-click="charge.channelaccountid=channel.id" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id}" ng-bind="channel.origin"></a>
         </div>
         <!-- 银行卡 -->
-        <ul class="list list-light">
-            <li>
-                <a class="item item-avatar" href="">
+        <ul class="list list-light mt list-round">
+            <li class="padding-horizontal" ng-repeat="cart in bankcards">
+                <a class="item item-avatar bg-stable bd-stable bd2" href="">
                     <img src="img/pay/ps_cmb.png" alt="">
                     <h4>招商银行</h4>
                     <p>每日限额50000，单次限额10000</p>
                 </a>
             </li>
-            <li>
-                <a ng-click="show_bind()" class="item">
-                    <button type="" class="button button-energized button-block"><i class="icon ion-plus"></i> 添加银行卡</button>
+            <li ng-if="!bankcards.length">
+                <a ng-click="show_bind()" class="item padding">
+                    <button type="" class="button button-energized button-block button-small"><i class="icon ion-plus"></i> 添加银行卡</button>
                 </a>
             </li>
         </ul>
-        <p class="padding">充值金额: {{charge.amount}} 元</p>
-        <div class="padding">
-            <button class="button button-block button-default button-assertive" ng-click="pay()">
+        <p class="padding-horizontal">充值金额: {{charge.amount}} 元</p>
+        <div class="padding-horizontal">
+            <button class="button button-small button-block button-default button-assertive" ng-click="pay()">
                 <span class="">立即充值</span>
             </button>
         </div>

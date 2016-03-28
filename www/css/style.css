@@ -59,6 +59,11 @@ a:visited{
 	float: right;
 }
 
+.bd2{
+	border-width: 2px;
+    border-style: solid;
+}
+
 .pull-left {
 	float: left;
 }
@@ -304,6 +309,16 @@ ion-slide .trans-btn {
 
 .list-light > li > a.item {
     border: none;
+    margin: 0px;
+}
+
+.list-round > li > a.item{
+	border-radius: 2px;
+}
+
+.list-light > li > a.item.active{
+	background-color: transparent;
+	border: 2px solid #0066ca;
 }
 
 /* ============================================================
@@ -465,7 +480,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .charge .col {
 	border-left: 1px solid #ddd;
-	padding: 10px 0px;
+	padding: 5px 0px;
 	border-bottom: 1px solid #ddd;
 	transition: all ease 0.5s;
 	cursor: pointer;
@@ -474,7 +489,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 	-webkit-flex: 1 0 29%;
 	border: 1px solid #ddd;
 	border-radius: 3px;
-	height: 40px;
+	height: 30px;
 }
 
 .charge .col:nth-child(3n) {
@@ -627,10 +642,10 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .charge .col input[type='number']{
 	width: 84px;
-    height: 38px;
-    line-height: 25px;
-    padding-left: 10px;
-    display: inline-block;
+	height: 28px;
+	line-height: 24px;
+	padding-left: 10px;
+	display: inline-block;
 }
 
 .charge .col.positive-bg input[type='number']{

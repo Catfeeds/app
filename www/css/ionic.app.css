@@ -9728,3 +9728,9 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.bg-stable {
+  background-color: #f8f8f8; }
+
+.bd-stable {
+  border-color: #f8f8f8; }

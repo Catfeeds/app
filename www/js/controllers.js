@@ -80,13 +80,14 @@ angular.module('gugecc.controllers', [])
         Me,
         $state,
         cookies, $api,
-        channels,
-        $eview,
+        channels, bankcards,
+        $app,
         $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
         $scope.amountSelects = [100, 500, 1000, 2000, 5000];
         $scope.otherAmount = '';
         $scope.channels = channels;
+        $scope.bankcards = bankcards;
 
         $scope.charge = {
             amount: 100,
@@ -101,30 +102,6 @@ angular.module('gugecc.controllers', [])
                 $scope.otherAmount = '';
             };
             $scope.checkKey = key;
-        }
-
-        $ionicModal.fromTemplateUrl('templates/charge/result.html', {
-            scope: $scope
-        }).then(function(modal) {
-            $scope.modal = modal;
-        })
-
-        $scope.showModal = function() {
-            // 查询余额
-            $api.business.userinfo({ uid: cookies.get('user') }, function(res) {
-                $ionicHistory.clearCache();
-                $scope.me = res.result;
-            });
-            $scope.modal.show();
-        }
-
-        $scope.closeModal = function() {
-            $state.go($state.current, null, {
-                reload: true,
-                inherit: false,
-                notify: true
-            });
-            $scope.modal.hide();
         }
 
         $scope.pay = function() {
@@ -153,37 +130,29 @@ angular.module('gugecc.controllers', [])
             };
             angular.extend(data, $scope.charge);
 
-            $api.payment.charge(data, function(res) {
-                if (res.code != 0) {
-                    $ionicLoading.show({
-                        template: res.message || '服务器错误',
-                        duration: 1000
-                    });
-                    return;
-                }
+            $app.pay(data).then(function(){
+                // 成功
+                $api.business.userinfo({ uid: cookies.get('user') }, function(res) {
+                    $ionicHistory.clearCache();
+                    $scope.me = res.result;
 
-                pingpp.createPayment(res.result, function(result) {
-                    // 跳转支付成功页面
-                    $scope.showModal();
-                }, function(err) {
-                    var msg = {
-                        'fail': '支付失败',
-                        'cancel': '用户已取消支付',
-                        'invalid': '支付结果无效，请联系支付平台'
-                    };
-                    $ionicLoading.show({
-                        template: msg[err || 'invalid'],
-                        duration: 2000
+                    $app.modal({
+                        templateUrl: 'templates/charge/result.html',
+                        scopeData: {
+                            me: $scope.me
+                        }
                     });
                 });
-
             });
         }
 
         $scope.show_bind = function(){
-            var modal = $eview.modal({
+            var modal = $app.modal({
                 templateUrl: 'templates/charge/bind.html',
-                controller: 'BindCard'
+                controller: 'BindCard', 
+                data: {
+                    project: Me.project
+                }
             });
 
             modal.then(function(res){
@@ -373,26 +342,59 @@ angular.module('gugecc.controllers', [])
             tab ? $scope.tab = tab : 1;
         }
     }])
-    .controller('BindCard', ['$scope', '$modalData', 'cookies', '$api', function ($scope, $modalData, cookies, $api) {
+    .controller('BindCard', ['$scope', '$modalData', 'cookies', '$api', '$app', '$ionicLoading', '$interval', 
+            function ($scope, $modalData, cookies, $api, $app, $ionicLoading, $interval) {
         $scope.data = {};
+        $scope.order = {};
+
+        $api.bank.info(function(res){
+            $scope.banks = res.result;
+        });
+
+        $scope.startCounter = function(){
+            $scope.time = 60,
+                timer = $interval(function(){
+                    time--;
+                }, 1000, 60);
+        }
 
         $scope.getCode = function(){
             // 检查表单输入
             var data = angular.extend({uid: cookies.get('user')}, $scope.data);
 
             $api.channelaccount.verifycode(data, function(res){
-                if(res.code == 0 && res.result.orderId){
-                    $scope.data.orderid = res.result.orderId
+                if(res.code == 0 && res.result.orderID){
+                    $scope.data.orderid = res.result.orderID;
+                    $scope.startCounter();
+                }else{
+                    $ionicLoading.show({
+                        template: res.message,
+                        duration: 2000
+                    });
                 }
             });
         }
 
         $scope.bind = function(){
-            var data = angular.extend({uid: cookies.get('user')}, $scope.data);
+            var data = {
+                belongto: cookies.get('user'),
+                flow: 'EARNING',
+                name: $scope.data.name,
+                idcard: $scope.data.idcard,
+                account: $scope.data.bankcard,                
+                accounttype: 'PRIVATE',
+                origin: $scope.order.banktype,
+                reservedmobile: $scope.data.mobile,  
+                reservedname: $scope.data.name,
+                orderid: $scope.data.orderid,
+                verifycode: $scope.order.verifycode
+            }
+
             $api.channelaccount.add(data, function(res){
-                console.log(res);
                 if(res.code == 0){
-                    $scope.modal.remove();
+                    $app.closeModal($scope.modal, {
+                        command: 'refresh'
+                    });
                 }
             })
         }

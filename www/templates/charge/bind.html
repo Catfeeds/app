@@ -19,13 +19,10 @@
         </div>
         <div class="list list-inset">
             <label class="item item-input item-select">
-                <div class="input-label">
+                <div class="input-label button-small">
                     开户行
                 </div>
-                <select ng-model="banktype">
-                    <option value="1">招商银行</option>
-                    <option selected value="2">工商银行</option>
-                    <option value="3">农业银行</option>
+                <select ng-model="order.banktype" ng-options="l.id as l.title for l in banks">
                 </select>
             </label>
             <label class="item item-input">
@@ -38,15 +35,18 @@
             </label>
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                    <input type="text" placeholder="请输入验证码" ng-model="data.verifycode">
+                    <input type="text" placeholder="请输入验证码" ng-model="order.verifycode" i-async>
                 </label>
-                <button class="button button-small" ng-click="getCode()">
+                <button ng-show="!time" class="button button-small button-energized" ng-click="getCode()">
                     发送验证码
+                </button>
+                <button ng-show="time" class="button button-small button-light">
+                    {{time}}秒后重试
                 </button>
             </div>
         </div>
         <div class="padding">
-            <button class="button button-block button-positive" ng-click="bind()" ng-disabled="!data.orderid">提交</button>
+            <button class="button button-small button-block button-positive" ng-click="bind()">提交</button>
         </div>
     </ion-content>
 </ion-modal-view>
