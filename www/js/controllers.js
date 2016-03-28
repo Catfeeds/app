@@ -373,6 +373,19 @@ angular.module('gugecc.controllers', [])
             tab ? $scope.tab = tab : 1;
         }
     }])
-    .controller('BindCard', ['$scope', '$modalData', function ($scope, $modalData) {
-        
+    .controller('BindCard', ['$scope', '$modalData', 'cookies', '$api', function ($scope, $modalData, cookies, $api) {
+        $scope.data = {};
+
+        $scope.getCode = function(){
+            // 检查表单输入
+            var data = angular.extend({uid: cookies.get('user')}, $scope.data);
+
+            $api.channelaccount.verifycode(data, function(res){
+                console.log(res);
+            });
+        }
+
+        $scope.bind = function(){
+            $scope.modal.remove();
+        }
     }])

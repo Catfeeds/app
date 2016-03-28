@@ -11,10 +11,10 @@
     <ion-content class="has-header">
         <div class="list list-inset">
             <label class="item item-input">
-                <input type="text" placeholder="姓名">
+                <input type="text" placeholder="姓名" ng-model="data.name">
             </label>
             <label class="item item-input">
-                <input type="text" placeholder="身份证">
+                <input type="text" placeholder="身份证" ng-model="data.idcard">
             </label>
         </div>
         <div class="list list-inset">
@@ -22,31 +22,31 @@
                 <div class="input-label">
                     开户行
                 </div>
-                <select>
+                <select ng-model="banktype">
                     <option value="1">招商银行</option>
                     <option selected value="2">工商银行</option>
                     <option value="3">农业银行</option>
                 </select>
             </label>
             <label class="item item-input">
-                <input type="text" placeholder="卡号">
+                <input type="text" placeholder="卡号" ng-model="data.bankcard">
             </label>
         </div>
         <div class="list list-inset">
             <label class="item item-input">
-                <input type="text" placeholder="预留手机号码" disabled>
+                <input type="text" placeholder="预留手机号码" ng-model="data.mobile">
             </label>
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
                     <input type="text" placeholder="请输入验证码">
                 </label>
-                <button class="button button-small">
+                <button class="button button-small" ng-click="getCode()">
                     发送验证码
                 </button>
             </div>
         </div>
         <div class="padding">
-            <button class="button button-block button-positive">提交</button>
+            <button class="button button-block button-positive" ng-click="bind()">提交</button>
         </div>
     </ion-content>
 </ion-modal-view>
