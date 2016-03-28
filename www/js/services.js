@@ -50,6 +50,7 @@ angular.module('gugecc.services', ['ngResource'])
             }],
             channelaccount: ['channelaccount', {
                 'info': { method: 'POST' },
+                'add': { method: 'POST' },
                 'verifycode': {method: 'POST'}
             }]
         };

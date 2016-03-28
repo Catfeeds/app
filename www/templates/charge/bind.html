@@ -38,7 +38,7 @@
             </label>
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                    <input type="text" placeholder="请输入验证码">
+                    <input type="text" placeholder="请输入验证码" ng-model="data.verifycode">
                 </label>
                 <button class="button button-small" ng-click="getCode()">
                     发送验证码
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="padding">
-            <button class="button button-block button-positive" ng-click="bind()">提交</button>
+            <button class="button button-block button-positive" ng-click="bind()" ng-disabled="!data.orderid">提交</button>
         </div>
     </ion-content>
 </ion-modal-view>

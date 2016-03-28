@@ -12,33 +12,35 @@
         </div>
         <div class="row text-center">
             <div class="col col-33" ng-repeat="row in amountSelects.slice(3) " ng-class="{'positive-bg light': checkKey == 'b'+$index}" ng-click="setAmount(row, true, 'b'+$index);">{{row}} 元</div>
-            <div class="col col-33" style="padding: 0px;" ng-class="{'positive-bg light': checkKey == 'c'}" > 
+            <div class="col col-33" style="padding: 0px;" ng-class="{'positive-bg light': checkKey == 'c'}">
                 <input type="number" ng-change="setAmount(otherAmount, false, 'c')" ng-model="otherAmount" placeholder="其他" min="100" max="5000">
             </div>
         </div>
+        <fieldset>
+            <legend>支付方式</legend>
+        </fieldset>
         <!-- 支付平台 -->
-        <div class="button-bar padding-top padding-bottom mt">
+        <div class="button-bar">
             <a class="button" href="" ng-click="charge.channelaccountid=channel.id" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id}" ng-bind="channel.origin"></a>
         </div>
         <!-- 银行卡 -->
         <ul class="list list-light">
             <li>
-                <a class="item item-avatar" href="" >
+                <a class="item item-avatar" href="">
                     <img src="img/pay/ps_cmb.png" alt="">
                     <h4>招商银行</h4>
                     <p>每日限额50000，单次限额10000</p>
                 </a>
             </li>
             <li>
-                <a ng-click="show_bind()" class="item" >
-                    <button type="" class="button button-assertive button-block">添加银行卡</button>
+                <a ng-click="show_bind()" class="item">
+                    <button type="" class="button button-energized button-block"><i class="icon ion-plus"></i> 添加银行卡</button>
                 </a>
             </li>
         </ul>
-           
-        <p class="padding-vertical">充值金额: {{charge.amount}} 元</p>
-        <div class="padding-vertical">
-            <button class="button button-block button-default assertive" ng-click="pay()">
+        <p class="padding">充值金额: {{charge.amount}} 元</p>
+        <div class="padding">
+            <button class="button button-block button-default button-assertive" ng-click="pay()">
                 <span class="">立即充值</span>
             </button>
         </div>

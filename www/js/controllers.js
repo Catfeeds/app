@@ -381,11 +381,19 @@ angular.module('gugecc.controllers', [])
             var data = angular.extend({uid: cookies.get('user')}, $scope.data);
 
             $api.channelaccount.verifycode(data, function(res){
-                console.log(res);
+                if(res.code == 0 && res.result.orderId){
+                    $scope.data.orderid = res.result.orderId
+                }
             });
         }
 
         $scope.bind = function(){
-            $scope.modal.remove();
+            var data = angular.extend({uid: cookies.get('user')}, $scope.data);
+            $api.channelaccount.add(data, function(res){
+                console.log(res);
+                if(res.code == 0){
+                    $scope.modal.remove();
+                }
+            })
         }
     }])
