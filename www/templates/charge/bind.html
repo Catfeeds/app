@@ -1,0 +1,52 @@
+<ion-modal-view hide-nav-bar="true" title="绑定银行卡">
+    <ion-nav-bar>
+        <ion-nav-buttons side="primary">
+            <button class="button button-round icon ion-close-circled button-clear button-assertive text-calm" ng-click="closeModal()">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-title>
+            绑定银行卡
+        </ion-nav-title>
+    </ion-nav-bar>
+    <ion-content class="has-header">
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="姓名">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="身份证">
+            </label>
+        </div>
+        <div class="list list-inset">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    开户行
+                </div>
+                <select>
+                    <option value="1">招商银行</option>
+                    <option selected value="2">工商银行</option>
+                    <option value="3">农业银行</option>
+                </select>
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="卡号">
+            </label>
+        </div>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="预留手机号码" disabled>
+            </label>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="请输入验证码">
+                </label>
+                <button class="button button-small">
+                    发送验证码
+                </button>
+            </div>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-positive">提交</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

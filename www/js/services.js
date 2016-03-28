@@ -270,7 +270,7 @@ angular.module('gugecc.services', ['ngResource'])
             }
         };
     }])
-    .factory('$weather', ['$http', '$q', function($http, $q) {
+    .factory('$weather', ['$http', '$q', '$ionicLoading', function($http, $q, $ionicLoading) {
         var apiKey = 'a2c457b03c1aa9cd4af847ff77f0df93',
             weatherUrl = 'http://apis.baidu.com/apistore/weatherservice/recentweathers?cityname=',
             locationUrl = "http://api.map.baidu.com/geocoder?output=json&location=",
@@ -327,7 +327,15 @@ angular.module('gugecc.services', ['ngResource'])
                     // 解析地址
                     self.coder(loc.coords);
                 }, function(error) {
+                    if (error.code == 3) {
+                        $ionicLoading.show({
+                            template: '获取当前位置超时',
+                            duration: 1000
+                        })
+                    }
                     console.log(error);
+                }, {
+                    timeout: 5000
                 });
             },
             coder: function(cord) {
@@ -349,4 +357,45 @@ angular.module('gugecc.services', ['ngResource'])
         weather.init();
 
         return weather;
+    }])
+    .service('$eview', ['$ionicModal', '$http', '$rootScope', '$injector', '$controller', '$q', 
+        function ($ionicModal, $http, $rootScope, $injector, $controller, $q) {
+        var modalPrefix = 'modal-',
+            _options = {};
+        // common modal 
+        this.modals = {};
+
+        this.modal = function(options){
+            // templateUrl is required
+            var self = this,
+                data = options.data,
+                promise = $ionicModal.fromTemplateUrl(options.templateUrl, {
+                    animation: 'slide-in-up'
+                });
+            
+            var defer = $q.defer();
+
+            promise.then(function(modal){
+
+                self.modals[modalPrefix + modal.scope.$id] = {
+                    modal: modal,
+                    defer: defer
+                };
+
+                modal.scope.closeModal = function(){
+                    modal.remove();
+                }
+
+                if (options.controller) {
+                    var controller = $controller(options.controller, {
+                        '$scope': modal.scope, 
+                        '$modalData' : data || {}
+                    });
+                }
+
+                modal.show();
+            });
+            
+            return defer.promise;
+        }
     }]);

@@ -81,6 +81,7 @@ angular.module('gugecc.controllers', [])
         $state,
         cookies, $api,
         channels,
+        $eview,
         $ionicSideMenuDelegate, $ionicLoading, $ionicModal, $ionicHistory) {
         $scope.me = Me;
         $scope.amountSelects = [100, 500, 1000, 2000, 5000];
@@ -177,6 +178,17 @@ angular.module('gugecc.controllers', [])
                 });
 
             });
+        }
+
+        $scope.show_bind = function(){
+            var modal = $eview.modal({
+                templateUrl: 'templates/charge/bind.html',
+                controller: 'BindCard'
+            });
+
+            modal.then(function(res){
+                console.log(res);
+            })
         }
     })
     .controller('Device', ['$scope', '$api', 'cookies', 'Me', '$state', 'info', '$ionicLoading',
@@ -360,4 +372,7 @@ angular.module('gugecc.controllers', [])
         $scope.getLogs = function(tab) {
             tab ? $scope.tab = tab : 1;
         }
+    }])
+    .controller('BindCard', ['$scope', '$modalData', function ($scope, $modalData) {
+        
     }])

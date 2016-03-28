@@ -287,7 +287,7 @@ ion-slide .trans-btn {
 	padding-right: 16px!important;
 }
 
-.list-light a.item.item-avatar {
+.list-light > li > a.item {
     border: none;
 }
 
