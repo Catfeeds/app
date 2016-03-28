@@ -88,11 +88,21 @@ angular.module('gugecc.controllers', [])
         $scope.otherAmount = '';
         $scope.channels = channels;
         $scope.bankcards = bankcards;
+        $scope.cardpay = false;
+        $scope.selectedCard = null;
 
         $scope.charge = {
             amount: 100,
             channelaccountid: channels ? channels[0].id : undefined
         };
+
+        $scope.plt_choose = function(channel){
+            $scope.charge.channelaccountid=channel.id; $scope.cardpay=false;
+        }
+
+        $scope.card_choose = function(card){
+            $scope.selectedCard = card; $scope.cardpay = true;
+        }
 
         $scope.checkKey = 'a0';
 
@@ -130,7 +140,7 @@ angular.module('gugecc.controllers', [])
             };
             angular.extend(data, $scope.charge);
 
-            $app.pay(data).then(function(){
+            $app.pay(data, $scope.cardpay).then(function(){
                 // 成功
                 $api.business.userinfo({ uid: cookies.get('user') }, function(res) {
                     $ionicHistory.clearCache();
@@ -354,11 +364,12 @@ angular.module('gugecc.controllers', [])
         $scope.startCounter = function(){
             $scope.time = 60,
                 timer = $interval(function(){
-                    time--;
+                    $scope.time--;
                 }, 1000, 60);
         }
 
         $scope.getCode = function(){
+            return $scope.startCounter();
             // 检查表单输入
             var data = angular.extend({uid: cookies.get('user')}, $scope.data);
 
@@ -398,4 +409,8 @@ angular.module('gugecc.controllers', [])
                 }
             })
         }
+    }])
+    .controller('PayPinpad', ['$scope', '$modalData', '$api', '$app', 
+        function ($scope, $modalData, $api, $app) {
+        
     }])

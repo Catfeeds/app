@@ -16,19 +16,19 @@
                 <input type="number" ng-change="setAmount(otherAmount, false, 'c')" ng-model="otherAmount" placeholder="其他" min="100" max="5000">
             </div>
         </div>
-        <fieldset>
+        <fieldset class="padding-horizontal">
             <legend>支付方式</legend>
         </fieldset>
         <!-- 支付平台 -->
         <div class="button-bar padding-horizontal">
-            <a class="button button-small" ng-click="charge.channelaccountid=channel.id" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id}" ng-bind="channel.origin"></a>
+            <a class="button button-small" ng-click="plt_choose(channel)" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id && !cardpay}" ng-bind="channel.origin"></a>
         </div>
         <!-- 银行卡 -->
         <ul class="list list-light mt list-round">
-            <li class="padding-horizontal" ng-repeat="cart in bankcards">
-                <a class="item item-avatar bg-stable bd-stable bd2" href="">
+            <li class="padding-horizontal" ng-repeat="card in bankcards">
+                <a class="item item-avatar bg-stable bd-stable bd2" ng-click="card_choose(card)" ng-class="{active: card && cardpay && (selectedCard.id == card.id)}">
                     <img src="img/pay/ps_cmb.png" alt="">
-                    <h4>招商银行</h4>
+                    <h4>招商银行 <span> ({{card.account | card}})</span></h4>
                     <p>每日限额50000，单次限额10000</p>
                 </a>
             </li>

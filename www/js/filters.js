@@ -89,3 +89,8 @@ angular.module('gugecc.filters', [])
             return t ? d[t][k] || '3' : '3';
         }
     })
+    .filter('card', function(){
+        return function(input){
+            return input.replace(input.substr(4), '****') + input.substr(-4);
+        }
+    })

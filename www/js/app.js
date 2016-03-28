@@ -3,6 +3,7 @@ var app = angular.module('gugecc', [
     'ui.router',
     'gugecc.services',
     'gugecc.filters',
+    'gugecc.diretives',
     'gugecc.controllers',
     'oc.lazyLoad',
     'ngCookies'
@@ -59,7 +60,6 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve : {
-
                 }
             })
             .state('tabs.tab.home', {
@@ -89,20 +89,15 @@ app.config(function($stateProvider,
                         return $ocLazyLoad.load([{
                             serie: true,
                             files: [
-                                './lib/Chart.js/Chart.js',
                                 './lib/Chart.StackedBar.js/src/Chart.StackedBar.js',
                                 './lib/angular-chart.js/dist/angular-chart.css',
-                                './lib/angular-chart.js/dist/angular-chart.js',
                                 './lib/d3/d3.js',
-                                './js/directives.js', 
                                 './lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js'
                             ]
                         }]).then(function(chart) {
                             var provider = $injector.get("ChartJs");
                             provider.Chart.defaults.StackedBar.barShowStroke = false;
-                            // provider.Chart.defaults.StackedBar.barValueSpacing = 15;
                             provider.Chart.defaults.StackedBar.showTooltips = false;
-
                         });
                     }
                 }

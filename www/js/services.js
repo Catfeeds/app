@@ -383,7 +383,8 @@ angular.module('gugecc.services', ['ngResource'])
         var modalPrefix = 'modal-',
             _options = {};
         // common modal 
-        _modals = {};
+        _modals = {},
+        _service = this;
 
         /**
          * 关闭 modal ，resolve相应 defer
@@ -391,7 +392,7 @@ angular.module('gugecc.services', ['ngResource'])
          * @param  {[type]} data  [description]
          * @return {[type]}       [description]
          */
-        this.closeModal = function(modal, data){
+        this.closeModal = function closeModal (modal, data){
             var m = _modals[modalPrefix + modal.scope.$id];
             m.defer.resolve(data);
             modal.remove();
@@ -402,12 +403,13 @@ angular.module('gugecc.services', ['ngResource'])
          * @param  {[type]} options [description]
          * @return {[type]}         [description]
          */
-        this.modal = function(options){
+        this.modal = function modal (options){
             // templateUrl is required
             var self = this,
                 data = options.data,
                 promise = $ionicModal.fromTemplateUrl(options.templateUrl, {
-                    animation: 'slide-in-up'
+                    animation: 'slide-in-up',
+                    backdropClickToClose: true
                 });
             
             var defer = $q.defer();
@@ -444,9 +446,13 @@ angular.module('gugecc.services', ['ngResource'])
             return defer.promise;
         }
 
-        this.pay = function(data){
-            var defer = $q.defer();
-
+        /**
+         * ping ++ 支付方式
+         * @param  {[type]} data  [description]
+         * @param  {[type]} defer [description]
+         * @return {[type]}       [description]
+         */
+        function pingpp (data, defer){
             $api.payment.charge(data, function(res) {
                 if (res.code != 0) {
                     $ionicLoading.show({
@@ -471,8 +477,36 @@ angular.module('gugecc.services', ['ngResource'])
                     });
                     defer.reject();
                 });
-
             });
+        }
+
+        /**
+         * 银行卡支付方式
+         * @return {[type]} [description]
+         */
+        function card (data, defer) {
+            $api.payment.charge(data, function(res){
+                if (res.code == 0) {
+                    // 显示输入验证码
+                    _service.modal({
+                        templateUrl: 'templates/charge/pin.html',
+                        data: data,
+                        controller: 'PayPinpad'
+                    }).then(function(res){
+
+                    })                  
+                }
+            })
+        }
+
+        this.pay = function pay (data, cardpay){
+            var defer = $q.defer();
+
+            if (cardpay) {
+                card(data, defer);
+            }else{
+                pingpp(data, defer);
+            }
 
             return defer.promise;
         }
