@@ -455,7 +455,7 @@ angular.module('gugecc.services', ['ngResource'])
          * @param  {[type]} defer [description]
          * @return {[type]}       [description]
          */
-        function pingpp (data, defer){
+        function pingPay (data, defer){
             $api.payment.charge(data, function(res) {
                 if (res.code != 0) {
                     defer.reject({
@@ -511,7 +511,7 @@ angular.module('gugecc.services', ['ngResource'])
             if (cardpay) {
                 card(data, defer);
             }else{
-                pingpp(data, defer);
+                pingPay(data, defer);
             }
 
             return defer.promise;

@@ -440,7 +440,7 @@ angular.module('gugecc.controllers', [])
                         return false;
                     }
                     dismiss();
-                });
+                }, '确认放弃支付', ['放弃', '继续支付']);
             }else{
                 dismiss();
             }    
