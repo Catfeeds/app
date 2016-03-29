@@ -392,10 +392,13 @@ angular.module('gugecc.services', ['ngResource'])
          * @param  {[type]} data  [description]
          * @return {[type]}       [description]
          */
-        this.closeModal = function closeModal (modal, data){
+        this.closeModal = function closeModal (modal, data, fail){
             var m = _modals[modalPrefix + modal.scope.$id];
-            m.defer.resolve(data);
             modal.remove();
+            if (fail) {
+                return m.defer.reject(data);
+            }
+            m.defer.resolve(data);
         }
 
         /**
@@ -455,9 +458,8 @@ angular.module('gugecc.services', ['ngResource'])
         function pingpp (data, defer){
             $api.payment.charge(data, function(res) {
                 if (res.code != 0) {
-                    $ionicLoading.show({
-                        template: res.message || '服务器错误',
-                        duration: 1000
+                    defer.reject({
+                        message: res.message || '服务器错误'
                     });
                     return;
                 }
@@ -471,11 +473,10 @@ angular.module('gugecc.services', ['ngResource'])
                         'cancel': '用户已取消支付',
                         'invalid': '支付结果无效，请联系支付平台'
                     };
-                    $ionicLoading.show({
-                        template: msg[err || 'invalid'],
-                        duration: 2000
+
+                    defer.reject({
+                        message: msg[err || 'invalid']
                     });
-                    defer.reject();
                 });
             });
         }
@@ -487,16 +488,21 @@ angular.module('gugecc.services', ['ngResource'])
         function card (data, defer) {
             $api.payment.charge(data, function(res){
                 if (res.code == 0) {
+                    data.orderid = res.result.orderID;
                     // 显示输入验证码
                     _service.modal({
                         templateUrl: 'templates/charge/pin.html',
-                        data: data,
+                        data: {
+                            payment: data
+                        },
                         controller: 'PayPinpad'
                     }).then(function(res){
-
-                    })                  
+                        defer.resolve(res);
+                    }, function(err){
+                        defer.reject(err);
+                    })                 
                 }
-            })
+            });
         }
 
         this.pay = function pay (data, cardpay){

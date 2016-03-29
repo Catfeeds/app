@@ -101,7 +101,8 @@ angular.module('gugecc.controllers', [])
         }
 
         $scope.card_choose = function(card){
-            $scope.selectedCard = card; $scope.cardpay = true;
+            $scope.selectedCard = card; $scope.cardpay = true ;
+            $scope.charge.channelaccountid=card.id;
         }
 
         $scope.checkKey = 'a0';
@@ -153,6 +154,11 @@ angular.module('gugecc.controllers', [])
                         }
                     });
                 });
+            }, function(err){
+                $ionicLoading.show({
+                    template: err.message,
+                    duration: 1200
+                })
             });
         }
 
@@ -412,5 +418,30 @@ angular.module('gugecc.controllers', [])
     }])
     .controller('PayPinpad', ['$scope', '$modalData', '$api', '$app', 
         function ($scope, $modalData, $api, $app) {
-        
+
+        $scope.data = angular.extend({}, $modalData.payment);
+
+        $scope.close = function(){
+            $app.closeModal($scope.modal, {
+                command: 'error',
+                message: '用户已放弃支付'
+            }, true);
+        }
+
+        $scope.pay = function(){
+            console.log($scope.data);
+            $api.payment.charge($scope.data, function(res){
+                if (res.code == 0) {
+                    $app.closeModal($scope.modal, {
+                        command: 'success'
+                    });
+                    return 
+                }
+
+                $app.closeModal($scope.modal, {
+                    command: 'error',
+                    message: res.message || res.err.message
+                }, true);
+            })
+        }
     }])

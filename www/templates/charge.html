@@ -13,7 +13,7 @@
         <div class="row text-center">
             <div class="col col-33" ng-repeat="row in amountSelects.slice(3) " ng-class="{'positive-bg light': checkKey == 'b'+$index}" ng-click="setAmount(row, true, 'b'+$index);">{{row}} 元</div>
             <div class="col col-33" style="padding: 0px;" ng-class="{'positive-bg light': checkKey == 'c'}">
-                <input type="number" ng-change="setAmount(otherAmount, false, 'c')" ng-model="otherAmount" placeholder="其他" min="100" max="5000">
+                <input type="number" ng-change="setAmount(otherAmount, false, 'c')" ng-model="otherAmount" placeholder="其他" min="1" max="5000">
             </div>
         </div>
         <fieldset class="padding-horizontal">

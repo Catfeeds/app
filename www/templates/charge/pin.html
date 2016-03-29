@@ -2,15 +2,14 @@
 	<ion-content class="small">
 		<div class="bar bar-header bar-positive">
 			<h1 class="title">支付验证</h1>
-			<button class="button button-icon icon ion-android-close" ng-click="closeModal()"></button>
+			<button class="button button-icon icon ion-android-close" ng-click="close()"></button>
 		</div>
 		<div class="padding-vertical pad-header">
 			<div ion-pinpad ng-model="data.verifycode" class="padding"></div>
 		</div>
 
-		{{data.verifycode}}
 		<div class="padding">
-			<button type="button" class="button button-small button-block button-positive">		确定支付
+			<button type="button" class="button button-small button-block button-positive" ng-click="pay()">		确定支付
 			</button>
 		</div>
 	</ion-content>
