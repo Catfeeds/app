@@ -369,7 +369,7 @@ angular.module('gugecc.controllers', [])
         $scope.data = {};
         $scope.order = {};
 
-        $api.bank.info(function(res){
+        $api.bank.info({}, function(res){
             $scope.banks = res.result;
         });
 

@@ -161,7 +161,7 @@ angular.module('gugecc.services', ['ngResource'])
         this.$get = function() {
             return function(user, token, data) {
                 if (_.isEmpty(data)) {
-                    return null;
+                    data = {};
                 }
 
                 var v = moment();
