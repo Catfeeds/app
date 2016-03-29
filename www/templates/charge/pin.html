@@ -1,9 +1,10 @@
-<ion-modal-view class="small-modal">
-	<ion-content class="small">
-		<div class="bar bar-header bar-positive">
-			<h1 class="title">支付验证</h1>
-			<button class="button button-icon icon ion-android-close" ng-click="close()"></button>
-		</div>
+<ion-modal-view>
+	<div class="bar bar-header bar-positive">
+		<h1 class="title">支付验证</h1>
+		<button class="button button-icon icon ion-android-close" ng-click="close()"></button>
+	</div>
+	<ion-content class="has-header">
+		
 		<div class="padding-vertical pad-header">
 			<div ion-pinpad ng-model="data.verifycode" class="padding"></div>
 		</div>

@@ -700,19 +700,30 @@ input.cmn-toggle-round-flat:checked + label:after {
 .small-modal .pad-header{
 	padding-top: 54px;
 }
-
+.platform-ios.platform-cordova:not(.fullscreen) .small-modal .bar{
+	height: 54px!important;
+}
+.platform-ios.platform-cordova:not(.fullscreen) .small-modal .bar h1,
+.platform-ios.platform-cordova:not(.fullscreen) .small-modal .bar button{
+	margin-top: 10px;
+}
 /* num pin pad */
 [ion-pinpad], ion-pinpad{
+	display: -webkit-box;
 	display: flex;
+	-webkit-justify-content: space-around;
 	justify-content: space-around;
 }
 
 [ion-pinpad] input.ion-pin-pad-num, 
 ion-pinpad input.ion-pin-pad-num{
-    padding: 10px;
-    border: 1px solid #ddd;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    font-size: 30px;
+	padding: 0px;
+	border: 1px solid #ddd;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	font-size: 30px;
+	margin: 5px;
+	line-height: 40px
 }
+

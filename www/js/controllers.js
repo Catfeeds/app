@@ -115,6 +115,12 @@ angular.module('gugecc.controllers', [])
             $scope.checkKey = key;
         }
 
+        $scope.payTest = function(){
+            $app.modal({
+                templateUrl: 'templates/charge/pin.html'
+            });
+        }
+
         $scope.pay = function() {
             // 提示无充值渠道错误
             if (!channels) {
@@ -416,16 +422,28 @@ angular.module('gugecc.controllers', [])
             })
         }
     }])
-    .controller('PayPinpad', ['$scope', '$modalData', '$api', '$app', 
-        function ($scope, $modalData, $api, $app) {
+    .controller('PayPinpad', ['$scope', '$modalData', '$api', '$app', '$ionicLoading', 
+        function ($scope, $modalData, $api, $app, $ionicLoading) {
 
         $scope.data = angular.extend({}, $modalData.payment);
 
         $scope.close = function(){
-            $app.closeModal($scope.modal, {
-                command: 'error',
-                message: '用户已放弃支付'
-            }, true);
+            var dismiss = function(){
+                $app.closeModal($scope.modal, {
+                    command: 'error',
+                    message: '用户已放弃支付'
+                }, true);
+            }
+            if (navigator.notification) {
+                navigator.notification.confirm('', function(res){
+                    if (res == 2) {
+                        return false;
+                    }
+                    dismiss();
+                });
+            }else{
+                dismiss();
+            }    
         }
 
         $scope.pay = function(){
@@ -438,10 +456,10 @@ angular.module('gugecc.controllers', [])
                     return 
                 }
 
-                $app.closeModal($scope.modal, {
-                    command: 'error',
-                    message: res.message || res.err.message
-                }, true);
+                $ionicLoading.show({
+                    template: res.message || res.err.message,
+                    duration: 1200
+                });
             })
         }
     }])
