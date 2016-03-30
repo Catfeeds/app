@@ -115,21 +115,6 @@ angular.module('gugecc.controllers', [])
             $scope.checkKey = key;
         }
 
-        $scope.payTest = function(){
-            $app.modal({
-                templateUrl: 'templates/charge/pin.html',
-                data: {
-                    payment: {
-                        project: Me.project,
-                        body: '智慧管家充值',
-                        subject: '智慧管家',
-                        uid: cookies.get('user')
-                    }
-                },
-                controller: 'PayPinpad'
-            });
-        }
-
         $scope.pay = function() {
             // 提示无充值渠道错误
             if (!channels) {
@@ -187,7 +172,9 @@ angular.module('gugecc.controllers', [])
             });
 
             modal.then(function(res){
-                console.log(res);
+                if (res.command == 'refresh') {
+                    $state.reload();
+                }
             })
         }
     })
@@ -214,7 +201,7 @@ angular.module('gugecc.controllers', [])
             $scope.load();
 
             $scope.showDevice = function(device) {
-                $state.go('tabs.tab.device_control', { 'sensor': device });
+                $state.go('tabs.device_control', { 'sensor': device });
             }
 
             $scope.toggle = function(device, evt) {
@@ -281,7 +268,7 @@ angular.module('gugecc.controllers', [])
             }
 
             $scope.go = function(month) {
-                $state.go('tabs.tab.device_month', { 'month': month, 'device': $scope.sensor.id });
+                $state.go('tabs.device_month', { 'month': month, 'device': $scope.sensor.id });
             }
 
             $scope.recent = recent;

@@ -113,7 +113,8 @@ a:visited{
 	border-bottom: 1px solid #ddd;
 	padding: 10px 0px;
 	color: #444;
-    vertical-align: middle;
+	vertical-align: middle;
+	max-width: 80px;
 }
 
 .spinner svg {

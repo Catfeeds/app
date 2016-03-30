@@ -10,6 +10,13 @@
 </head>
 
 <body>
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-buttons side="primary">
+            <button class="button button-round icon ion-chevron-left button-clear" ng-click="$ionicGoBack()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
     <ion-nav-view name="root"></ion-nav-view>
     <script id="templates/intro.html" type="text/ng-template">
         <ion-view view-title="">

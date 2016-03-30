@@ -23,21 +23,22 @@
                         仪表控制
                         <i class="icon ion-chevron-right pull-right"></i>
                     </ion-item>
-                  <!--   <ion-item ng-click="go('notices')">
+                    <ion-item ng-click="go('notices')">
                         <i class="fi fi-comment"></i>
                         通知
                         <i class="icon ion-chevron-right pull-right"></i>
                     </ion-item>
-                    <ion-item href="#">
-                        <i class="fi fi-feedback"></i>
-                        反馈
-                        <i class="icon ion-chevron-right pull-right"></i>
-                    </ion-item>
-                    <ion-item href="#">
+                    <ion-item ui-sref="settings">
                         <i class="fi fi-setting"></i>
                         设置
                         <i class="icon ion-chevron-right pull-right"></i>
+                    </ion-item>
+                    <!-- <ion-item ui-sref="settings">
+                        <i class="fi fi-feedback"></i>
+                        反馈
+                        <i class="icon ion-chevron-right pull-right"></i>
                     </ion-item> -->
+                   
                     <ion-item ui-sref="logout" menu-close="" class="item" ui-sref-opts="{reload: true}">
                         <i class="fi fi-exit"></i>
                         退出
@@ -47,7 +48,27 @@
             </ion-content>
         </ion-side-menu>
         <ion-side-menu-content edge-drag-threshold="60">
-            <ion-nav-view name="tabs"></ion-nav-view>
+            <!-- <ion-nav-view name="tabs"></ion-nav-view> -->
+            <ion-nav-bar class="bar-positive">
+                <ion-nav-buttons side="left">
+                    <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()"></button>
+                </ion-nav-buttons>
+            </ion-nav-bar>
+            <!-- Main content, usually <ion-nav-view> -->
+            <ion-tabs class="tabs-icon-top tabs-positive" delegate-handle="tabs">
+                <ion-tab title="主页" icon="fi fi-home" ui-sref="tabs.home">
+                    <ion-nav-view name="home-tab"></ion-nav-view>
+                </ion-tab>
+                <ion-tab title="分析" icon="fi fi-analyze" ui-sref="tabs.analyze">
+                    <ion-nav-view name="analyze-tab"></ion-nav-view>
+                </ion-tab>
+                <ion-tab title="仪表" icon="fi fi-device" ui-sref="tabs.device">
+                    <ion-nav-view name="device-tab"></ion-nav-view>
+                </ion-tab>
+                <ion-tab title="充值" icon="fi fi-charge" ui-sref="tabs.charge">
+                    <ion-nav-view name="charge-tab"></ion-nav-view>
+                </ion-tab>
+            </ion-tabs>
         </ion-side-menu-content>
     </ion-side-menus>
 </ion-view>

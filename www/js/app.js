@@ -50,19 +50,9 @@ app.config(function($stateProvider,
                         return defer.promise;
                     }
                 },
-                abstract: true
+                // abstract: true
             })
-            .state('tabs.tab', {
-                abstract: true,
-                views: {
-                    'tabs': {
-                        templateUrl: 'templates/tabs.html'
-                    }
-                },
-                resolve : {
-                }
-            })
-            .state('tabs.tab.home', {
+            .state('tabs.home', {
                 url: '/home',
                 views: {
                     'home-tab': {
@@ -76,7 +66,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.analyze', {
+            .state('tabs.analyze', {
                 url: '/analyze',
                 views: {
                     'analyze-tab': {
@@ -102,7 +92,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.analyze_detail', {
+            .state('tabs.analyze_detail', {
                 url: '/analyze_detail/:type/',
                 views: {
                     'analyze-tab': {
@@ -111,7 +101,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.device', {
+            .state('tabs.device', {
                 url: '/device',
                 resolve: {
                     deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -127,7 +117,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.device_control', {
+            .state('tabs.device_control', {
                 url: '/control/:type?',
                 params : {'sensor' : null},
                 resolve: {
@@ -159,7 +149,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.device_month', {
+            .state('tabs.device_month', {
                 url: '/month',
                 params: {
                     'month': null,
@@ -211,7 +201,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.charge', {
+            .state('tabs.charge', {
                 url: '/charge',
                 views: {
                     'charge-tab': {
@@ -243,7 +233,7 @@ app.config(function($stateProvider,
                     }
                 }
             })
-            .state('tabs.tab.logs', {
+            .state('tabs.logs', {
                 url: '/log',
                 views: {
                     'charge-tab': {
@@ -282,6 +272,14 @@ app.config(function($stateProvider,
                 'views': {
                     'root': {
                         templateUrl: 'templates/settings.html'
+                    }
+                }
+            })
+            .state('bankcards', {
+                url: '/bankcards',
+                'views': {
+                    'root': {
+                        templateUrl: 'templates/settings/bankcards.html'
                     }
                 }
             })
@@ -386,7 +384,7 @@ app.config(function($stateProvider,
 
             if (cookies.valid() && toState.name == 'login') {
                 event.preventDefault();
-                $state.go('tabs.tab.home');
+                $state.go('tabs.home');
             };
         })
     }]);
@@ -428,7 +426,7 @@ app
             // disable backbutton
 
             if (cookies.valid()) {
-                $state.go('tabs.tab.home');
+                $state.go('tabs.home');
             } else {
                 $state.go('login');
             };
@@ -453,7 +451,7 @@ app
                     // setup cookie
                     cookies.up(res.result, $scope.remember);
                     $ionicHistory.clearCache()
-                    $state.go('tabs.tab.home');
+                    $state.go('tabs.home');
                 } else {
                     $ionicLoading.show({
                         template: res.message || '登录失败',

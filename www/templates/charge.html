@@ -5,7 +5,7 @@
                 <span class="input-label">商户帐号</span>
                 <input type="text" placeholder="" value="{{me.uid}}" disabled>
             </label>
-            <p class="padding-top">当前余额: {{me.cash |number: 2}} 元 <a ui-sref="tabs.tab.logs" class="pull-right">余额记录</a></p>
+            <p class="padding-top">当前余额: {{me.cash |number: 2}} 元 <a ui-sref="tabs.logs" class="pull-right">余额记录</a></p>
         </div>
         <div class="row text-center">
             <div class="col col-33" ng-repeat="row in amountSelects | limitTo: 3" ng-class="{'positive-bg light': checkKey == 'a'+$index}" ng-click="setAmount(row, true, 'a'+$index);">{{row}} 元</div>
@@ -42,6 +42,9 @@
         <div class="padding-horizontal">
             <button class="button button-small button-block button-assertive" ng-click="pay()">
                 <span class="">立即充值</span>
+            </button>
+            <button class="button button-small button-block button-positive" ng-click="refresh()">
+                <span class="">刷新</span>
             </button>
         </div>
     </ion-content>
