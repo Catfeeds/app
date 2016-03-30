@@ -709,14 +709,18 @@ input.cmn-toggle-round-flat:checked + label:after {
 }
 /* num pin pad */
 [ion-pinpad], ion-pinpad{
+	position: relative;
+}
+
+[ion-pinpad] .ion-num-wrapper, ion-pinpad .ion-num-wrapper{
 	display: -webkit-box;
 	display: flex;
 	-webkit-justify-content: space-around;
 	justify-content: space-around;
 }
 
-[ion-pinpad] input.ion-pin-pad-num, 
-ion-pinpad input.ion-pin-pad-num{
+[ion-pinpad] span.ion-pinpad-num, 
+ion-pinpad span.ion-pinpad-num{
 	padding: 0px;
 	border: 1px solid #ddd;
 	width: 40px;
@@ -724,6 +728,30 @@ ion-pinpad input.ion-pin-pad-num{
 	text-align: center;
 	font-size: 30px;
 	margin: 5px;
-	line-height: 40px
+	line-height: 40px;
+	display: inline-block;
+	min-width: 40px;
 }
 
+[ion-pinpad] input.ion-pinpad-input, 
+ion-pinpad input.ion-pinpad-input {
+	position: absolute;
+	left: 0px;
+	top: 10px;
+	width: 100%;
+	height: 50px;
+	padding: 0px 10px;
+	background: rgba(0, 0, 0, 0);
+	font-size: 25px;
+	line-height: 25px;
+	letter-spacing: 1.8em;
+	color: #777;
+	opacity: 0;
+	cursor: none;
+	text-indent: -999em;
+	margin-left: -5px;
+}
+
+.item-input-inset .item-input-wrapper input{
+	width: 98%;
+}

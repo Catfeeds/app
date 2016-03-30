@@ -117,7 +117,16 @@ angular.module('gugecc.controllers', [])
 
         $scope.payTest = function(){
             $app.modal({
-                templateUrl: 'templates/charge/pin.html'
+                templateUrl: 'templates/charge/pin.html',
+                data: {
+                    payment: {
+                        project: Me.project,
+                        body: '智慧管家充值',
+                        subject: '智慧管家',
+                        uid: cookies.get('user')
+                    }
+                },
+                controller: 'PayPinpad'
             });
         }
 
@@ -381,7 +390,6 @@ angular.module('gugecc.controllers', [])
         }
 
         $scope.getCode = function(){
-            return $scope.startCounter();
             // 检查表单输入
             var data = angular.extend({uid: cookies.get('user')}, $scope.data);
 
@@ -417,6 +425,11 @@ angular.module('gugecc.controllers', [])
                 if(res.code == 0){
                     $app.closeModal($scope.modal, {
                         command: 'refresh'
+                    });
+                }else{
+                    $ionicLoading.show({
+                        template: res.message,
+                        duration: 2000
                     });
                 }
             })

@@ -235,6 +235,7 @@ app.config(function($stateProvider,
                         var defer = $q.defer();
                         $api.channelaccount.info({
                             belongto : Me.uid,
+                            status: 'success'
                         }, function(res){
                             return defer.resolve(res.result);
                         })
