@@ -96,6 +96,12 @@ angular.module('gugecc.controllers', [])
             channelaccountid: channels ? channels[0].id : undefined
         };
 
+        if (bankcards) {
+            $scope.selectedCard = bankcards[0];
+            $scope.charge.channelaccountid = bankcards[0]['id'];
+            $scope.cardpay = true;
+        }
+
         $scope.plt_choose = function(channel){
             $scope.charge.channelaccountid=channel.id; $scope.cardpay=false;
         }
@@ -162,6 +168,12 @@ angular.module('gugecc.controllers', [])
             });
         }
         
+        $scope.payTest = function(){
+            $app.modal({
+                templateUrl: 'templates/charge/pin.html',
+            });
+        }
+
         $scope.refresh = function(){
             $state.go($state.current, {}, {reload: true});
         }
