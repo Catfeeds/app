@@ -161,13 +161,18 @@ angular.module('gugecc.controllers', [])
                 })
             });
         }
+        
+        $scope.refresh = function(){
+            $state.go($state.current, {}, {reload: true});
+        }
 
         $scope.show_bind = function(){
             var modal = $app.modal({
                 templateUrl: 'templates/charge/bind.html',
                 controller: 'BindCard', 
                 data: {
-                    project: Me.project
+                    project: Me.project,
+                    redirect: 'pay'
                 }
             });
 
@@ -460,6 +465,26 @@ angular.module('gugecc.controllers', [])
                     template: res.message || res.err.message,
                     duration: 1200
                 });
+            })
+        }
+    }])
+    .controller('BankCardSetting', ['$scope', 'bankcards', '$api', '$ionicLoading', '$state',
+     function ($scope, bankcards, $api, $ionicLoading, $state) {
+        $scope.bankcards = bankcards;
+
+        $scope.remove = function(card, index){
+            $api.channelaccount.delete({
+                id: card.id
+            }, function(res){
+                if (res.code == 0) {
+                    $scope.bankcards.splice(index, 1);
+                    $state.reload();
+                }else{
+                    $ionicLoading.show({
+                        template: res.message,
+                        duration: 1200
+                    })
+                }
             })
         }
     }])

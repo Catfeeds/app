@@ -71,7 +71,7 @@
             </div>
         </div>
         <div class="padding">
-        	<ion-list>
+        	<ion-list disable-user-behavior="false">
 	            <ion-item>今日能耗
 	                <span class="item-note">{{account.consumption | number: 2}}元</span>
 	            </ion-item>
@@ -80,7 +80,9 @@
 	            </ion-item>
 	            <ion-item>平均能耗
 	                <span class="item-note">{{account.avgConsumption | number: 2}}元</span>
-	            </ion-item>
+	               <ion-option-button>ok</ion-option-button>
+    </ion-item>
+                </ion-item>
 	            <!-- <ion-item>今日排名
 	                <span class="item-note">6</span>
 	            </ion-item> -->

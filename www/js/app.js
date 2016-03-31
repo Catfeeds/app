@@ -209,6 +209,7 @@ app.config(function($stateProvider,
                         templateUrl: 'templates/charge.html'
                     }
                 },
+                cache: false,
                 resolve: {
                     channels: function($api, $q, Me){
                         var defer = $q.defer();
@@ -279,7 +280,21 @@ app.config(function($stateProvider,
                 url: '/bankcards',
                 'views': {
                     'root': {
-                        templateUrl: 'templates/settings/bankcards.html'
+                        templateUrl: 'templates/settings/bankcards.html',
+                        controller: 'BankCardSetting'
+                    }
+                },
+                resolve: {
+                    bankcards: function($api, $q, cookies){
+                        var defer = $q.defer();
+                        $api.channelaccount.info({
+                            belongto : cookies.get('user'),
+                            all: true
+                            // status: 'success'
+                        }, function(res){
+                            return defer.resolve(res.result);
+                        })
+                        return defer.promise;
                     }
                 }
             })
@@ -297,27 +312,6 @@ app.config(function($stateProvider,
                             'lib/angular-md5/angular-md5.js'
                         ]);
                     }]
-                }
-            })
-            .state('logout', {
-                url: '/logout',
-                cache: false,
-                resolve: {
-                    deps: function(cookies, $api, $q) {
-                        var defer = $q.defer();
-                        $api.auth.logout(null, function(res) {
-                            cookies.down();
-                            defer.resolve(res);
-                        });
-                        return defer.promise;
-                    }
-                },
-                views: {
-                    'root' : {
-                        controller: function($scope, $state, deps) {
-                            $state.go('login');
-                        }
-                    }
                 }
             });
 
@@ -407,9 +401,17 @@ app
         }
 
         $scope.logout = function() {
-            $api.auth.logout(null, function(res) {
-                $state.go('login');
-            })
+            // 添加确认
+            navigator.notification.confirm('', function(res){
+                if (res == 2) {
+                    return false;
+                }
+                $api.auth.logout(null, function(res) {
+                    cookies.down();
+                    $state.go('login');
+                });
+            }, '确认退出登录', ['确认', '取消']);
+            
         }
 
         $scope.go = function(state) {

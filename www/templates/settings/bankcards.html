@@ -1,9 +1,28 @@
 <ion-view view-title="银行卡">
 	<ion-content has-subheader="false">
-		<div class="list list-inset">
-			<a class="item" ui-sref="bankcards">
-				银行卡
-			</a>
-		</div>
+        <!-- <ion-list type="list-inset" show-delete="false" can-swipe="true">
+            <ion-item ng-repeat="card in bankcards" class="{{::card.status | lowercase}}" type="item-text-wrap">
+                <a class="item item-avatar bg-stable bd-stable bd2 mt" 
+                    ng-class="{active: card && cardpay && (selectedCard.id == card.id)}">
+                    <img src="img/pay/ps_cmb.png" alt="">
+                    <h4>招商银行 <span> ({{card.account | card}})</span></h4>
+                    <p>每日限额50000，单次限额10000</p>
+                </a>
+
+                <ion-option-button class="button-assertive" ng-click="remove(card)">
+                    <i class="icon ion-close-circled"></i>
+                </ion-option-button>
+            </ion-item>
+        </ion-list> -->
+
+        <ion-list can-swipe="true" type="list-inset">
+            <ion-item ng-repeat="card in bankcards">
+                {{card.origin | bank}} <span> ({{card.account | card}})</span>
+                <ion-option-button class="button-assertive" ng-click="remove(card, $index)">
+                    <i class="icon ion-close-circled"></i>
+                </ion-option-button>
+            </ion-item>
+            
+          </ion-list>
 	</ion-content>
 </ion-view>

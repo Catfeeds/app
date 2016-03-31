@@ -1,8 +1,8 @@
-<ion-view view-title="">
+<ion-view >
     <ion-side-menus>
         <!-- Left menu -->
         <ion-side-menu side="left">
-            <ion-content has-header="true" class="dash-page">
+            <ion-content has-header="false" class="dash-page" style="top: 0px;">
                 <center>
                     <img src="img/d-avatar.png" alt="">
                     <h4 ng-bind="me.department"></h4>
@@ -39,7 +39,7 @@
                         <i class="icon ion-chevron-right pull-right"></i>
                     </ion-item> -->
                    
-                    <ion-item ui-sref="logout" menu-close="" class="item" ui-sref-opts="{reload: true}">
+                    <ion-item ng-click="logout()" menu-close="" class="item">
                         <i class="fi fi-exit"></i>
                         退出
                         <i class="icon ion-chevron-right pull-right"></i>

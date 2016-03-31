@@ -756,3 +756,13 @@ ion-pinpad input.ion-pinpad-input {
 .item-input-inset .item-input-wrapper input{
 	width: 98%;
 }
+
+.success .item-content a.item{
+	border: none;
+	border-left: 4px solid #4a90e2;
+}
+
+.checking .item-content a.item{
+	border: none;
+	border-left: 4px solid #ffc900;
+}

@@ -3,7 +3,7 @@
   "private": "true",
   "devDependencies": {},
   "dependencies": {
-    "ionic": "driftyco/ionic-bower#1.2.3-nightly-1905",
+    "ionic": "driftyco/ionic-bower#1.2.4",
     "angular-md5": "~0.1.10",
     "oclazyload": "~1.0.9",
     "angular-cookies": "1.4.3",
