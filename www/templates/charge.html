@@ -27,9 +27,9 @@
         <ul class="list list-light mt list-round">
             <li class="padding-horizontal" ng-repeat="card in bankcards">
                 <a class="item item-avatar bg-stable bd-stable bd2" ng-click="card_choose(card)" ng-class="{active: card && cardpay && (selectedCard.id == card.id)}">
-                    <img src="img/pay/ps_cmb.png" alt="">
-                    <h4>招商银行 <span> ({{card.account | card}})</span></h4>
-                    <p>每日限额50000，单次限额10000</p>
+                    <img ng-src="img/pay/ps_{{card.origin}}.png" alt="">
+                    <h4>{{card.origin | bank}} <span> ({{card.account | card}})</span></h4>
+                    <p>限额: 单日50000，单笔10000</p>
                 </a>
             </li>
             <li ng-if="!bankcards.length">
@@ -43,7 +43,7 @@
             <button class="button button-small button-block button-assertive" ng-click="pay()">
                 <span class="">立即充值</span>
             </button>
-            <button class="button button-small button-block button-positive" ng-click="payTest()">
+            <button class="button button-small button-block button-positive" ng-click="refresh()">
                 <span class="">刷新</span>
             </button>
         </div>

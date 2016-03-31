@@ -78,7 +78,7 @@ angular.module('gugecc.controllers', [])
     ])
     .controller('Charge', function($scope,
         Me,
-        $state,
+        $state, $stateParams,
         cookies, $api,
         channels, bankcards,
         $app,
@@ -90,13 +90,14 @@ angular.module('gugecc.controllers', [])
         $scope.bankcards = bankcards;
         $scope.cardpay = false;
         $scope.selectedCard = null;
+        $scope.checkKey = 'a0';
 
         $scope.charge = {
             amount: 100,
             channelaccountid: channels ? channels[0].id : undefined
         };
 
-        if (bankcards) {
+        if (!!bankcards.length) {
             $scope.selectedCard = bankcards[0];
             $scope.charge.channelaccountid = bankcards[0]['id'];
             $scope.cardpay = true;
@@ -110,8 +111,6 @@ angular.module('gugecc.controllers', [])
             $scope.selectedCard = card; $scope.cardpay = true ;
             $scope.charge.channelaccountid=card.id;
         }
-
-        $scope.checkKey = 'a0';
 
         $scope.setAmount = function(amount, reset, key) {
             $scope.charge.amount = amount;
@@ -175,7 +174,10 @@ angular.module('gugecc.controllers', [])
         }
 
         $scope.refresh = function(){
-            $state.go($state.current, {}, {reload: true});
+            $state.reload().then(function(){
+                // or
+                $scope.bankcards = bankcards;
+            });
         }
 
         $scope.show_bind = function(){
@@ -183,14 +185,15 @@ angular.module('gugecc.controllers', [])
                 templateUrl: 'templates/charge/bind.html',
                 controller: 'BindCard', 
                 data: {
-                    project: Me.project,
-                    redirect: 'pay'
+                    project: Me.project
                 }
             });
 
             modal.then(function(res){
-                if (res.command == 'refresh') {
-                    $state.reload();
+                if (res.command == 'pay') {
+                    $state.reload().then(function(){
+                        $scope.bankcards = bankcards;
+                    });
                 }
             })
         }
@@ -428,7 +431,7 @@ angular.module('gugecc.controllers', [])
             $api.channelaccount.add(data, function(res){
                 if(res.code == 0){
                     $app.closeModal($scope.modal, {
-                        command: 'refresh'
+                        command: 'pay'
                     });
                 }else{
                     $ionicLoading.show({

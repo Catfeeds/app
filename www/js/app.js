@@ -209,7 +209,6 @@ app.config(function($stateProvider,
                         templateUrl: 'templates/charge.html'
                     }
                 },
-                cache: false,
                 resolve: {
                     channels: function($api, $q, Me){
                         var defer = $q.defer();

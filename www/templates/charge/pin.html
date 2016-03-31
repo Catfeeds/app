@@ -4,6 +4,9 @@
 		<button class="button button-icon icon ion-android-close" ng-click="close()"></button>
 	</div>
 	<ion-content class="has-header">
+		<div class="padding">
+			<p class="h5">充值{{data.amount}}元，请输入短信验证码</p>
+		</div>
 		<div class="padding-vertical pad-header">
 			<div ion-pinpad ng-model="data.verifycode" class="padding"></div>
 		</div>
