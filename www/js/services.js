@@ -467,7 +467,10 @@ angular.module('gugecc.services', ['ngResource'])
 
                 pingpp.createPayment(res.result, function(result) {
                     // 跳转支付成功页面
-                    defer.resolve();
+                    if (result == 'success') {
+                        return defer.resolve();
+                    }
+                    defer.reject({message: '未知错误'});
                 }, function(err) {
                     var msg = {
                         'fail': '支付失败',

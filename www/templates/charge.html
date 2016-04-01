@@ -29,7 +29,7 @@
                 <a class="item item-avatar bg-stable bd-stable bd2" ng-click="card_choose(card)" ng-class="{active: card && cardpay && (selectedCard.id == card.id)}">
                     <img ng-src="img/pay/ps_{{card.origin}}.png" alt="">
                     <h4>{{card.origin | bank}} <span> ({{card.account | card}})</span></h4>
-                    <p>限额: 单日50000，单笔10000</p>
+                    <p>限额: 单笔{{card.origin | bank: 'limit1'}}, 单日{{card.origin | bank: 'limit2'}}</p>
                 </a>
             </li>
             <li ng-if="!bankcards.length">

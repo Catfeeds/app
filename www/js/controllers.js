@@ -97,11 +97,14 @@ angular.module('gugecc.controllers', [])
             channelaccountid: channels ? channels[0].id : undefined
         };
 
-        if (!!bankcards.length) {
-            $scope.selectedCard = bankcards[0];
-            $scope.charge.channelaccountid = bankcards[0]['id'];
-            $scope.cardpay = true;
+        $scope.init = function(){
+            if (!!bankcards.length) {
+                $scope.selectedCard = bankcards[0];
+                $scope.charge.channelaccountid = bankcards[0]['id'];
+                $scope.cardpay = true;
+            }
         }
+        $scope.init();
 
         $scope.plt_choose = function(channel){
             $scope.charge.channelaccountid=channel.id; $scope.cardpay=false;
@@ -191,8 +194,15 @@ angular.module('gugecc.controllers', [])
 
             modal.then(function(res){
                 if (res.command == 'pay') {
-                    $state.reload().then(function(){
-                        $scope.bankcards = bankcards;
+
+                    $api.channelaccount.info({
+                        belongto : Me.uid,
+                        status: 'success'
+                    }, function(res){
+                        $scope.bankcards = res.result;
+
+                        $scope.init();
+                        $scope.pay();
                     });
                 }
             })

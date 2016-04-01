@@ -96,8 +96,8 @@ angular.module('gugecc.filters', [])
     })
     .filter('bank', function(){
         var limit = {
-                limit1: {},
-                limit2: {}
+                limit1: {"abc": "50000","bcm": "50000","bob": "50000","boc": "50000","boss": "5000","ccb": "50000","cciticb": "500000","ceb": "50000","cib": "50000","cmb": "50000","cmbc": "1000000","gdb": "500000","hxb": "50000 ","icbc": "50000","pinganb": "500000","psbc": "50000 ","sdb": "50000","spdb": "50000"},
+                limit2: {"abc": "50000","bcm": "500000","bob": "50000","boc": "无限额","boss": "50000","ccb": "无限额","cciticb": "无限额","ceb": "50000","cib": "50000","cmb": "50000","cmbc": "无限额","gdb": "无限额","hxb": "无限额 ","icbc": "50000","pinganb": "5000000","psbc": "50000 ","sdb": "50000","spdb": "50000"},
             }, banks = {"abc": "农业银行","bcm": "交通银行","bob": "北京银行","boc": "中国银行","boss": "上海银行","ccb": "建设银行","cciticb": "中信银行","ceb": "光大银行","cib": "兴业银行","cmb": "招商银行","cmbc": "民生银行","gdb": "广东发展银行","hxb": "华夏银行 ","icbc": "工商银行","pinganb": "平安银行","psbc": "中国邮政储蓄银行 ","sdb": "深圳发展银行","spdb": "浦东发展银行"};
 
         return function(input, type){
