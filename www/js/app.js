@@ -31,11 +31,12 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve: {
-                    'Me': function($api, $q, cookies) {
+                    'Me': function($api, $q, cookies, $rootScope) {
                         var defer = $q.defer();
                         $api.business.userinfo({
                             uid: cookies.get('user')
                         }, function(res) {
+                            $rootScope._me = res.result;
                             return defer.resolve(res.result);
                         });
                         return defer.promise;

@@ -1,4 +1,7 @@
 <ion-view view-title="银行卡">
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-plus button-clear" ng-click="add()"></button>
+    </ion-nav-buttons>
 	<ion-content has-subheader="false">
         <ion-list can-swipe="true" type="list-inset">
             <ion-item ng-repeat="card in bankcards">

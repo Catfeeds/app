@@ -493,8 +493,9 @@ angular.module('gugecc.controllers', [])
             })
         }
     }])
-    .controller('BankCardSetting', ['$scope', 'bankcards', '$api', '$ionicLoading', '$state',
-     function ($scope, bankcards, $api, $ionicLoading, $state) {
+    .controller('BankCardSetting', [
+        '$scope', '$app', 'bankcards', '$api', '$ionicLoading', '$rootScope', '$state',
+     function ($scope, $app, bankcards, $api, $ionicLoading, $rootScope, $state) {
         $scope.bankcards = bankcards;
 
         $scope.remove = function(card, index){
@@ -511,5 +512,17 @@ angular.module('gugecc.controllers', [])
                     })
                 }
             })
+        }
+
+        $scope.add = function(){
+            $app.modal({
+                templateUrl: 'templates/charge/bind.html',
+                controller: 'BindCard', 
+                data: {
+                    project: $rootScope._me.project
+                }
+            }).then(function(res){
+                $state.reload();
+            });
         }
     }])
