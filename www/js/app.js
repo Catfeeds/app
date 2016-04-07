@@ -381,6 +381,9 @@ app.config(function($stateProvider,
                 $state.go('tabs.home');
             };
         })
+    }])
+    .run(['cookies', function (cookies) {
+        
     }]);
 
 app

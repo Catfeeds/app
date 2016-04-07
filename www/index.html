@@ -19,7 +19,7 @@
 
     <ion-nav-view name="root"></ion-nav-view>
     <script id="templates/intro.html" type="text/ng-template">
-        <ion-view view-title="">
+        <ion-view view-title="" hide-nav-bar="true">
             <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true">
                 <ion-slide>
                     <img src="img/wt/wt_1.png" alt="">
@@ -57,14 +57,6 @@
     <script src="js/directives.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/services.js"></script>
-    <script>
-        document.addEventListener('deviceready', function() {
-            if (cordova) {
-                window.plugins.jPushPlugin.init();
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
-            };
-        }, false);
-        
-    </script>
+    <script src="js/push.js"></script>
 </body>
 </html>

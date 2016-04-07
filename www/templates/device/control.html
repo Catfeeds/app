@@ -11,29 +11,8 @@
                 <a class="button button-small" ng-class="{'button-stable': tab!='detail', 'button-positive': tab=='detail'}" ng-click="show('detail')">明细</a>
             </div>
             <div class="padding control-panel" ng-show="tab=='control'">
-
-            	<!-- info -->
-           		<div class="card text-center" ng-if="sensor.devicetype == 'ELECTRICITYMETER'">
-	                <h5 class="bold" >设备运行中</h5>
-	                <p>本月已使用</p>
-	                <p class="number bold">{{recent[0].sum}}</p>
-	                <p class="unit">度</p>
-            	</div>
-                
-                <div class="card text-center" ng-if="sensor.devicetype == 'TEMPRATURECONTROL'">
-                    <h5 class="bold" >设备运行中</h5>
-                    <p>本月已使用</p>
-                    <p class="number bold">{{recent[0].sum}}</p>
-                    <p class="unit">度</p>
-                </div>
-
-
-            	<!-- control -->
-            	<div class="text-center power" ng-if="canSwitch(sensor.command)">
-            		<a href="" title="" ng-click="toggle(sensor, $event)">
-                        <img ng-src="{{statusImg(sensor)}}" alt="">
-                    </a>
-            	</div>
+                <!-- 根据设备类型 include -->
+                <div class="" ng-include="get_template(sensor)" scope="" onload=""></div>                
             </div>
             <div class="control detail-panel" ng-show="tab=='detail'">
                 <div class="padding row header-recent">

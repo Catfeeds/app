@@ -15,9 +15,6 @@ angular.module('gugecc.diretives', ['chart.js'])
 			template: html,
 			link: function(scope, elm, attr, ngModel){
 				var highlight = null;
-				// elm.find('input').on('focus', function(evt){
-				// 	syncText();
-				// });
 
 				elm.find('input').on('keypress', function(evt){
 					evt.returnValue = !!/[\d]/.exec(String.fromCharCode(evt.keyCode)) && this.value.length <6;

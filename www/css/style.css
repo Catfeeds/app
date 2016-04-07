@@ -843,22 +843,30 @@ ion-pinpad input.ion-pinpad-input {
     margin-left: -5px;
 }
 
-[ion-pinpad] span.ion-pinpad-num.active:after,
-ion-pinpad span.ion-pinpad-num.active:after {
-    content: '';
-    position: absolute;
-    width: 60%;
-    height: 3px;
-    background: gray;
-    bottom: 1px;
-    left: 20%;
+[ion-pinpad] span.ion-pinpad-num.active ,
+ion-pinpad span.ion-pinpad-num.active {
+    border-color: #4A90E2;
+    box-shadow: 0px 0px 1px;
     animation: blinking infinite;
-    animation-duration: 1s;
+    animation-duration: 1.2s;
 }
+
+// [ion-pinpad] span.ion-pinpad-num.active:after,
+// ion-pinpad span.ion-pinpad-num.active:after {
+//     content: '';
+//     position: absolute;
+//     width: 60%;
+//     height: 3px;
+//     background: gray;
+//     bottom: 1px;
+//     left: 20%;
+//     animation: blinking infinite;
+//     animation-duration: 1s;
+// }
 
 @keyframes blinking {
     from {
-        opacity: 0;
+        opacity: .4;
     }
     to {
         opacity: 1;

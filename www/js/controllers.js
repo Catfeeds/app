@@ -301,6 +301,15 @@ angular.module('gugecc.controllers', [])
                 $state.go('tabs.device_month', { 'month': month, 'device': $scope.sensor.id });
             }
 
+            $scope.get_template = function(sensor){
+
+                if (sensor.type == 'TEMPRATURECONTROL') {
+                    return 'templates/device/type/temp.html';
+                }
+                
+                return 'templates/device/type/electricity.html';
+            }
+
             $scope.recent = recent;
         }
     ])
