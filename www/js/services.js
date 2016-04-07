@@ -172,7 +172,6 @@ angular.module('gugecc.services', ['ngResource'])
                 data['t'] = token;
 
                 var plainText = PlainText(data, vCode);
-                console.log('PlainText: ' + plainText);
 
                 var sign = Hash(plainText);
                 data['sign'] = sign;

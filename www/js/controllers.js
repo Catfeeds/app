@@ -10,7 +10,6 @@ angular.module('gugecc.controllers', [])
 
         // 添加天气信息
         $weather.get().then(function(weather){
-            console.log(weather);
             $scope.weather = weather.today;
             $scope.city = weather.city;
         });

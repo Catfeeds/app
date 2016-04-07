@@ -1,5 +1,4 @@
 (function () {
-
 	function init () {
 		// 初始化极光推送 和 显示键盘 accessorybar
 	    window.plugins.jPushPlugin.init();
@@ -17,7 +16,7 @@
 		try {
             console.log("JPushPlugin:registrationID is " + data);
             if (data.length == 0) {
-                var t1 = window.setTimeout(getRegistrationID, 1000);
+                // var t1 = window.setTimeout(getRegistrationID, 10000);
             }
         }
         catch (exception) {
@@ -34,6 +33,6 @@
 	    }
 	}, false);
 
-
+	
 })(); 
 
