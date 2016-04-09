@@ -16,12 +16,26 @@
 		try {
             console.log("JPushPlugin:registrationID is " + data);
             if (data.length == 0) {
-                // var t1 = window.setTimeout(getRegistrationID, 10000);
+                var t1 = window.setTimeout(getRegistrationID, 10000);
+            }else{
+            	// setup tag within tag
+            	setupPushTags();
             }
         }
         catch (exception) {
             console.log(exception);
         }
+	}
+
+	function setupPushTags (){
+		app.run(['$rootScope', function($rootScope){
+			$rootScope.$watch('_me', function(n, o){
+				var tags = [];
+				tags.push('user:'+_me.uid);
+				tags.push('project:'+_me.project);
+				window.plugins.jPushPlugin.setTags(tags);
+			})
+		}])
 	}
 
 	document.addEventListener('deviceready', function() {
@@ -32,7 +46,5 @@
 	    	console.log(e);
 	    }
 	}, false);
-
-	
 })(); 
 
