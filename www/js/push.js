@@ -14,12 +14,12 @@
 
 	var onGetRegistradionID = function (data) {
 		try {
-            console.log("JPushPlugin:registrationID is " + data);
+            console.log("JPushPlugin:registrationID is " + data, data.length == 0);
+            localStorage.appRegistered = true;
+            app.setupPushTags();
+
             if (data.length == 0) {
-                var t1 = window.setTimeout(getRegistrationID, 10000);
-            }else{
-            	// setup tag within tag
-            	setupPushTags();
+                // var t1 = window.setTimeout(getRegistrationID, 10000);
             }
         }
         catch (exception) {
@@ -27,15 +27,19 @@
         }
 	}
 
-	function setupPushTags (){
-		app.run(['$rootScope', function($rootScope){
-			$rootScope.$watch('_me', function(n, o){
-				var tags = [];
-				tags.push('user:'+_me.uid);
-				tags.push('project:'+_me.project);
-				window.plugins.jPushPlugin.setTags(tags);
-			})
-		}])
+	app.setupPushTags = function(){
+		if (!localStorage.appRegistered || !localStorage.appLoaded ) {
+			return;
+		}
+		if (!window.plugins && !window.plugins.jPushPlugin) {
+			return;
+		}
+
+		var tags = [], me = app.setupPushTags._me;
+		tags.push('user_'+me.uid);
+		tags.push('project_'+me.project);
+		window.plugins.jPushPlugin.setTags(tags);
+		delete localStorage.appRegistered && delete localStorage.appLoaded ;
 	}
 
 	document.addEventListener('deviceready', function() {

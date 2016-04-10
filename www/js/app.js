@@ -36,7 +36,9 @@ app.config(function($stateProvider,
                         $api.business.userinfo({
                             uid: cookies.get('user')
                         }, function(res) {
-                            $rootScope._me = res.result;
+                            app.setupPushTags._me = $rootScope._me = res.result;
+                            localStorage.appLoaded = true;
+                            app.setupPushTags();
                             return defer.resolve(res.result);
                         });
                         return defer.promise;
@@ -292,7 +294,11 @@ app.config(function($stateProvider,
                             all: true
                             // status: 'success'
                         }, function(res){
-                            return defer.resolve(res.result);
+                            if (res.code == 0) {
+                                defer.resolve(res.result);
+                            }else{
+                                defer.reject([]);
+                            }
                         })
                         return defer.promise;
                     }
