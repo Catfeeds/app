@@ -230,7 +230,11 @@ app.config(function($stateProvider,
                             belongto : Me.uid,
                             status: 'success'
                         }, function(res){
-                            return defer.resolve(res.result);
+                            if (res.code == 0) {
+                                return defer.resolve(res.result);
+                            }else{
+                                return defer.resolve([]);
+                            }
                         })
                         return defer.promise;
                     }
@@ -290,17 +294,31 @@ app.config(function($stateProvider,
                     bankcards: function($api, $q, cookies){
                         var defer = $q.defer();
                         $api.channelaccount.info({
-                            belongto : cookies.get('user'),
-                            all: true
-                            // status: 'success'
+                            belongto : cookies.get('user'), all: true
                         }, function(res){
-                            if (res.code == 0) {
-                                defer.resolve(res.result);
-                            }else{
+                            if (res.code == 0) { defer.resolve(res.result); }else{
                                 defer.reject([]);
                             }
-                        })
-                        return defer.promise;
+                        }); return defer.promise;
+                    }
+                }
+            })
+            .state('card', {
+                url: '/card',
+                params: {
+                    card : null
+                },
+                'views': {
+                    'root': {
+                        templateUrl: 'templates/settings/card.html',
+                    }
+                }
+            })
+            .state('password', {
+                url: '/password',
+                'views': {
+                    'root': {
+                        templateUrl: 'templates/settings/password.html',
                     }
                 }
             })
