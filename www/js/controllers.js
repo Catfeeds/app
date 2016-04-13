@@ -3,6 +3,7 @@ angular.module('gugecc.controllers', [])
         $api,
         $ionicSideMenuDelegate,
         cookies,
+        push,
         Account, 
         $weather) {
         $scope.account = Account;
@@ -13,6 +14,9 @@ angular.module('gugecc.controllers', [])
             $scope.weather = weather.today;
             $scope.city = weather.city;
         });
+
+        // 注册推送
+        push.register($scope.account);
     })
     .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, cookies, Me, utils, $stateParams, datePickerSettings) {
         var user = cookies.get('user');

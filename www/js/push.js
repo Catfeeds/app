@@ -1,54 +1,108 @@
 (function () {
+	
 	function init () {
 		// 初始化极光推送 和 显示键盘 accessorybar
 	    window.plugins.jPushPlugin.init();
 	    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
-
-	    // 获取 registerId;
-		getRegistrationID();
 	}
 
-	function getRegistrationID () {
-        window.plugins.jPushPlugin.getRegistrationID(onGetRegistradionID);
-	}
+	document.addEventListener('deviceready', init);
 
-	var onGetRegistradionID = function (data) {
-		try {
-            console.log("JPushPlugin:registrationID is " + data, data.length == 0);
-            localStorage.appRegistered = true;
-            app.setupPushTags();
-
-            if (data.length == 0) {
-                // var t1 = window.setTimeout(getRegistrationID, 10000);
+	var onOpenNotification = function (event) {
+        try {
+            var alertContent;
+            if (device.platform == "Android") {
+                alertContent = window.plugins.jPushPlugin.openNotification.alert;
+            } else {
+                alertContent = event.aps.alert;
             }
         }
         catch (exception) {
-            console.log(exception);
+            console.log("JPushPlugin:onOpenNotification" + exception);
         }
-	}
+    };
 
-	app.setupPushTags = function(){
-		if (!localStorage.appRegistered || !localStorage.appLoaded ) {
-			return;
-		}
-		if (!window.plugins && !window.plugins.jPushPlugin) {
-			return;
-		}
+    var onReceiveNotification = function (event) {
+        try {
+            var alertContent;
+            if (device.platform == "Android") {
+                alertContent = window.plugins.jPushPlugin.receiveNotification.alert;
+            } else {
+                alertContent = event.aps.alert;
+            }
+        }
+        catch (exception) {
+            console.log(exception)
+        }
+    };
+    var onReceiveMessage = function (event) {
+        try {
 
-		var tags = [], me = app.setupPushTags._me;
-		tags.push('user_'+me.uid);
-		tags.push('project_'+me.project);
-		window.plugins.jPushPlugin.setTags(tags);
-		delete localStorage.appRegistered && delete localStorage.appLoaded ;
-	}
+            var message;
+            if (device.platform == "Android") {
+                message = window.plugins.jPushPlugin.receiveMessage.message;
+            } else {
+                message = event.content;
+            }
+            //var extras = window.plugins.jPushPlugin.extras
+        }
+        catch (exception) {
+            console.log("JPushPlugin:onReceiveMessage-->" + exception);
+        }
+    };
 
-	document.addEventListener('deviceready', function() {
-	    try {
-	    	init();
-	    } catch(e) {
-	    	// statements
-	    	console.log(e);
-	    }
-	}, false);
+    app.service('push', ['cookies', '$q', '$timeout', '$state', 
+    	function(cookies, $q, $timeout, $state){
+
+    	function regTags (me) {
+    		var tags = [];
+			tags.push('user_'+me.uid);
+			tags.push('project_'+me.project);
+			window.plugins.jPushPlugin.setTags(tags);
+			console.log('register tags: ', tags);
+    	} 
+
+    	this.register = function(me){
+    		this.account = me;
+	    	// 获取 registerId;
+			document.addEventListener('deviceready', this.getID.bind(this));
+
+		 //    document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+		 //    document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+    	}
+
+    	this.getID = function getID () {
+    		function onID (data){
+				if (data.length == 0) {
+
+				}
+	    		regTags(this.account);
+    		}
+        	window.plugins.jPushPlugin.getRegistrationID(onID.bind(this));
+    	}
+
+    	this.onOpen = function(){
+			document.addEventListener("jpush.openNotification", function(event){
+				var msg = '', action = '';
+				if (device.platform == "Android") {
+	                msg = window.plugins.jPushPlugin.receiveNotification.alert;
+	                action = window.plugins.jPushPlugin.receiveNotification.action;
+	            } else {
+	                msg = event.aps.alert;
+    				action = event.action;
+	            }
+
+				console.log(event,
+					msg,
+					action,
+					$state
+				);
+			}, false);
+    	}
+
+    	this.onReceive = function(){
+
+    	}
+    }]);
 })(); 
 

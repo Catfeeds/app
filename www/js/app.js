@@ -36,9 +36,7 @@ app.config(function($stateProvider,
                         $api.business.userinfo({
                             uid: cookies.get('user')
                         }, function(res) {
-                            app.setupPushTags._me = $rootScope._me = res.result;
-                            localStorage.appLoaded = true;
-                            app.setupPushTags();
+                            $rootScope._me = res.result;
                             return defer.resolve(res.result);
                         });
                         return defer.promise;
