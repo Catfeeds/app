@@ -43,11 +43,12 @@ app.config(function($stateProvider,
                         });
                         return defer.promise;
                     },
-                    'info' : function($api, $q, cookies){
+                    'info' : function($api, $q, cookies, $rootScope){
                         var defer = $q.defer();
                         $api.account.info({
                             id: cookies.get('user')
                         }, function(res){
+                            $rootScope._userinfo = res.result;
                             return defer.resolve(res.result);
                         });
                         return defer.promise;
@@ -284,6 +285,7 @@ app.config(function($stateProvider,
             })
             .state('bankcards', {
                 url: '/bankcards',
+                cache: false,
                 'views': {
                     'root': {
                         templateUrl: 'templates/settings/bankcards.html',
@@ -291,12 +293,14 @@ app.config(function($stateProvider,
                     }
                 },
                 resolve: {
-                    bankcards: function($api, $q, cookies){
+                    bankcards: function($api, $q, cookies, $stateParams){
                         var defer = $q.defer();
                         $api.channelaccount.info({
                             belongto : cookies.get('user'), all: true
                         }, function(res){
-                            if (res.code == 0) { defer.resolve(res.result); }else{
+                            if (res.code == 0) { 
+                                defer.resolve(res.result);
+                            }else{
                                 defer.reject([]);
                             }
                         }); return defer.promise;
@@ -311,6 +315,7 @@ app.config(function($stateProvider,
                 'views': {
                     'root': {
                         templateUrl: 'templates/settings/card.html',
+                        controller: 'CardDetail'
                     }
                 }
             })
@@ -319,6 +324,12 @@ app.config(function($stateProvider,
                 'views': {
                     'root': {
                         templateUrl: 'templates/settings/password.html',
+                        controller: 'Passwd'
+                    }
+                },
+                resolve: {
+                    account: function account ($api, $rootScope) {
+                        return $rootScope._userinfo;
                     }
                 }
             })

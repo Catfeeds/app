@@ -504,23 +504,8 @@ angular.module('gugecc.controllers', [])
     .controller('BankCardSetting', [
         '$scope', '$app', 'bankcards', '$api', '$ionicLoading', '$rootScope', '$state',
      function ($scope, $app, bankcards, $api, $ionicLoading, $rootScope, $state) {
+        
         $scope.bankcards = bankcards;
-
-        $scope.remove = function(card, index){
-            $api.channelaccount.delete({
-                id: card.id
-            }, function(res){
-                if (res.code == 0) {
-                    $scope.bankcards.splice(index, 1);
-                    $state.reload();
-                }else{
-                    $ionicLoading.show({
-                        template: res.message,
-                        duration: 1200
-                    })
-                }
-            })
-        }
 
         $scope.add = function(){
             $app.modal({
@@ -532,5 +517,44 @@ angular.module('gugecc.controllers', [])
             }).then(function(res){
                 $state.reload();
             });
+        }
+    }])
+    .controller('CardDetail', ['$scope', '$stateParams', '$state', '$api', 
+        function($scope, $stateParams, $state, $api){
+        $scope.card = $stateParams.card;
+        console.log($scope.card);
+
+        $scope.unbind = function(){
+
+            $api.channelaccount.delete({
+                id: $scope.card.id
+            }, function(res){
+                if (res.code == 0) {
+                    $state.go('bankcards', null, {reload: true, notify: true});
+                }else{
+                    $ionicLoading.show({
+                        template: res.message,
+                        duration: 1200
+                    });
+                }
+            });
+        }        
+    }])
+    .controller('Passwd', ['$scope', '$api', 'cookies', 'account', '$state', '$ionicLoading', 
+        function($scope, $api, cookies, account, $state, $ionicLoading){
+        $scope.data = {};
+
+        $scope.update = function(){
+            $api.account.passwd($scope.data, function(res){
+                if (res.code == 0) {
+                    cookies.down();
+                    $state.go('login');
+                }else{
+                    $ionicLoading.show({
+                        template: res.message || '修改失败',
+                        duration: 1200
+                    })
+                }
+            })
         }
     }])

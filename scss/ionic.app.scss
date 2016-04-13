@@ -31,6 +31,27 @@ $font-family-sans-serif: 		  "webfont" !default;
 	background-color: $stable;
 }
 
+.bg-positive {
+	background-color: $positive;
+	color: #fff;
+}
+
+.bg-calm {
+	background-color: $calm;
+	color: #fff;
+}
+
+.bg-balanced{
+	background-color: $balanced;
+	color: #fff;
+}
+
+.bg-grey {
+	background-color: #4f6a85;
+	color: #fff;
+    border-top: none;
+}
+
 .bd-stable {
 	border-color: $stable;
 }

@@ -9735,5 +9735,22 @@ a.button {
 .bg-stable {
   background-color: #f8f8f8; }
 
+.bg-positive {
+  background-color: #4a90e2;
+  color: #fff; }
+
+.bg-calm {
+  background-color: #11c1f3;
+  color: #fff; }
+
+.bg-balanced {
+  background-color: #33cd5f;
+  color: #fff; }
+
+.bg-grey {
+  background-color: #4f6a85;
+  color: #fff;
+  border-top: none; }
+
 .bd-stable {
   border-color: #f8f8f8; }

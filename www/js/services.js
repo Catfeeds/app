@@ -21,6 +21,7 @@ angular.module('gugecc.services', ['ngResource'])
             }],
             account: ['account', {
                 info: { method: 'POST' },
+                passwd: {method: 'POST'}
             }],
             bank: ['bank', {
                 info: { method: 'POST'}

@@ -1,7 +1,28 @@
 <ion-view view-title="银行卡详情">
 	<ion-content has-subheader="false">
+		<div class="list">
+			<div class="item item-divider bg-grey">
+				<span>持卡人 : {{card.reservedname}}</span>
+			</div>
+		    <a class="item" href="#">
+		      <h3 class="positive">卡号</h3>
+		      <p>{{card.account | card}}</p>
+		    </a>
+		    <a class="item" href="#">
+		      <h3 class="positive">发卡行</h3>
+		      <p>{{card.origin}}</p>
+		    </a>
+		    <a class="item" href="#">
+		      <h3 class="positive">预留手机号</h3>
+		      <p>{{card.reservedmobile | card}}</p>
+		    </a>
+		</div>
 		<div class="padding">
-   			<button type="button" class="button button-block button-assertive button-small">解除绑定</button>
+   			<button type="button" 
+				class="button button-block button-assertive button-small"
+				ng-click="unbind()">
+   				解除绑定
+   			</button>
 		</div>
    	</ion-content>
 </ion-view>

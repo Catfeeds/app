@@ -45,4 +45,13 @@ angular.module('gugecc.diretives', ['chart.js'])
 				});
 			}
 		};
+	}])
+	.directive('ionMatch', [function () {
+		return {
+			restrict: 'A',
+			require: 'ngModel',
+			link: function (scope, elm, attrs, model) {
+				
+			}
+		};
 	}]);
