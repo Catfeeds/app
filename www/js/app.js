@@ -52,7 +52,7 @@ app.config(function($stateProvider,
                         return defer.promise;
                     }
                 },
-                // abstract: true
+                abstract: true
             })
             .state('tabs.home', {
                 url: '/home',
@@ -348,7 +348,7 @@ app.config(function($stateProvider,
                 }
             });
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/m/home');
     })
     .config(function($httpProvider) {
         $httpProvider.interceptors.push(function($rootScope) {
@@ -400,19 +400,34 @@ app.config(function($stateProvider,
         // 设置跳转
         $rootScope.$on('$stateChangeStart', function(event,
             toState, toParams, fromState, fromParams) {
-            var inited = localStorage.inited;
-            if (!inited && toState.name == 'intro') {
+            var inited = localStorage.inited,
+                authorized = cookies.valid();
+
+            console.log('to: ', toState);
+            if (!inited && toState.name != 'intro') {
+                event.preventDefault();
+                $state.go('intro');
                 return;
             }
-            if ((inited && toState.name == 'intro') || (toState.name != 'login' && !cookies.valid())) {
+
+            if ( inited && !authorized && toState.name != 'login' ) {
                 event.preventDefault();
                 $state.go('login');
+                return 
             };
 
-            if (cookies.valid() && toState.name == 'login') {
+            if (authorized && toState.name == 'login') {
                 event.preventDefault();
                 $state.go('tabs.home');
             };
+        });
+
+        $rootScope.$on('$app:receivePush', function(evt, data){
+            console.log('receive: ', data, evt);
+        })
+
+        $rootScope.$on('$app:openPush', function(evt, data){
+            console.log('open: ', data, evt);
         })
     }]);
 
@@ -435,16 +450,7 @@ app
 
         $scope.logout = function() {
             // 添加确认
-            navigator.notification.confirm('', function(res){
-                if (res == 2) {
-                    return false;
-                }
-                $api.auth.logout(null, function(res) {
-                    cookies.down();
-                    $state.go('login');
-                });
-            }, '确认退出登录', ['确认', '取消']);
-            
+            $app.logout();
         }
 
         $scope.go = function(state) {
@@ -452,12 +458,13 @@ app
             $ionicSideMenuDelegate.toggleLeft();
         }
     })
-    .controller('IntroCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', 'cookies',
-        function($scope, $state, $ionicSlideBoxDelegate, cookies) {
+    .controller('IntroCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', '$ionicHistory', 'cookies',
+        function($scope, $state, $ionicSlideBoxDelegate, $ionicHistory, cookies) {
         // Called to navigate to the main app
         $scope.startApp = function() {
             // 检查登录
             localStorage.inited = true;
+            $ionicHistory.clearCache();
             // disable backbutton
 
             if (cookies.valid()) {
@@ -485,13 +492,13 @@ app
                 if (!res.code) {
                     // setup cookie
                     cookies.up(res.result, $scope.remember);
-                    $ionicHistory.clearCache()
+                    $ionicHistory.clearCache();
                     $state.go('tabs.home');
                 } else {
                     $ionicLoading.show({
                         template: res.message || '登录失败',
                         duration: 1000
-                    })
+                    });
                 }
             });
         }

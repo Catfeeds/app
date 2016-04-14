@@ -51,8 +51,8 @@
         }
     };
 
-    app.service('push', ['cookies', '$q', '$timeout', '$state', 
-    	function(cookies, $q, $timeout, $state){
+    app.service('push', ['cookies', '$q', '$timeout', '$state', '$rootScope', 
+    	function(cookies, $q, $timeout, $state, $rootScope){
 
     	function regTags (me) {
     		var tags = [];
@@ -67,8 +67,8 @@
 	    	// 获取 registerId;
 			document.addEventListener('deviceready', this.getID.bind(this));
 
-		 //    document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-		 //    document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+			document.addEventListener("jpush.openNotification", this.onOpen.bind(this), false);
+		    document.addEventListener("jpush.receiveNotification", this.onReceive.bind(this), false);
     	}
 
     	this.getID = function getID () {
@@ -81,27 +81,30 @@
         	window.plugins.jPushPlugin.getRegistrationID(onID.bind(this));
     	}
 
-    	this.onOpen = function(){
-			document.addEventListener("jpush.openNotification", function(event){
-				var msg = '', action = '';
-				if (device.platform == "Android") {
-	                msg = window.plugins.jPushPlugin.receiveNotification.alert;
-	                action = window.plugins.jPushPlugin.receiveNotification.action;
-	            } else {
-	                msg = event.aps.alert;
-    				action = event.action;
-	            }
-
-				console.log(event,
-					msg,
-					action,
-					$state
-				);
-			}, false);
+    	function process (event, type){
+    		var msg = '', action = '';
+			if (device.platform == "Android") {
+                msg = window.plugins.jPushPlugin[type].alert;
+                action = window.plugins.jPushPlugin[type].action;
+            } else {
+                msg = event.aps.alert;
+				action = event.action;
+            }
+            return {
+    			action: action,
+    			alert: msg
+            }
     	}
 
-    	this.onReceive = function(){
+    	this.onOpen = function(event){
+    		var data = process(event, 'openNotification');
 
+    		$rootScope.$broadcast('$app:openPush', data);
+    	}
+
+    	this.onReceive = function(event){
+    		var data = process(event, 'receiveNotification');
+    		$rootScope.$broadcast('$app:receivePush', data);
     	}
     }]);
 })(); 

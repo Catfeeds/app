@@ -1,6 +1,7 @@
 angular.module('gugecc.services', ['ngResource'])
     .constant('urls', {
-        'api': 'http://42.120.42.45:8085/api/',
+        'api': 'http://121.41.85.131:8005/api/', // test sever
+        // 'api': 'http://42.120.42.45:8085/api/', // online server
         'devApi': '/api/',
         'debug': !Boolean(window.cordova)
     })
@@ -153,6 +154,8 @@ angular.module('gugecc.services', ['ngResource'])
             Object.keys(auth_keys).map(function(item) {
                 delete localStorage[prefix + item];
             });
+
+            // broadcast 取消注册 事件
         }
 
         this.valid = function() {
@@ -371,6 +374,8 @@ angular.module('gugecc.services', ['ngResource'])
         '$controller', 
         '$ionicLoading', 
         '$api', 
+        '$state', 
+        'cookies', 
         '$q', 
     function (
         $ionicModal, 
@@ -380,6 +385,8 @@ angular.module('gugecc.services', ['ngResource'])
         $controller, 
         $ionicLoading, 
         $api, 
+        $state, 
+        cookies, 
         $q) {
         var modalPrefix = 'modal-',
             _options = {};
@@ -519,5 +526,17 @@ angular.module('gugecc.services', ['ngResource'])
             }
 
             return defer.promise;
+        }
+
+        this.logout = function(){
+            navigator.notification.confirm('', function(res){
+                if (res == 2) {
+                    return false;
+                }
+                $api.auth.logout(null, function(res) {
+                    cookies.down();
+                    $state.go('login');
+                });
+            }, '确认退出登录', ['确认', '取消']);
         }
     }]);
