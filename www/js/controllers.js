@@ -9,10 +9,12 @@ angular.module('gugecc.controllers', [])
         $scope.account = Account;
         var user = cookies.get('user');
 
-        // 添加天气信息
-        $weather.get().then(function(weather){
-            $scope.weather = weather.today;
-            $scope.city = weather.city;
+        $scope.$on("$ionicView.enter", function () {
+            // 添加天气信息
+            $weather.get().then(function(weather){
+                $scope.weather = weather.today;
+                $scope.city = weather.city;
+            });
         });
 
         // 注册推送
@@ -506,10 +508,15 @@ angular.module('gugecc.controllers', [])
         }
     }])
     .controller('BankCardSetting', [
-        '$scope', '$app', 'bankcards', '$api', '$ionicLoading', '$rootScope', '$state',
-     function ($scope, $app, bankcards, $api, $ionicLoading, $rootScope, $state) {
-        
-        $scope.bankcards = bankcards;
+        '$scope', '$app', '$api', '$ionicLoading', '$rootScope', '$state', 'cookies',
+     function ($scope, $app, $api, $ionicLoading, $rootScope, $state, cookies) {
+        $scope.$on("$ionicView.enter", function () {
+            $api.channelaccount.info({
+                belongto : cookies.get('user'), all: true
+            }, function(res){
+                $scope.bankcards = res.result;
+            });
+        });
 
         $scope.add = function(){
             $app.modal({
@@ -523,8 +530,8 @@ angular.module('gugecc.controllers', [])
             });
         }
     }])
-    .controller('CardDetail', ['$scope', '$stateParams', '$state', '$api', 
-        function($scope, $stateParams, $state, $api){
+    .controller('CardDetail', ['$scope', '$stateParams', '$state', '$api', '$ionicLoading', 
+        function($scope, $stateParams, $state, $api, $ionicLoading){
         $scope.card = $stateParams.card;
         console.log($scope.card);
 
@@ -553,6 +560,11 @@ angular.module('gugecc.controllers', [])
                 if (res.code == 0) {
                     cookies.down();
                     $state.go('login');
+
+                    $ionicLoading.show({
+                        template: '密码修改成功，请重新登录',
+                        duration: 1200
+                    })
                 }else{
                     $ionicLoading.show({
                         template: res.message || '修改失败',

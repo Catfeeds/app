@@ -6,7 +6,7 @@
         <ion-list can-swipe="true" type="list-inset">
             <a class="item item-avatar bg-stable bd-stable bd2" ui-sref="card({card: card})" ng-repeat="card in bankcards">
                 <img ng-src="img/pay/ps_{{card.type}}.png" alt="">
-                <h4>{{card.origin }} <span> ({{card.account | card}})</span></h4>
+                <h4>{{card.origin |bank}} <span> ({{card.account | card}})</span></h4>
                 <p>限额: 单笔{{card.type | bank: 'limit1'}}, 单日{{card.type | bank: 'limit2'}}</p>
             </a>
         </ion-list>

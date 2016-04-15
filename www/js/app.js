@@ -283,25 +283,10 @@ app.config(function($stateProvider,
             })
             .state('bankcards', {
                 url: '/bankcards',
-                cache: false,
                 'views': {
                     'root': {
                         templateUrl: 'templates/settings/bankcards.html',
                         controller: 'BankCardSetting'
-                    }
-                },
-                resolve: {
-                    bankcards: function($api, $q, cookies, $stateParams){
-                        var defer = $q.defer();
-                        $api.channelaccount.info({
-                            belongto : cookies.get('user'), all: true
-                        }, function(res){
-                            if (res.code == 0) { 
-                                defer.resolve(res.result);
-                            }else{
-                                defer.reject([]);
-                            }
-                        }); return defer.promise;
                     }
                 }
             })
@@ -396,14 +381,13 @@ app.config(function($stateProvider,
             $ionicLoading.hide();
         })
     }])
-    .run(['$rootScope', '$state', 'cookies', function($rootScope, $state, cookies) {
+    .run(['$rootScope', '$state', 'cookies', '$ionicLoading', function($rootScope, $state, cookies, $ionicLoading) {
         // 设置跳转
         $rootScope.$on('$stateChangeStart', function(event,
             toState, toParams, fromState, fromParams) {
             var inited = localStorage.inited,
                 authorized = cookies.valid();
 
-            console.log('to: ', toState);
             if (!inited && toState.name != 'intro') {
                 event.preventDefault();
                 $state.go('intro');
@@ -422,12 +406,34 @@ app.config(function($stateProvider,
             };
         });
 
+        function respond(data, alert){
+            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+            if (alert) {
+                $ionicLoading.show({
+                    template: data.msg,
+                    duration: 1200
+                })
+            }
+            switch (data.action) {
+                case 'pay':
+                    $state.go('tabs.charge');
+                    break;
+                case 'home':
+                    $state.go('tabs.home');
+                    break;
+                default:
+                    break;
+            }
+        }
+
         $rootScope.$on('$app:receivePush', function(evt, data){
             console.log('receive: ', data, evt);
+            respond(data, true);
         })
 
         $rootScope.$on('$app:openPush', function(evt, data){
             console.log('open: ', data, evt);
+            respond(data, false);
         })
     }]);
 

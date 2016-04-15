@@ -362,9 +362,7 @@ angular.module('gugecc.services', ['ngResource'])
                 })
             }
         }
-
         weather.init();
-
         return weather;
     }])
     .service('$app', ['$ionicModal', 
