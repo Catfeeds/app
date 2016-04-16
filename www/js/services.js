@@ -1,7 +1,7 @@
 angular.module('gugecc.services', ['ngResource'])
     .constant('urls', {
-        'api': 'http://121.41.85.131:8005/api/', // test sever
-        // 'api': 'http://42.120.42.45:8085/api/', // online server
+        // 'api': 'http://121.41.85.131:8005/api/', // test sever
+        'api': 'http://42.120.42.45:8085/api/', // online server
         'devApi': '/api/',
         'debug': !Boolean(window.cordova)
     })
@@ -321,7 +321,10 @@ angular.module('gugecc.services', ['ngResource'])
                         }
                     } else {
                         // 提示错误
-
+                        ionicLoading.show({
+                            template: '获取天气数据失败: '+ location.district,
+                            duration: 1200
+                        })
                     }
                 })
                 return req;
@@ -358,7 +361,10 @@ angular.module('gugecc.services', ['ngResource'])
 
                     self.update();
                 }, function(err) {
-
+                    $ionicLoading.show({
+                        template: '获取当前位置信息失败',
+                        duration: 1200
+                    })
                 })
             }
         }

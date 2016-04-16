@@ -443,6 +443,7 @@ app
         $ionicTabsDelegate,
         $api,
         Me,
+        $app,
         $state) {
 
         $scope.me = Me;

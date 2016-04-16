@@ -24,7 +24,7 @@
             <a class="button button-small" ng-click="plt_choose(channel)" ng-repeat="channel in channels" ng-class="{'button-positive' : charge.channelaccountid==channel.id && !cardpay}" ng-bind="channel.origin"></a>
         </div>
         <!-- 银行卡 -->
-        <ul class="list list-light mt list-round">
+        <!-- <ul class="list list-light mt list-round">
             <li class="padding-horizontal" ng-repeat="card in bankcards">
                 <a class="item item-avatar bg-stable bd-stable bd2" ng-click="card_choose(card)" ng-class="{active: card && cardpay && (selectedCard.id == card.id)}">
                     <img ng-src="img/pay/ps_{{card.type}}.png" alt="">
@@ -37,15 +37,12 @@
                     <button type="" class="button button-energized button-block button-small"><i class="icon ion-plus"></i> 银行卡支付</button>
                 </a>
             </li>
-        </ul>
+        </ul> -->
         <p class="padding-horizontal">充值金额: {{charge.amount}} 元</p>
         <div class="padding-horizontal">
             <button class="button button-small button-block button-assertive" ng-click="pay()">
                 <span class="">立即充值</span>
             </button>
-            <!-- <button class="button button-small button-block button-positive" ng-click="payTest()">
-                <span class="">刷新</span>
-            </button> -->
         </div>
     </ion-content>
 </ion-view>
