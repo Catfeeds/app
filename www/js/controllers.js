@@ -20,7 +20,16 @@ angular.module('gugecc.controllers', [])
         // 注册推送
         push.register($scope.account);
     })
-    .controller('Analyze', function($scope, $ionicSideMenuDelegate, $timeout, $api, cookies, Me, utils, $stateParams, datePickerSettings) {
+    .controller('Analyze', function($scope,
+        $ionicSideMenuDelegate,
+        $timeout,
+        $api,
+        cookies,
+        Me,
+        utils,
+        $cordovaDatePicker,
+        $stateParams,
+        datePickerSettings) {
         var user = cookies.get('user');
         $scope.show = $stateParams.type ? $stateParams.type : 'DAY';
         $scope.time = moment().format('YYYYMMDD');
@@ -42,6 +51,27 @@ angular.module('gugecc.controllers', [])
         $scope.$on('create', function(event, chart) {
             $scope.chart = chart;
         });
+
+        $scope.choose_date = function(){
+            var options = {
+                date: new Date(),
+                mode: 'date', // or 'time'
+                doneButtonLabel: '确认',
+                doneButtonColor: '#33cd5f',
+                allowFutureDates: false,
+                cancelButtonLabel: '取消',
+                cancelButtonColor: '#ef473a',
+                locale: 'zh_CN'
+              };
+
+              document.addEventListener("deviceready", function () {
+
+                $cordovaDatePicker.show(options).then(function(date){
+                    alert(date);
+                });
+
+              }, false);
+        }
 
         $scope.getData = function(type, cb) {
             $api.business.energyconsumptioncost({

@@ -6,7 +6,8 @@ var app = angular.module('gugecc', [
     'gugecc.diretives',
     'gugecc.controllers',
     'oc.lazyLoad',
-    'ngCookies'
+    'ngCookies',
+    'ngCordova'
 ]);
 
 app.config(function($stateProvider,

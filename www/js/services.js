@@ -3,7 +3,7 @@ angular.module('gugecc.services', ['ngResource'])
         // 'api': 'http://121.41.85.131:8005/api/', // test sever
         'api': 'http://42.120.42.45:8085/api/', // online server
         'devApi': '/api/',
-        'debug': !Boolean(window.cordova)
+        'debug': !!!window.cordova
     })
     .service('$api', ['$resource', 'urls', function($resource, urls) {
         var fullUrl = function(url, bool) {
@@ -279,7 +279,8 @@ angular.module('gugecc.services', ['ngResource'])
             }
         };
     }])
-    .factory('$weather', ['$http', '$q', '$ionicLoading', function($http, $q, $ionicLoading) {
+    .factory('$weather', ['$http', '$q', '$ionicLoading', '$cordovaGeolocation', 
+        function($http, $q, $ionicLoading, $cordovaGeolocation) {
         var apiKey = 'a2c457b03c1aa9cd4af847ff77f0df93',
             weatherUrl = 'http://apis.baidu.com/apistore/weatherservice/recentweathers?cityname=',
             locationUrl = "http://api.map.baidu.com/geocoder?output=json&location=",
@@ -333,12 +334,11 @@ angular.module('gugecc.services', ['ngResource'])
 
             },
             locate: function() {
-                // 定位
-                var self = this;
-                navigator.geolocation.getCurrentPosition(function(loc) {
-                    // 解析地址
-                    self.coder(loc.coords);
-                }, function(error) {
+                function success (loc){
+                    self.coder(loc.coords)
+                }
+
+                function error (error){
                     if (error.code == 3) {
                         $ionicLoading.show({
                             template: '获取当前位置超时',
@@ -346,9 +346,22 @@ angular.module('gugecc.services', ['ngResource'])
                         })
                     }
                     console.log(error);
-                }, {
-                    timeout: 5000
-                });
+                }
+
+                // 定位
+                var self = this,
+                    options = {
+                        timeout: 5000
+                    };
+                if ($cordovaGeolocation) {
+                    $cordovaGeolocation
+                        .getCurrentPosition(options)
+                        .then(success, error);
+                }else{
+                     // 获取定位
+                    navigator.geolocation.getCurrentPosition(success, 
+                        error, options);
+                }
             },
             coder: function(cord) {
                 // 通过gps查询 城市名称
