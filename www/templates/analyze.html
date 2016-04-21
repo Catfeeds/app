@@ -32,7 +32,7 @@
             chart-options="options">
 		</canvas>
         <chart-legend>
-            <ul class="stackedbar-legend">
+            <ul class="stackedbar-legend" ng-show="usage.data.length">
                 <li ng-repeat="energy in chart.data.datasets">
                     <span style="background-color:{{energy.fillColor}}"></span>
                     <b>{{energy.label | energy}}</b>

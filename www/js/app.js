@@ -97,6 +97,9 @@ app.config(function($stateProvider,
             })
             .state('tabs.analyze_detail', {
                 url: '/analyze_detail/:type/',
+                params: {
+                    time: null
+                },
                 views: {
                     'analyze-tab': {
                         controller: 'Analyze',
@@ -511,3 +514,14 @@ app
             });
         }
     }]);
+
+// bootstrap
+if (!!window.cordova) {
+    document.addEventListener('deviceready', function(evt){
+        angular.bootstrap(document, ['gugecc']);
+    }, false);
+}else{
+    angular.element(document).ready(function(){
+        angular.bootstrap(document, ['gugecc']);
+    });
+}

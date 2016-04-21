@@ -104,3 +104,13 @@ angular.module('gugecc.filters', [])
             return !!type ? limit[type][input] : banks[input];
         }
     })
+    .filter('week', function(){
+        var days = ['日', '一', '二', '三', '四', '五', '六'];
+        return function(input, format){
+            if (!input) {
+                return '';
+            }
+            var f = format ? format : 'YYYY-MM-DD';
+            return '星期' + days[moment(input, f).weekday()];
+        }
+    })

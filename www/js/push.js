@@ -2,7 +2,6 @@
 	
 	function init () {
 		// 初始化极光推送 和 显示键盘 accessorybar
-	    window.plugins.jPushPlugin.init();
 	    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
 	}
 
@@ -59,26 +58,45 @@
 			tags.push('user_'+me.uid);
 			tags.push('project_'+me.project);
 			window.plugins.jPushPlugin.setTags(tags);
-			console.log('register tags: ', tags);
     	} 
 
     	this.register = function(me){
+            window.plugins.jPushPlugin.init();
+
     		this.account = me;
 	    	// 获取 registerId;
 			document.addEventListener('deviceready', this.getID.bind(this));
 
 			document.addEventListener("jpush.openNotification", this.onOpen.bind(this), false);
 		    document.addEventListener("jpush.receiveNotification", this.onReceive.bind(this), false);
-    	}
+    	   
+            document.addEventListener("jpush.setTagsWithAlias", function(evt){
+                console.log('set tag: ', evt, arguments);
+            }, false);
+
+            // 检查推送状态
+            window.plugins.jPushPlugin.isPushStopped(function(res){
+                console.log('push status stop: ', res, arguments);
+            })
+        }
 
     	this.getID = function getID () {
     		function onID (data){
 				if (data.length == 0) {
-
+                    // 注册失败提示
 				}
 	    		regTags(this.account);
     		}
-        	window.plugins.jPushPlugin.getRegistrationID(onID.bind(this));
+
+            if (device.platform != "Android") {
+                window.plugins.jPushPlugin.setDebugModeFromIos();
+                window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+            } else {
+                window.plugins.jPushPlugin.setDebugMode(true);
+                window.plugins.jPushPlugin.setStatisticsOpen(true);
+            }
+        	
+            window.plugins.jPushPlugin.getRegistrationID(onID.bind(this));
     	}
 
     	function process (event, type){

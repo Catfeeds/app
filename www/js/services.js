@@ -307,7 +307,7 @@ angular.module('gugecc.services', ['ngResource'])
             update: function() {
                 pending = true;
                 // 请求天气数据 
-                var url = weatherUrl + location.district,
+                var url = weatherUrl + location.city.replace('市', ''),
                     req = $http.get(url, {
                         headers: {
                             apikey: apiKey
@@ -315,18 +315,18 @@ angular.module('gugecc.services', ['ngResource'])
                     });
 
                 req.success(function(result) {
+                    pending =false;
                     if (result.errNum == 0) {
                         cache = result.retData;
+
                         if (defer) {
                             defer.resolve(cache);
                         }
                     } else {
                         // 提示错误
-                        ionicLoading.show({
-                            template: '获取天气数据失败: '+ location.district,
-                            duration: 1200
-                        })
                     }
+                }).error(function(){
+                    pending = false;
                 })
                 return req;
             },
@@ -340,12 +340,7 @@ angular.module('gugecc.services', ['ngResource'])
 
                 function error (error){
                     if (error.code == 3) {
-                        $ionicLoading.show({
-                            template: '获取当前位置超时',
-                            duration: 1000
-                        })
                     }
-                    console.log(error);
                 }
 
                 // 定位
@@ -353,6 +348,7 @@ angular.module('gugecc.services', ['ngResource'])
                     options = {
                         timeout: 5000
                     };
+
                 if ($cordovaGeolocation) {
                     $cordovaGeolocation
                         .getCurrentPosition(options)
@@ -365,7 +361,7 @@ angular.module('gugecc.services', ['ngResource'])
             },
             coder: function(cord) {
                 // 通过gps查询 城市名称
-                // 
+
                 var self = this,
                     url = locationUrl + cord.latitude + ',' + cord.longitude;
                 $http.get(url).success(function(res) {
@@ -373,11 +369,9 @@ angular.module('gugecc.services', ['ngResource'])
                     cityCode = res.result.cityCode;
 
                     self.update();
+
                 }, function(err) {
-                    $ionicLoading.show({
-                        template: '获取当前位置信息失败',
-                        duration: 1200
-                    })
+                    
                 })
             }
         }

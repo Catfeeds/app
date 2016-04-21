@@ -1,6 +1,6 @@
 <ion-view title="充值">
     <ion-content class="padding charge">
-        <div class="list list-inset">
+        <div class="list list-inset padding-horizontal">
             <label class="item item-input">
                 <span class="input-label">商户帐号</span>
                 <input type="text" placeholder="" value="{{me.uid}}" disabled>
@@ -38,7 +38,7 @@
                 </a>
             </li>
         </ul> -->
-        <p class="padding-horizontal">充值金额: {{charge.amount}} 元</p>
+        <p class="padding">充值金额: {{charge.amount}} 元</p>
         <div class="padding-horizontal">
             <button class="button button-small button-block button-assertive" ng-click="pay()">
                 <span class="">立即充值</span>
