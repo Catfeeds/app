@@ -81,7 +81,7 @@ angular.module('gugecc.filters', [])
                 	name: '能量表',
                 	icon: '1'
                 },
-                'TEMPRATURECONTROL': {
+                'TEMPERATURECONTROL': {
                 	name: '温控器',
                 	icon: '1'
                 } 

@@ -246,7 +246,7 @@ angular.module('gugecc.controllers', [])
                 $scope.devices = [];
 
                 $api.sensor.info({
-                    project: project
+                    project: project,
                 }, function(res) {
                     $scope.$broadcast('scroll.refreshComplete');
                     if (!res.code) {
@@ -257,7 +257,7 @@ angular.module('gugecc.controllers', [])
             $scope.load();
 
             $scope.showDevice = function(device) {
-                $state.go('tabs.device_control', { 'sensor': device });
+                $state.go('tabs.device_control', { 'sensor': device, id: device.id });
             }
 
             $scope.toggle = function(device, evt) {
@@ -284,9 +284,10 @@ angular.module('gugecc.controllers', [])
             }
         }
     ])
-    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'recent', 'info', '$ionicLoading', '$ionicPopup',
-        function($scope, $state, $api, Me, $stateParams, recent, info, $ionicLoading, $ionicPopup) {
-            $scope.sensor = $stateParams.sensor;
+    .controller('DeviceCtrl', ['$scope', '$state', '$api', 'sensor', 'Me', '$stateParams', 'recent', 'info', '$ionicLoading', '$ionicPopup',
+        function($scope, $state, $api, sensor, Me, $stateParams, recent, info, $ionicLoading, $ionicPopup) {
+            console.log('sensor: ', sensor);
+            $scope.sensor = sensor;
             $scope.tab = 'control';
 
             $scope.toggle = function(device, evt) {
@@ -327,13 +328,37 @@ angular.module('gugecc.controllers', [])
                 $state.go('tabs.device_month', { 'month': month, 'device': $scope.sensor.id });
             }
 
-            $scope.get_template = function(sensor) {
-
-                if (sensor.type == 'TEMPRATURECONTROL') {
+            $scope.get_template = function() {
+                if (sensor.devicetype == 'TEMPERATURECONTROL') {
+                    sensor.channels[41];
                     return 'templates/device/type/temp.html';
                 }
 
                 return 'templates/device/type/electricity.html';
+            }
+
+            $scope.send_command = function(command, org){
+                var param = {}
+                switch (command) {
+                    case 'EMC_TEMPRATURE':
+                        param = {value: org[0]+org[1]};
+                        sensor.channels[37].lasttotal = param.value;
+
+                        break;
+                    case 'EMC_SWITCH':
+                        param = {}
+                    default:
+                        // statements_def
+                        break;
+                }
+
+                $api.control.send({
+                    id: sensor.id,
+                    command: command,
+                    param: param
+                }, function(data) {
+                    console.log('data:', data);
+                })
             }
 
             $scope.recent = recent;

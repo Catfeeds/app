@@ -886,3 +886,56 @@ ion-pinpad span.ion-pinpad-num.active {
     border: none;
     border-left: 4px solid #ffc900;
 }
+
+.large{
+    font-size: 40px;
+    line-height: 100px;
+}
+
+.blue {
+    color: #4a90e2
+}
+
+.col-45{
+    flex: 0 0 45%;
+    max-width: 45%;
+}
+
+.large.fi:after{
+    font-size: 30px;
+}
+
+.round-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #4a90e2;
+    border: 1px solid #4a90e2;
+}
+
+.round-btn:clicked{
+    
+}
+
+.round-btn i{
+    line-height: 50px;
+    color: #fff;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.just{
+    justify-content: space-around;
+    display: flex;
+}

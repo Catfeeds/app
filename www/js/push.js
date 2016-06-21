@@ -7,57 +7,14 @@
 
 	document.addEventListener('deviceready', init);
 
-	var onOpenNotification = function (event) {
-        try {
-            var alertContent;
-            if (device.platform == "Android") {
-                alertContent = window.plugins.jPushPlugin.openNotification.alert;
-            } else {
-                alertContent = event.aps.alert;
-            }
-        }
-        catch (exception) {
-            console.log("JPushPlugin:onOpenNotification" + exception);
-        }
-    };
-
-    var onReceiveNotification = function (event) {
-        try {
-            var alertContent;
-            if (device.platform == "Android") {
-                alertContent = window.plugins.jPushPlugin.receiveNotification.alert;
-            } else {
-                alertContent = event.aps.alert;
-            }
-        }
-        catch (exception) {
-            console.log(exception)
-        }
-    };
-    var onReceiveMessage = function (event) {
-        try {
-
-            var message;
-            if (device.platform == "Android") {
-                message = window.plugins.jPushPlugin.receiveMessage.message;
-            } else {
-                message = event.content;
-            }
-            //var extras = window.plugins.jPushPlugin.extras
-        }
-        catch (exception) {
-            console.log("JPushPlugin:onReceiveMessage-->" + exception);
-        }
-    };
-
     app.service('push', ['cookies', '$q', '$timeout', '$state', '$rootScope', 
     	function(cookies, $q, $timeout, $state, $rootScope){
 
     	function regTags (me) {
     		var tags = [];
 			tags.push('user_'+me.uid);
-			tags.push('project_'+me.project);
-			window.plugins.jPushPlugin.setTags(tags);
+			// tags.push('project_'+me.project);
+			window.plugins.jPushPlugin.setAlias(tags);
     	} 
 
     	this.register = function(me){
@@ -75,9 +32,13 @@
             }, false);
 
             // 检查推送状态
-            window.plugins.jPushPlugin.isPushStopped(function(res){
-                console.log('push status stop: ', res, arguments);
-            })
+            // window.plugins.jPushPlugin.resumePush(function(res){
+            //     console.log('push resume: ', res, arguments);
+            // })
+
+            document.addEventListener("jpush.receiveMessage", function(evt){
+                console.log('receive message: ', evt);
+            }, false);
         }
 
     	this.getID = function getID () {
@@ -116,7 +77,6 @@
 
     	this.onOpen = function(event){
     		var data = process(event, 'openNotification');
-
     		$rootScope.$broadcast('$app:openPush', data);
     	}
 

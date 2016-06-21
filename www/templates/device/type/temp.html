@@ -1,0 +1,24 @@
+<div class="card text-center" ng-if="sensor.devicetype == 'TEMPERATURECONTROL'">
+    <h5>设备运行中</h5>
+    <div class="row">
+        <span class="col-10"></span>
+        <span class="col-45 large blue postive fi fi-temp">{{sensor.channels[37].lasttotal}}</span>
+        <span class="col-45 large positive fi-do fi">{{sensor.channels[40].lasttotal}}</span>
+    </div>
+</div>
+
+<div class="row just">
+    <div class="col-80 text-center just">
+        <span class="round-btn" ng-click="send_command('EMC_TEMPRATURE', [sensor.channels[37].lasttotal, -1])">
+            <i class="fi fi-minus"></i>
+        </span>
+        <span class="round-btn" ng-click="send_command('EMC_TEMPRATURE',  [sensor.channels[37].lasttotal, +1])">
+            <i class="fi fi-plus"></i>
+        </span>
+    </div>
+</div>
+<div class="text-center" style="margin-top: 20px" ng-if="canSwitch(sensor.command)">
+    <a href="" title="" ">
+        <img ng-src="{{statusImg(sensor)}}" alt="" width="80" height="80">
+    </a>
+</div>

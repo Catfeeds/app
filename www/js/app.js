@@ -124,14 +124,28 @@ app.config(function($stateProvider,
                 }
             })
             .state('tabs.device_control', {
-                url: '/control/:type?',
-                params : {'sensor' : null},
+                url: '/control/:id?',
                 resolve: {
+                    sensor: function($stateParams, $api, $q){
+                        var defer = $q.defer();
+                        $api.sensor.info({
+                            sid: $stateParams.id,
+                        }, function(res) {
+                            if (res.code == 0) {
+                                var sensor = res.result.detail && res.result.detail[0];
+                                defer.resolve(sensor);
+                            }else{
+                                defer.reject({});
+                            };
+                        });
+
+                        return defer.promise;
+                    },
                     recent : function($api, $q, cookies, $stateParams){
                         var defer = $q.defer();
 
                         $api.business.timequantumstatistic({
-                            deviceid: $stateParams.sensor.id
+                            deviceid: $stateParams.id
                         }, function(res){
                             console.log(res);
                             if (res.code == 0) {
@@ -424,6 +438,9 @@ app.config(function($stateProvider,
                     break;
                 case 'home':
                     $state.go('tabs.home');
+                    break;
+                case 'fee':
+                    $state.go('tabs.charge');
                     break;
                 default:
                     break;

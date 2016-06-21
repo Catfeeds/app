@@ -6,13 +6,6 @@
     <p class="unit">度</p>
 </div>
 
-<div class="card text-center" ng-if="sensor.devicetype == 'TEMPRATURECONTROL'">
-    <h5 class="bold" >设备运行中</h5>
-    <p>本月已使用</p>
-    <p class="number bold">{{recent[0].sum}}</p>
-    <p class="unit">度</p>
-</div>
-
 <!-- control -->
 <div class="text-center power" ng-if="canSwitch(sensor.command)">
 	<a href="" title="" ng-click="toggle(sensor, $event)">

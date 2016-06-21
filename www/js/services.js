@@ -3,7 +3,7 @@ angular.module('gugecc.services', ['ngResource'])
         // 'api': 'http://121.41.85.131:8005/api/', // test sever
         'api': 'http://42.120.42.45:8085/api/', // online server
         'devApi': '/api/',
-        'debug': !!!window.cordova
+        'debug': !window.cordova
     })
     .service('$api', ['$resource', 'urls', function($resource, urls) {
         var fullUrl = function(url, bool) {
@@ -38,7 +38,8 @@ angular.module('gugecc.services', ['ngResource'])
                 "channeldetail": { method: 'POST' },
                 "recentchargelog": { method: 'POST' },
                 "fundflow": { method: 'POST' },
-                "timequantumstatistic": { method: 'POST' }
+                "timequantumstatistic": { method: 'POST' },
+                "monitor": { method: 'POST'}
             }],
             sensor: ['sensor', {
                 "info": { method: 'POST' }
