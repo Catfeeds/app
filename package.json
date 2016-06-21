@@ -1,6 +1,6 @@
 {
   "name": "gugecc-app",
-  "version": "0.1.5",
+  "version": "1.1.1",
   "description": "云能源管理",
   "dependencies": {
     "gulp": "^3.5.6",

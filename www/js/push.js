@@ -18,6 +18,9 @@
     	} 
 
     	this.register = function(me){
+            if (!window.plugins || !window.plugins.jPushPlugin) {
+                return;
+            }
             window.plugins.jPushPlugin.init();
 
     		this.account = me;
