@@ -64,21 +64,37 @@
     	}
 
     	function process (event, type){
-    		var msg = '', action = '';
+    		var msg = '', action = '', param;
 			if (device.platform == "Android") {
                 msg = window.plugins.jPushPlugin[type].alert;
                 action = window.plugins.jPushPlugin[type].action;
+                param = window.plugins.jPushPlugin[type].param;
             } else {
                 msg = event.aps.alert;
 				action = event.action;
+                param = event.param;
             }
             return {
     			action: action,
-    			alert: msg
+    			alert: msg,
+                param: param
             }
     	}
 
+        this.resetBagde = function() {
+            if (!window.plugins || !window.plugins.jPushPlugin) {
+                return false;
+            }
+
+            window.plugins.jPushPlugin.prototype.reSetBadge();
+            window.plugins.jPushPlugin.clearAllNotification();
+        }
+
+        this.resetBagde();
+        
     	this.onOpen = function(event){
+            this.resetBagde();
+
     		var data = process(event, 'openNotification');
     		$rootScope.$broadcast('$app:openPush', data);
     	}

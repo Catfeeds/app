@@ -626,4 +626,20 @@ angular.module('gugecc.controllers', [])
                 })
             }
         }
+
+    ])
+     .controller('Notices', ['$scope', 'notice', '$rootScope', '$api', 
+        function($scope, notice, $rootScope, $api){
+            $scope.me = $rootScope._me;
+            $scope.events = notice.all();
+
+            $scope.get_title = function (event) {
+                return notice.title(event.type);
+            }
+
+            $scope.parse_content = function(event){
+                var load = notice.parse(event.type, event.param);
+                return load.template;
+            }
+        }
     ])

@@ -279,7 +279,8 @@ app.config(function($stateProvider,
                 'url': '/notices',
                 'views': {
                     'root': {
-                        templateUrl: 'templates/notices.html'
+                        templateUrl: 'templates/notices.html',
+                        controller: 'Notices'
                     }
                 }
             })
@@ -371,7 +372,7 @@ app.config(function($stateProvider,
             }
         })
     })
-    .run(['urls', 'cookies', 'encrypt', '$http', '$ionicLoading', '$rootScope', 
+    .run(['urls', 'cookies', 'encrypt', '$http', '$ionicLoading', '$rootScope',
         function(urls, cookies, encrypt, $http, $ionicLoading, $rootScope) {
         // 设置请求超时 和 API 签名
         $http.defaults.timeout = 5000;
@@ -399,7 +400,7 @@ app.config(function($stateProvider,
             $ionicLoading.hide();
         })
     }])
-    .run(['$rootScope', '$state', 'cookies', '$ionicLoading', function($rootScope, $state, cookies, $ionicLoading) {
+    .run(['$rootScope', '$state', 'notice', 'cookies', '$ionicLoading', function($rootScope, $state, notice, cookies, $ionicLoading) {
         // 设置跳转
         $rootScope.$on('$stateChangeStart', function(event,
             toState, toParams, fromState, fromParams) {
@@ -425,6 +426,9 @@ app.config(function($stateProvider,
         });
 
         function respond(data, alert){
+            // 保存数据
+            notice.save(data);  
+
             window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
             if (alert) {
                 $ionicLoading.show({
