@@ -631,7 +631,11 @@ angular.module('gugecc.controllers', [])
      .controller('Notices', ['$scope', 'notice', '$rootScope', '$api', 
         function($scope, notice, $rootScope, $api){
             $scope.me = $rootScope._me;
-            $scope.events = notice.all();
+
+             $scope.$on("$ionicView.enter", function() {
+                // 添加天气信息
+                $scope.events = notice.all();
+            });
 
             $scope.get_title = function (event) {
                 return notice.title(event.type);
