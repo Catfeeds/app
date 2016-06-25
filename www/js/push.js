@@ -13,8 +13,8 @@
     	function regTags (me) {
     		var tags = [];
 			tags.push('user_'+me.uid);
-			// tags.push('project_'+me.project);
-			window.plugins.jPushPlugin.setAlias(tags);
+			tags.push('project_'+me.project);
+			window.plugins.jPushPlugin.setTags(tags);
     	} 
 
     	this.register = function(me){
@@ -85,9 +85,12 @@
             if (!window.plugins || !window.plugins.jPushPlugin) {
                 return false;
             }
-
-            window.plugins.jPushPlugin.prototype.reSetBadge();
-            window.plugins.jPushPlugin.clearAllNotification();
+            try {
+                window.plugins.jPushPlugin.prototype.reSetBadge();
+                window.plugins.jPushPlugin.clearAllNotification();
+            } catch(e) {
+                console.log(e);
+            }
         }
 
         this.resetBagde();

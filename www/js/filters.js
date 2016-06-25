@@ -10,6 +10,11 @@ angular.module('gugecc.filters', [])
             return moment.unix(input).format(format|| 'YYYY-MM-DD');
         }
     })
+    .filter('bill', function(){
+        return function(input){
+            return '';
+        }
+    })
     .filter('rtime', function(){
         return function(input, m){
             var format = m ? 'YYYY-MM-DD' : 'YYYY-MM';

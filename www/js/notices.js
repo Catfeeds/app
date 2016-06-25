@@ -22,37 +22,37 @@ app.service('notice', ['$interpolate', function ($interpolate) {
 	templates = {
 		ntf_balanceinsufficient: {
 			title: "余额不足提醒",
-			template: "截至{{time}}你的账户当前可用余额已不足100元, 为了不影响你的正常运营，请及时充值。"
+			template: "截至{{time | timestamp:'YYYY年M月d日 HH:mm'}}你的账户当前可用余额已不足100元, 为了不影响你的正常运营，请及时充值。"
 		},
 		ntf_accountarrears: {
 			title: "账户欠费提醒",
-			template: "截至{{time}}你的账户已欠费{{amount}}元, 为避免系统自动停止服务而影响你的正常运营，请及时充值。"
+			template: "截至{{time | timestamp:'YYYY年M月d日 HH:mm'}}你的账户已欠费{{amount}}元, 为避免系统自动停止服务而影响你的正常运营，请及时充值。"
 		},
 		ntf_arrearsstopservices: {
 			title: "欠费停止服务通知",
-			template: "由于你的欠费金额超过{{amount}}元，系统已于{{time}}自动停止服务,为了你的正常运营，请及时充值。"
+			template: "由于你的欠费金额超过{{amount}}元，系统已于{{time | timestamp:'YYYY年M月d日 HH:mm'}}自动停止服务,为了你的正常运营，请及时充值。"
 		},
 		ntf_arrearsresumeservices: {
 			template: ""
 		},
 		ntf_recharging: {
 			title: "充值成功提醒",
-			template: "{{time}}你的账户成功充值{{amount}}元，目前您的账户余额为{{balance}}元。"
+			template: "{{time | timestamp:'YYYY年M月d日 HH:mm'}}你的账户成功充值{{amount}}元，目前您的账户余额为{{balance}}元。"
 		},
 		ntf_appupgrade: {
 			template: ""
 		},
 		ntf_remindrecharge: {
 			title: "费用催缴",
-			template: "物业人工提醒截至{{time}}你的账户已欠费{{amount}}元，为避免系统自动停止服务而影响你的正常运营，请及时充值。"
+			template: "物业人工提醒截至{{time | timestamp:'YYYY年M月d日 HH:mm'}}你的账户已欠费{{amount}}元，为避免系统自动停止服务而影响你的正常运营，请及时充值。"
 		},
 		ntf_userdailyreport: {
 			title: "扣费成功提醒",
-			template: "系统自动从的账户众扣除{{category | bill}}。截至{{current}},你的账户余额为{{balance}}。"
+			template: "系统自动从的账户中扣除{{category | bill}}。截至{{time | timestamp:'YYYY年M月d日 HH:mm'}},你的账户余额为{{balance}}。"
 		},
 		ntf_usermonthlyreport: {
 			title: "月度账单提醒",
-			template: "{{time}}你的消费总额为{{amount}}, 其中{{category | bill}}。截至{{current}},你的账户余额为{{balance}}。"
+			template: "{{time | timestamp 'YYYY年M月'}}你的消费总额为{{amount}}, 其中{{category | bill}}。截至{{time | timestamp:'YYYY年M月d日 HH:mm'}},你的账户余额为{{balance}}。"
 		}
 	}
 
@@ -67,10 +67,10 @@ app.service('notice', ['$interpolate', function ($interpolate) {
 	}
 
 	this.save = function(data){
-	   	var data = localStorage._cloud_msg || '[]',
-	   		events = JSON.parse(data);
+	   	var loc = localStorage._cloud_msg || '[]',
+	   		events = JSON.parse(loc);
 
-	   	events.shift(data.param);
+	   	events.unshift(JSON.parse(data.param));
 	   	localStorage._cloud_msg = JSON.stringify(events);
 	}
 

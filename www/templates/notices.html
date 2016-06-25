@@ -7,7 +7,7 @@
     </ion-nav-bar>
     <ion-content>
         <div class="padding" ng-repeat="event in events">
-            <h5 class="text-center">12月5日 周五下午 1:30</h5>
+            <h5 class="text-center">{{event.timestamp | timestamp :  'YYYY-MM-DD HH:mm'}}</h5>
             <div class="card">
                 <div class="item item-text-wrap item-body">
                     <h2 class="h3 bold">
