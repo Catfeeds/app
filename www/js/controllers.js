@@ -6,6 +6,11 @@ angular.module('gugecc.controllers', [])
         push,
         Account,
         $weather) {
+
+        $scope.showLeft = function() {
+            $ionicSideMenuDelegate.toggleLeft()
+        }
+
         $scope.account = Account;
         var user = cookies.get('user');
 
@@ -15,6 +20,8 @@ angular.module('gugecc.controllers', [])
                 $scope.weather = weather.today;
                 $scope.city = weather.city;
             });
+
+            $scope.unread = localStorage._unread;
         });
 
         // 注册推送
@@ -631,8 +638,9 @@ angular.module('gugecc.controllers', [])
      .controller('Notices', ['$scope', 'notice', '$rootScope', '$api', 
         function($scope, notice, $rootScope, $api){
             $scope.me = $rootScope._me;
+            localStorage._unread = 0;
 
-             $scope.$on("$ionicView.enter", function() {
+            $scope.$on("$ionicView.enter", function() {
                 // 添加天气信息
                 $scope.events = notice.all();
             });

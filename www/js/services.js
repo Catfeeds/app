@@ -1,8 +1,8 @@
 angular.module('gugecc.services', ['ngResource'])
     .constant('urls', {
         // 'api': 'http://121.41.85.131:8005/api/', // test sever
-        'api': 'http://120.27.150.112:8005/api/', // pre release server
-        // 'api': 'http://42.120.42.45:8085/api/', // online server
+        // 'api': 'http://120.27.150.112:8005/api/', // pre release server
+        'api': 'http://42.120.42.45:8085/api/', // online server
         'devApi': '/api/',
         'debug': !window.cordova
     })

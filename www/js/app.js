@@ -426,16 +426,17 @@ app.config(function($stateProvider,
         });
 
         function respond(data, alert){
+            $rootScope.unread = localStorage._unread || 0;
+            localStorage._unread = $rootScope.unread++ ;
             // 保存数据
             notice.save(data);  
 
             window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
-            if (alert) {
-                $ionicLoading.show({
-                    template: data.msg,
-                    duration: 1200
-                })
-            }
+            
+            // if (alert) {
+            //     $state.go('notices');
+            // }
+
             switch (data.action) {
                 case 'pay':
                     $state.go('tabs.charge');

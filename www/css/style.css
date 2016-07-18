@@ -939,3 +939,9 @@ ion-pinpad span.ion-pinpad-num.active {
     justify-content: space-around;
     display: flex;
 }
+
+.badge-top{
+    position: absolute!important;
+    top: -5px!important;
+    right: -5px;
+}
