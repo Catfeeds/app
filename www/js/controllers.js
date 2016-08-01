@@ -394,7 +394,7 @@ angular.module('gugecc.controllers', [])
         var query = {
             charges: {
                 "project": [{ "id": project }],
-                "from": moment().subtract(6, 'month').format('YYYYMMDD'),
+                "from": moment().subtract(12, 'month').format('YYYYMMDD'),
                 "to": moment().format('YYYYMMDD'),
                 pageindex: 1,
                 pagesize: 20,
@@ -422,7 +422,7 @@ angular.module('gugecc.controllers', [])
         $scope.loadList = function(type) {
             if (type == 'charges') {
                 $api.business.recentchargelog(query[type], function(res) {
-                    var page = res.result[project].detail.detail;
+                    var page = res.result[project].detail;
                     $scope[type] = $scope[type] ? $scope[type].concat(page) : page;
                     $scope.paging[type] = res.result[project].paging;
 
