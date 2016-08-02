@@ -404,7 +404,7 @@ angular.module('gugecc.controllers', [])
                 // project: Me.project,
                 uid: cookies.get('user'),
                 // key: '',
-                from: '20160101',
+                from: moment().format('YYYYMM')+'01',
                 to: moment().format('YYYYMMDD'),
                 // flow: 'EXPENSE',
                 category: 'PAYFEES'
