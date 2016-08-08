@@ -1,7 +1,7 @@
 angular.module('gugecc.services', ['ngResource'])
     .constant('urls', {
-        // 'api': 'http://121.41.85.131:8005/api/', // test sever
-        // 'api': 'http://120.27.150.112:8005/api/', // pre release server
+        // 'api': 'http://120.27.150.112:8005/api/', // test sever
+        // 'api': 'http://120.27.150.112:8905/api/', // pre release server
         'api': 'http://42.120.42.45:8085/api/', // online server
         'devApi': '/api/',
         'debug': !window.cordova
@@ -60,6 +60,9 @@ angular.module('gugecc.services', ['ngResource'])
                 'add': { method: 'POST' },
                 'delete': { method: 'POST' },
                 'verifycode': {method: 'POST'}
+            }],
+            weather: ['weather', {
+                recent: {'method': 'POST'}
             }]
         };
 
@@ -281,8 +284,8 @@ angular.module('gugecc.services', ['ngResource'])
             }
         };
     }])
-    .factory('$weather', ['$http', '$q', '$ionicLoading', '$cordovaGeolocation', 
-        function($http, $q, $ionicLoading, $cordovaGeolocation) {
+    .factory('$weather', ['$http', '$q', '$api', '$ionicLoading', '$cordovaGeolocation', 
+        function($http, $q, $api, $ionicLoading, $cordovaGeolocation) {
         var apiKey = 'a2c457b03c1aa9cd4af847ff77f0df93',
             weatherUrl = 'http://apis.baidu.com/apistore/weatherservice/recentweathers?cityname=',
             locationUrl = "http://api.map.baidu.com/geocoder?output=json&location=",
@@ -366,15 +369,26 @@ angular.module('gugecc.services', ['ngResource'])
 
                 var self = this,
                     url = locationUrl + cord.latitude + ',' + cord.longitude;
-                $http.get(url).success(function(res) {
-                    location = res.result.addressComponent;
-                    cityCode = res.result.cityCode;
 
-                    self.update();
+                $api.weather.recent({
+                    lng: cord.longitude,
+                    lat: cord.latitude
+                }, function(res){
+                    cache = res.result;
 
-                }, function(err) {
+                    if (defer) {
+                        defer.resolve(cache);
+                    }
+                })   
+                // $http.get(url).success(function(res) {
+                //     location = res.result.addressComponent;
+                //     cityCode = res.result.cityCode;
+
+                //     // self.update();
+
+                // }, function(err) {
                     
-                })
+                // })
             }
         }
         weather.init();
