@@ -1,3 +1,4 @@
+
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -15,43 +16,40 @@ $dark:                            #444 !default;
 */
 
 // The path for our ionicons font files, relative to the built CSS in www/css
-$ionicons-font-path: "../lib/ionic/release/fonts" !default;
-$positive:                        #4a90e2 !default;
-
-$font-family-base:                "webfont" !default;
-$font-family-sans-serif: 		  "webfont" !default;
-
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+$positive : #4a90e2 !default;
+$font-family-base : "webfont" !default;
+$font-family-sans-serif : "webfont" !default;
 // $item-default-text				  #
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 @import "media.css";
 @import "icon.css";
-
 .bg-stable {
-	background-color: $stable;
+    background-color: $stable;
 }
 
 .bg-positive {
-	background-color: $positive;
-	color: #fff;
+    background-color: $positive;
+    color: #fff;
 }
 
 .bg-calm {
-	background-color: $calm;
-	color: #fff;
+    background-color: $calm;
+    color: #fff;
 }
 
-.bg-balanced{
-	background-color: $balanced;
-	color: #fff;
+.bg-balanced {
+    background-color: $balanced;
+    color: #fff;
 }
 
 .bg-grey {
-	background-color: #4f6a85;
-	color: #fff;
+    background-color: #4f6a85;
+    color: #fff;
     border-top: none;
 }
 
 .bd-stable {
-	border-color: $stable;
+    border-color: $stable;
 }
