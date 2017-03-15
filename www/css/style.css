@@ -1,24 +1,25 @@
+
 /* Empty. Add your own CSS if you like */
 
 @font-face {
     font-family: 'webfont bold';
-    src: url('http://at.alicdn.com/t/rx6g3o4biuj714i.eot');
+    src: url('https://at.alicdn.com/t/rx6g3o4biuj714i.eot');
     /* IE9*/
-    src: url('http://at.alicdn.com/t/rx6g3o4biuj714i.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('http://at.alicdn.com/t/rx6g3o4biuj714i.woff') format('woff'), /* chrome、firefox */
-    url('http://at.alicdn.com/t/rx6g3o4biuj714i.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('http://at.alicdn.com/t/rx6g3o4biuj714i.svg#思源黑体-极细') format('svg');
+    src: url('https://at.alicdn.com/t/rx6g3o4biuj714i.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('https://at.alicdn.com/t/rx6g3o4biuj714i.woff') format('woff'), /* chrome、firefox */
+    url('https://at.alicdn.com/t/rx6g3o4biuj714i.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('https://at.alicdn.com/t/rx6g3o4biuj714i.svg#思源黑体-极细') format('svg');
     /* iOS 4.1- */
 }
 
 @font-face {
     font-family: 'webfont';
-    src: url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.eot');
+    src: url('https://at.alicdn.com/t/0chjm1aeo8gxpqfr.eot');
     /* IE9*/
-    src: url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.woff') format('woff'), /* chrome、firefox */
-    url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('http://at.alicdn.com/t/0chjm1aeo8gxpqfr.svg#思源黑体-极细') format('svg');
+    src: url('https://at.alicdn.com/t/0chjm1aeo8gxpqfr.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('https://at.alicdn.com/t/0chjm1aeo8gxpqfr.woff') format('woff'), /* chrome、firefox */
+    url('https://at.alicdn.com/t/0chjm1aeo8gxpqfr.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('https://at.alicdn.com/t/0chjm1aeo8gxpqfr.svg#思源黑体-极细') format('svg');
     /* iOS 4.1- */
 }
 
@@ -103,7 +104,8 @@ time,
 mark,
 audio,
 video {
-    font-family: "PingFang SC","Hiragino Sans GB", "Microsoft Yahei", arial,\5b8b\4f53, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", arial, \5b8b\4f53, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    ;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
@@ -196,7 +198,7 @@ a:visited {
     fill: #fff;
 }
 
-.button-bar > .button:first-child {
+.button-bar>.button:first-child {
     border-right: 1px solid #e8e8e8;
 }
 
@@ -221,11 +223,11 @@ ion-content {
     /*background-color: aliceblue;*/
 }
 
-ion-content.full > {
+ion-content.full> {
     height: 100%;
 }
 
-ion-content.full > .row {
+ion-content.full>.row {
     min-height: 100%;
 }
 
@@ -260,7 +262,7 @@ ion-content.full > .row {
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3)!important;
 }
 
-.row + .row {
+.row+.row {
     padding-top: 5px;
 }
 
@@ -385,17 +387,17 @@ ion-slide .trans-btn {
     padding-right: 16px!important;
 }
 
-.list-light > li > a.item {
+.list-light>li>a.item {
     border: none;
     margin: 0px;
 }
 
-.list-round > li > a.item {
+.list-round>li>a.item {
     border-radius: 2px;
     border: 2px solid transparent;
 }
 
-.list-light > li > a.item.active {
+.list-light>li>a.item.active {
     background-color: transparent;
     border: 2px solid #0066ca;
 }
@@ -411,7 +413,7 @@ ion-slide .trans-btn {
     visibility: hidden;
 }
 
-.cmn-toggle + label {
+.cmn-toggle+label {
     display: block;
     position: relative;
     cursor: pointer;
@@ -434,7 +436,7 @@ ion-slide .trans-btn {
     position: relative;
 }
 
-input.cmn-toggle-round-flat + label {
+input.cmn-toggle-round-flat+label {
     padding: 2px;
     width: 44px;
     height: 25px;
@@ -450,14 +452,14 @@ input.cmn-toggle-round-flat + label {
     transition: background 0.4s;
 }
 
-input.cmn-toggle-round-flat + label:before,
-input.cmn-toggle-round-flat + label:after {
+input.cmn-toggle-round-flat+label:before,
+input.cmn-toggle-round-flat+label:after {
     display: block;
     position: absolute;
     content: "";
 }
 
-input.cmn-toggle-round-flat + label:before {
+input.cmn-toggle-round-flat+label:before {
     top: 2px;
     left: 2px;
     bottom: 2px;
@@ -474,7 +476,7 @@ input.cmn-toggle-round-flat + label:before {
     transition: background 0.4s;
 }
 
-input.cmn-toggle-round-flat + label:after {
+input.cmn-toggle-round-flat+label:after {
     top: 4px;
     left: 4px;
     bottom: 4px;
@@ -491,11 +493,11 @@ input.cmn-toggle-round-flat + label:after {
     transition: margin 0.4s, background 0.4s;
 }
 
-input.cmn-toggle-round-flat:checked + label {
+input.cmn-toggle-round-flat:checked+label {
     background-color: #3ed84c;
 }
 
-input.cmn-toggle-round-flat:checked + label:after {
+input.cmn-toggle-round-flat:checked+label:after {
     margin-left: 20px;
     background-color: #3ed84c;
 }
@@ -843,7 +845,7 @@ ion-pinpad input.ion-pinpad-input {
     margin-left: -5px;
 }
 
-[ion-pinpad] span.ion-pinpad-num.active ,
+[ion-pinpad] span.ion-pinpad-num.active,
 ion-pinpad span.ion-pinpad-num.active {
     border-color: #4A90E2;
     box-shadow: 0px 0px 1px;
@@ -863,7 +865,6 @@ ion-pinpad span.ion-pinpad-num.active {
 //     animation: blinking infinite;
 //     animation-duration: 1s;
 // }
-
 @keyframes blinking {
     from {
         opacity: .4;
@@ -887,7 +888,7 @@ ion-pinpad span.ion-pinpad-num.active {
     border-left: 4px solid #ffc900;
 }
 
-.large{
+.large {
     font-size: 40px;
     line-height: 100px;
 }
@@ -896,16 +897,16 @@ ion-pinpad span.ion-pinpad-num.active {
     color: #4a90e2
 }
 
-.col-45{
+.col-45 {
     flex: 0 0 45%;
     max-width: 45%;
 }
 
-.large.fi:after{
+.large.fi:after {
     font-size: 30px;
 }
 
-.round-btn{
+.round-btn {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -914,33 +915,31 @@ ion-pinpad span.ion-pinpad-num.active {
     border: 1px solid #4a90e2;
 }
 
-.round-btn:clicked{
-    
-}
+.round-btn:clicked {}
 
-.round-btn i{
+.round-btn i {
     line-height: 50px;
     color: #fff;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
-.text-left{
+.text-left {
     text-align: left;
 }
 
-.text-right{
+.text-right {
     text-align: right;
 }
 
-.just{
+.just {
     justify-content: space-around;
     display: flex;
 }
 
-.badge-top{
+.badge-top {
     position: absolute!important;
     top: -5px!important;
     right: -5px;

@@ -12,7 +12,7 @@
 
         </ion-nav-buttons>
     </ion-nav-bar>
-	<div class="tabs-striped tabs-top tabs-color-positive transparent">
+    <div class="tabs-striped tabs-top tabs-color-positive transparent">
         <div class="tabs">
             <a class="tab-item" ng-class="{active : show == 'DAY'}" ng-click="changeview('DAY')">
                 日
@@ -23,14 +23,8 @@
         </div>
     </div>
     <ion-content class="padding has-tabs-top">
-        <canvas id="stacked-bar" 
-        	class="chart chart-stacked-bar" 
-        	chart-data="usage.data" 
-        	chart-labels="usage.labels"
-        	chart-colours="colours"
-        	chart-series="usage.series"
-            chart-options="options">
-		</canvas>
+        <canvas id="stacked-bar" class="chart chart-stacked-bar" chart-data="usage.data" chart-labels="usage.labels" chart-colours="colours" chart-series="usage.series" chart-options="options">
+        </canvas>
         <chart-legend>
             <ul class="stackedbar-legend" ng-show="usage.data.length">
                 <li ng-repeat="energy in chart.data.datasets">

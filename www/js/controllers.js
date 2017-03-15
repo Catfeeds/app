@@ -1,5 +1,5 @@
 angular.module('gugecc.controllers', [])
-    .controller('HomeTabCtrl', function($scope,
+    .controller('HomeTabCtrl', function ($scope,
         $api,
         $ionicSideMenuDelegate,
         cookies,
@@ -7,16 +7,16 @@ angular.module('gugecc.controllers', [])
         Account,
         $weather) {
 
-        $scope.showLeft = function() {
+        $scope.showLeft = function () {
             $ionicSideMenuDelegate.toggleLeft()
         }
 
         $scope.account = Account;
         var user = cookies.get('user');
 
-        $scope.$on("$ionicView.enter", function() {
+        $scope.$on("$ionicView.enter", function () {
             // 添加天气信息
-            $weather.get().then(function(weather) {
+            $weather.get().then(function (weather) {
                 $scope.weather = weather.today;
                 $scope.city = weather.city;
             });
@@ -27,7 +27,7 @@ angular.module('gugecc.controllers', [])
         // 注册推送
         push.register($scope.account);
     })
-    .controller('Analyze', function($scope,
+    .controller('Analyze', function ($scope,
         $ionicSideMenuDelegate,
         $timeout,
         $api,
@@ -41,11 +41,11 @@ angular.module('gugecc.controllers', [])
         var time = $stateParams.time
         $scope.time = time ? time : moment().format('YYYYMMDD');
 
-        $scope.showLeft = function() {
+        $scope.showLeft = function () {
             $ionicSideMenuDelegate.toggleLeft()
         }
 
-        $scope.$on('create', function(event, chart) {
+        $scope.$on('create', function (event, chart) {
             $scope.chart = chart;
         });
 
@@ -59,23 +59,22 @@ angular.module('gugecc.controllers', [])
             locale: 'zh_CN'
         };
 
-        $scope.choose_date = function() {
+        $scope.choose_date = function () {
             options.date = moment($scope.time, 'YYYYMMDD')._d;
 
-            $cordovaDatePicker.show(options).then(function(date) {
+            $cordovaDatePicker.show(options).then(function (date) {
                 $scope.time = moment(date).format('YYYYMMDD');
                 $scope.getData($scope.show);
             });
         }
 
-        $scope.getData = function(type, cb) {
+        $scope.getData = function (type, cb) {
             $api.business.energyconsumptioncost({
                 'time': $scope.time,
                 'project': Me.project,
                 'type': type
-            }, function(res) {
+            }, function (res) {
                 $scope.usage = utils.bar(res.result[Me.project].detail, $scope.show);
-
                 $scope.list = res.result[Me.project].detail;
                 if (cb) {
                     cb();
@@ -92,10 +91,10 @@ angular.module('gugecc.controllers', [])
         }, { // default
             "fillColor": '#FDB45C'
         }];
-        $scope.showBar = function(bar, event) {
+        $scope.showBar = function (bar, event) {
             console.log(bar, $scope.chart);
         }
-        $scope.changeview = function(view) {
+        $scope.changeview = function (view) {
             $scope.show = view;
             $scope.list = [];
             $scope.getData(view);
@@ -103,11 +102,11 @@ angular.module('gugecc.controllers', [])
         $scope.getData($scope.show);
     })
     .controller('AnalyzeDetail', ['$scope', '$api', 'Me', '$stateParams', '$state',
-        function($scope, $api, Me, $stateParams, $state) {
+        function ($scope, $api, Me, $stateParams, $state) {
 
         }
     ])
-    .controller('Charge', function($scope,
+    .controller('Charge', function ($scope,
         Me,
         $state, $stateParams,
         cookies, $api,
@@ -128,7 +127,7 @@ angular.module('gugecc.controllers', [])
             channelaccountid: channels ? channels[0].id : undefined
         };
 
-        $scope.init = function() {
+        $scope.init = function () {
             if (!!bankcards.length) {
                 $scope.selectedCard = bankcards[0];
                 $scope.charge.channelaccountid = bankcards[0]['id'];
@@ -137,18 +136,18 @@ angular.module('gugecc.controllers', [])
         }
         $scope.init();
 
-        $scope.plt_choose = function(channel) {
+        $scope.plt_choose = function (channel) {
             $scope.charge.channelaccountid = channel.id;
             $scope.cardpay = false;
         }
 
-        $scope.card_choose = function(card) {
+        $scope.card_choose = function (card) {
             $scope.selectedCard = card;
             $scope.cardpay = true;
             $scope.charge.channelaccountid = card.id;
         }
 
-        $scope.setAmount = function(amount, reset, key) {
+        $scope.setAmount = function (amount, reset, key) {
             $scope.charge.amount = amount;
             if (reset) {
                 $scope.otherAmount = '';
@@ -156,7 +155,7 @@ angular.module('gugecc.controllers', [])
             $scope.checkKey = key;
         }
 
-        $scope.pay = function() {
+        $scope.pay = function () {
             // 提示无充值渠道错误
             if (!channels) {
                 $ionicLoading.show({
@@ -182,9 +181,11 @@ angular.module('gugecc.controllers', [])
             };
             angular.extend(data, $scope.charge);
 
-            $app.pay(data, $scope.cardpay).then(function() {
+            $app.pay(data, $scope.cardpay).then(function () {
                 // 成功
-                $api.business.userinfo({ uid: cookies.get('user') }, function(res) {
+                $api.business.userinfo({
+                    uid: cookies.get('user')
+                }, function (res) {
                     $ionicHistory.clearCache();
                     $scope.me = res.result;
 
@@ -195,7 +196,7 @@ angular.module('gugecc.controllers', [])
                         }
                     });
                 });
-            }, function(err) {
+            }, function (err) {
                 $ionicLoading.show({
                     template: err.message,
                     duration: 1200
@@ -203,20 +204,20 @@ angular.module('gugecc.controllers', [])
             });
         }
 
-        $scope.payTest = function() {
+        $scope.payTest = function () {
             $app.modal({
                 templateUrl: 'templates/charge/pin.html',
             });
         }
 
-        $scope.refresh = function() {
-            $state.reload().then(function() {
+        $scope.refresh = function () {
+            $state.reload().then(function () {
                 // or
                 $scope.bankcards = bankcards;
             });
         }
 
-        $scope.show_bind = function() {
+        $scope.show_bind = function () {
             var modal = $app.modal({
                 templateUrl: 'templates/charge/bind.html',
                 controller: 'BindCard',
@@ -225,13 +226,13 @@ angular.module('gugecc.controllers', [])
                 }
             });
 
-            modal.then(function(res) {
+            modal.then(function (res) {
                 if (res.command == 'pay') {
 
                     $api.channelaccount.info({
                         belongto: Me.uid,
                         status: 'success'
-                    }, function(res) {
+                    }, function (res) {
                         $scope.bankcards = res.result;
 
                         $scope.init();
@@ -242,19 +243,19 @@ angular.module('gugecc.controllers', [])
         }
     })
     .controller('Device', ['$scope', '$api', 'cookies', 'Me', '$state', 'info', '$ionicLoading',
-        function($scope, $api, cookies, Me, $state, info, $ionicLoading) {
+        function ($scope, $api, cookies, Me, $state, info, $ionicLoading) {
             var project = Me.project;
 
-            $scope.canSwitch = function(commands) {
+            $scope.canSwitch = function (commands) {
                 return _.contains(commands, 'EMC_SWITCH');
             }
 
-            $scope.load = function() {
+            $scope.load = function () {
                 $scope.devices = [];
 
                 $api.sensor.info({
                     project: project,
-                }, function(res) {
+                }, function (res) {
                     $scope.$broadcast('scroll.refreshComplete');
                     if (!res.code) {
                         $scope.devices = res.result.detail;
@@ -263,12 +264,15 @@ angular.module('gugecc.controllers', [])
             }
             $scope.load();
 
-            $scope.showDevice = function(device) {
-                $state.go('tabs.device_control', { 'sensor': device, id: device.id });
+            $scope.showDevice = function (device) {
+                $state.go('tabs.device_control', {
+                    'sensor': device,
+                    id: device.id
+                });
             }
 
-            $scope.toggle = function(device, evt) {
-                navigator.notification.confirm('', function(res) {
+            $scope.toggle = function (device, evt) {
+                navigator.notification.confirm('', function (res) {
                     if (res == 2) {
                         return false;
                     }
@@ -276,7 +280,14 @@ angular.module('gugecc.controllers', [])
                     var command = device.status && device.status.switch == 'EMC_ON' ? 'EMC_OFF' : 'EMC_ON',
                         code = hex_sha1(info.ctrlpasswd).toUpperCase();
 
-                    $api.control.send({ id: device.id, command: 'EMC_SWITCH', ctrlcode: code, param: { mode: command } }, function(res) {
+                    $api.control.send({
+                        id: device.id,
+                        command: 'EMC_SWITCH',
+                        ctrlcode: code,
+                        param: {
+                            mode: command
+                        }
+                    }, function (res) {
                         console.log('res: ', res);
                         $ionicLoading.show({
                             template: '命令已发送<br> 稍后下来刷新查看执行状态',
@@ -292,14 +303,14 @@ angular.module('gugecc.controllers', [])
         }
     ])
     .controller('DeviceCtrl', ['$scope', '$state', '$api', 'sensor', 'Me', '$stateParams', 'recent', 'info', '$ionicLoading', '$ionicPopup',
-        function($scope, $state, $api, sensor, Me, $stateParams, recent, info, $ionicLoading, $ionicPopup) {
+        function ($scope, $state, $api, sensor, Me, $stateParams, recent, info, $ionicLoading, $ionicPopup) {
             console.log('sensor: ', sensor);
             $scope.sensor = sensor;
             $scope.tab = 'control';
 
-            $scope.toggle = function(device, evt) {
+            $scope.toggle = function (device, evt) {
                 // 调用 confirm
-                navigator.notification.confirm('', function(res) {
+                navigator.notification.confirm('', function (res) {
                     if (res == 2) {
                         return false;
                     }
@@ -307,7 +318,14 @@ angular.module('gugecc.controllers', [])
                     var command = device.status && device.status.switch == 'EMC_ON' ? 'EMC_OFF' : 'EMC_ON',
                         code = hex_sha1(info.ctrlpasswd).toUpperCase();
 
-                    $api.control.send({ id: device.id, command: 'EMC_SWITCH', ctrlcode: code, param: { mode: command } }, function(res) {
+                    $api.control.send({
+                        id: device.id,
+                        command: 'EMC_SWITCH',
+                        ctrlcode: code,
+                        param: {
+                            mode: command
+                        }
+                    }, function (res) {
                         console.log('res: ', res);
                         $ionicLoading.show({
                             template: '命令已发送<br> 稍后下来刷新查看执行状态',
@@ -319,23 +337,26 @@ angular.module('gugecc.controllers', [])
                 evt.stopPropagation();
             }
 
-            $scope.statusImg = function(device) {
+            $scope.statusImg = function (device) {
                 return device.status && device.status.switch == 'EMC_ON' ? 'img/switchOn.png' : 'img/switchOff.png';
             }
 
-            $scope.canSwitch = function(commands) {
+            $scope.canSwitch = function (commands) {
                 return _.contains(commands, 'EMC_SWITCH');
             }
 
-            $scope.show = function(tab) {
+            $scope.show = function (tab) {
                 $scope.tab = tab;
             }
 
-            $scope.go = function(month) {
-                $state.go('tabs.device_month', { 'month': month, 'device': $scope.sensor.id });
+            $scope.go = function (month) {
+                $state.go('tabs.device_month', {
+                    'month': month,
+                    'device': $scope.sensor.id
+                });
             }
 
-            $scope.get_template = function() {
+            $scope.get_template = function () {
                 if (sensor.devicetype == 'TEMPERATURECONTROL') {
                     sensor.channels[41];
                     return 'templates/device/type/temp.html';
@@ -344,11 +365,13 @@ angular.module('gugecc.controllers', [])
                 return 'templates/device/type/electricity.html';
             }
 
-            $scope.send_command = function(command, org){
+            $scope.send_command = function (command, org) {
                 var param = {}
                 switch (command) {
                     case 'EMC_TEMPRATURE':
-                        param = {value: org[0]+org[1]};
+                        param = {
+                            value: org[0] + org[1]
+                        };
                         sensor.channels[37].lasttotal = param.value;
 
                         break;
@@ -363,7 +386,7 @@ angular.module('gugecc.controllers', [])
                     id: sensor.id,
                     command: command,
                     param: param
-                }, function(data) {
+                }, function (data) {
                     console.log('data:', data);
                 })
             }
@@ -372,7 +395,7 @@ angular.module('gugecc.controllers', [])
         }
     ])
     .controller('MonthCtrl', ['$scope', '$state', '$api', 'Me', '$stateParams', 'utils', 'days',
-        function($scope, $state, $api, Me, $stateParams, utils, days) {
+        function ($scope, $state, $api, Me, $stateParams, utils, days) {
             $scope.vm = $stateParams.month;
 
             $scope.usage = utils.duty(days.usage);
@@ -386,14 +409,16 @@ angular.module('gugecc.controllers', [])
             }];
         }
     ])
-    .controller('LogCtrl', ['$scope', '$api', 'Me', 'cookies', '$http', function($scope, $api, Me, cookies, $http) {
+    .controller('LogCtrl', ['$scope', '$api', 'Me', 'cookies', '$http', function ($scope, $api, Me, cookies, $http) {
         $scope.tab = 'charge';
         $scope.paging = {};
 
         var project = Me.project;
         var query = {
             charges: {
-                "project": [{ "id": project }],
+                "project": [{
+                    "id": project
+                }],
                 "from": moment().subtract(12, 'month').format('YYYYMMDD'),
                 "to": moment().format('YYYYMMDD'),
                 pageindex: 1,
@@ -404,14 +429,14 @@ angular.module('gugecc.controllers', [])
                 // project: Me.project,
                 uid: cookies.get('user'),
                 // key: '',
-                from: moment().format('YYYYMM')+'01',
+                from: moment().format('YYYYMM') + '01',
                 to: moment().format('YYYYMMDD'),
                 // flow: 'EXPENSE',
                 category: 'PAYFEES'
             }
         }
 
-        $scope.more = function(type) {
+        $scope.more = function (type) {
             var paging = $scope.paging[type];
             if (!paging) {
                 return true
@@ -419,9 +444,9 @@ angular.module('gugecc.controllers', [])
             return paging.pageindex * paging.pagesize < paging.count;
         }
 
-        $scope.loadList = function(type) {
+        $scope.loadList = function (type) {
             if (type == 'charges') {
-                $api.business.recentchargelog(query[type], function(res) {
+                $api.business.recentchargelog(query[type], function (res) {
                     var page = res.result[project].detail;
                     $scope[type] = $scope[type] ? $scope[type].concat(page) : page;
                     $scope.paging[type] = res.result[project].paging;
@@ -431,7 +456,7 @@ angular.module('gugecc.controllers', [])
             };
 
             if (type == 'fee') {
-                $api.business.fundflow(query[type], function(res) {
+                $api.business.fundflow(query[type], function (res) {
                     var page = res.result;
                     $scope[type] = $scope[type] ? $scope[type].concat(page) : page;
                     // $scope.paging[type] = res.result[project].paging;
@@ -443,7 +468,7 @@ angular.module('gugecc.controllers', [])
         $scope.loadList('charges');
         $scope.loadList('fee');
 
-        $scope.loadMore = function(type) {
+        $scope.loadMore = function (type) {
             var paging = $scope.paging[type];
             if (!paging) {
                 return false;
@@ -454,31 +479,33 @@ angular.module('gugecc.controllers', [])
             }
         }
 
-        $scope.getLogs = function(tab) {
+        $scope.getLogs = function (tab) {
             tab ? $scope.tab = tab : 1;
         }
     }])
     .controller('BindCard', ['$scope', '$modalData', 'cookies', '$api', '$app', '$ionicLoading', '$interval',
-        function($scope, $modalData, cookies, $api, $app, $ionicLoading, $interval) {
+        function ($scope, $modalData, cookies, $api, $app, $ionicLoading, $interval) {
             $scope.data = {};
             $scope.order = {};
 
-            $api.bank.info({}, function(res) {
+            $api.bank.info({}, function (res) {
                 $scope.banks = res.result;
             });
 
-            $scope.startCounter = function() {
+            $scope.startCounter = function () {
                 $scope.time = 60,
-                    timer = $interval(function() {
+                    timer = $interval(function () {
                         $scope.time--;
                     }, 1000, 60);
             }
 
-            $scope.getCode = function() {
+            $scope.getCode = function () {
                 // 检查表单输入
-                var data = angular.extend({ uid: cookies.get('user') }, $scope.data);
+                var data = angular.extend({
+                    uid: cookies.get('user')
+                }, $scope.data);
 
-                $api.channelaccount.verifycode(data, function(res) {
+                $api.channelaccount.verifycode(data, function (res) {
                     if (res.code == 0 && res.result.orderID) {
                         $scope.data.orderid = res.result.orderID;
                         $scope.startCounter();
@@ -491,7 +518,7 @@ angular.module('gugecc.controllers', [])
                 });
             }
 
-            $scope.bind = function() {
+            $scope.bind = function () {
                 var data = {
                     belongto: cookies.get('user'),
                     flow: 'EARNING',
@@ -506,7 +533,7 @@ angular.module('gugecc.controllers', [])
                     verifycode: $scope.order.verifycode
                 }
 
-                $api.channelaccount.add(data, function(res) {
+                $api.channelaccount.add(data, function (res) {
                     if (res.code == 0) {
                         $app.closeModal($scope.modal, {
                             command: 'pay'
@@ -522,19 +549,19 @@ angular.module('gugecc.controllers', [])
         }
     ])
     .controller('PayPinpad', ['$scope', '$modalData', '$api', '$app', '$ionicLoading',
-        function($scope, $modalData, $api, $app, $ionicLoading) {
+        function ($scope, $modalData, $api, $app, $ionicLoading) {
 
             $scope.data = angular.extend({}, $modalData.payment);
 
-            $scope.close = function() {
-                var dismiss = function() {
+            $scope.close = function () {
+                var dismiss = function () {
                     $app.closeModal($scope.modal, {
                         command: 'error',
                         message: '用户已放弃支付'
                     }, true);
                 }
                 if (navigator.notification) {
-                    navigator.notification.confirm('', function(res) {
+                    navigator.notification.confirm('', function (res) {
                         if (res == 2) {
                             return false;
                         }
@@ -545,9 +572,9 @@ angular.module('gugecc.controllers', [])
                 }
             }
 
-            $scope.pay = function() {
+            $scope.pay = function () {
                 console.log($scope.data);
-                $api.payment.charge($scope.data, function(res) {
+                $api.payment.charge($scope.data, function (res) {
                     if (res.code == 0) {
                         $app.closeModal($scope.modal, {
                             command: 'success'
@@ -565,41 +592,44 @@ angular.module('gugecc.controllers', [])
     ])
     .controller('BankCardSetting', [
         '$scope', '$app', '$api', '$ionicLoading', '$rootScope', '$state', 'cookies',
-        function($scope, $app, $api, $ionicLoading, $rootScope, $state, cookies) {
-            $scope.$on("$ionicView.enter", function() {
+        function ($scope, $app, $api, $ionicLoading, $rootScope, $state, cookies) {
+            $scope.$on("$ionicView.enter", function () {
                 $api.channelaccount.info({
                     belongto: cookies.get('user'),
                     all: true
-                }, function(res) {
+                }, function (res) {
                     $scope.bankcards = res.result;
                 });
             });
 
-            $scope.add = function() {
+            $scope.add = function () {
                 $app.modal({
                     templateUrl: 'templates/charge/bind.html',
                     controller: 'BindCard',
                     data: {
                         project: $rootScope._me.project
                     }
-                }).then(function(res) {
+                }).then(function (res) {
                     $state.reload();
                 });
             }
         }
     ])
     .controller('CardDetail', ['$scope', '$stateParams', '$state', '$api', '$ionicLoading',
-        function($scope, $stateParams, $state, $api, $ionicLoading) {
+        function ($scope, $stateParams, $state, $api, $ionicLoading) {
             $scope.card = $stateParams.card;
             console.log($scope.card);
 
-            $scope.unbind = function() {
+            $scope.unbind = function () {
 
                 $api.channelaccount.delete({
                     id: $scope.card.id
-                }, function(res) {
+                }, function (res) {
                     if (res.code == 0) {
-                        $state.go('bankcards', null, { reload: true, notify: true });
+                        $state.go('bankcards', null, {
+                            reload: true,
+                            notify: true
+                        });
                     } else {
                         $ionicLoading.show({
                             template: res.message,
@@ -611,11 +641,11 @@ angular.module('gugecc.controllers', [])
         }
     ])
     .controller('Passwd', ['$scope', '$api', 'cookies', 'account', '$state', '$ionicLoading',
-        function($scope, $api, cookies, account, $state, $ionicLoading) {
+        function ($scope, $api, cookies, account, $state, $ionicLoading) {
             $scope.data = {};
 
-            $scope.update = function() {
-                $api.account.passwd($scope.data, function(res) {
+            $scope.update = function () {
+                $api.account.passwd($scope.data, function (res) {
                     if (res.code == 0) {
                         cookies.down();
                         $state.go('login');
@@ -635,12 +665,12 @@ angular.module('gugecc.controllers', [])
         }
 
     ])
-     .controller('Notices', ['$scope', 'notice', '$rootScope', '$api', 
-        function($scope, notice, $rootScope, $api){
+    .controller('Notices', ['$scope', 'notice', '$rootScope', '$api',
+        function ($scope, notice, $rootScope, $api) {
             $scope.me = $rootScope._me;
             localStorage._unread = 0;
 
-            $scope.$on("$ionicView.enter", function() {
+            $scope.$on("$ionicView.enter", function () {
                 // 添加天气信息
                 $scope.events = notice.all();
             });
@@ -649,7 +679,7 @@ angular.module('gugecc.controllers', [])
                 return notice.title(event.type);
             }
 
-            $scope.parse_content = function(event){
+            $scope.parse_content = function (event) {
                 var load = notice.parse(event.type, event.param);
                 return load.template;
             }
