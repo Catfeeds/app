@@ -1,0 +1,10 @@
+{
+  "name": "gugecc-app",
+  "app_id": "53bbd346",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://120.27.150.112:8905/api"
+    }
+  ]
+}
